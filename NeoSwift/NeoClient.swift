@@ -10,6 +10,7 @@ import Foundation
 
 public class NeoClient {
     public var seed = "http://seed4.neo.org:10332"
+    public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v1/"
     
     enum RPCMethod: String {
         case getBestBlockHash = "getbestblockhash"
@@ -20,6 +21,10 @@ public class NeoClient {
         case getTransaction = "getrawtransaction"
         case getTransactionOutput = "gettxout"
         case getUnconfirmedTransactions = "getrawmempool"
+        //The following routes can't be invoked by calling an RPC server
+        //We must use the wrapper for the nodes made by COZ
+        case sendRawTransaction = "sendrawransaction"
+        case getBalance = "getbalance"
     }
     
     public init(seed: String) {
@@ -42,6 +47,30 @@ public class NeoClient {
             "params"  : params ?? []
         ]
         request.httpBody = try! JSONSerialization.data(withJSONObject: requestDictionary, options: [])
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
+            if err != nil {
+                completion(nil, err)
+                return
+            }
+            
+            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as? [String:AnyObject] else {
+                completion(nil, "Some Error" as? Error)
+                return
+            }
+            
+            completion(json, nil)
+        }
+        task.resume()
+    }
+    
+    func sendFullNodeRequest(_ method: RPCMethod, params: [Any]?, completion :@escaping ([String:AnyObject]?, Error?) -> Void) {
+        guard let url = URL(string: "http://testnet-api.wallet.cityofzion.io/v1/address/balance/AJs38kijktEuM22sjfXqfjZ734RqR4H6JW") else {
+            completion(nil, "Invalid Seed" as? Error)
+            return
+        }
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "GET"
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
@@ -169,6 +198,30 @@ public class NeoClient {
             }
             completion(count, error)
             return
+        }
+    }
+    
+    public func sendRawTransaction(with params: [Any?], completion: @escaping([String]?, Error?) -> Void) {
+        sendRequest(.sendRawTransaction, params: params) { json, error in
+            guard error == nil else {
+                completion(nil, nil)
+                return
+            }
+            completion(nil, nil)
+        }
+    }
+    
+    public func getBalance(with params: [Any?], completion: @escaping(Balance?, Error?) -> Void) {
+        sendFullNodeRequest(.getBalance, params: params) { json, error in
+            let decoder = JSONDecoder()
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            let data = try! JSONSerialization.data(withJSONObject: json!, options: .prettyPrinted)
+            let balance = try! decoder.decode(Balance.self, from: data)
+            completion(balance, nil)
+
         }
     }
 }

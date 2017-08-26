@@ -1,0 +1,8 @@
+framework module "Keygen" {
+	header "ref.h"
+    header "GoKeygen.objc.h"
+    header "GoUniverse.objc.h"
+    header "Keygen.h"
+
+    export *
+}

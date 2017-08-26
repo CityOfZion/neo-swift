@@ -141,6 +141,28 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
+    func testGetBalance() {
+        let exp = expectation(description: "Wait for block hash response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
+    
+        neo.getBalance(with: []) { json, error in
+            exp.fulfill()
+            return
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testSendRawTransaction() {
+        let exp = expectation(description: "Wait for block hash response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
+        
+        neo.getBalance(with: []) { json, error in
+            exp.fulfill()
+            return
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
