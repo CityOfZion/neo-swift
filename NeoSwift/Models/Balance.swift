@@ -106,6 +106,60 @@ public struct Balance: Codable {
         let net: String = try container.decode(String.self, forKey: .net)
         self.init(gas: gas, neo: neo, address: address, net: net)
     }
+    
+    public func getInputsNecessaryToSendAsset(asset: AssetId, amount: Double) -> (Double?, Data?, Error?){
+        var sortedUnspents = [Unspent]()
+        var neededForTransaction = [Unspent]()
+        if asset == .neoAssetId {
+            if neo.balance < amount {
+                return (nil, nil, NSError())
+            }
+            sortedUnspents = neo.unspent.sorted {$0.value < $1.value }
+        } else {
+            if gas.balance < amount {
+                return (nil, nil, NSError())
+            }
+            sortedUnspents = neo.unspent.sorted { $0.value < $1.value }
+        }
+        var runningAmount = 0.0
+        var index = 0
+        var count: UInt8 = 0
+        //Assume we always have anough balance to do this, prevent the check for bal
+        while runningAmount < amount {
+            neededForTransaction.append(sortedUnspents[index])
+            runningAmount = runningAmount + sortedUnspents[index].value
+            index = index + 1
+            count = count + 1
+        }
+        var inputData = [UInt8]()
+        inputData.append(count)
+        for x in 0..<neededForTransaction.count {
+            let data = neededForTransaction[x].txId.dataWithHexString()
+            let reversedBytes = data.bytes.reversed()
+            inputData = inputData + reversedBytes + [0x00, 0x00, 0x00, UInt8(neededForTransaction[x].index)]
+        }
+        
+        return (runningAmount, Data(bytes: inputData), nil)
+    }
+    
+    func getTransactionPayload(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double) {
+        var inputDataBytes = inputData.bytes
+        var needsTwoOutputTransactions = runningAmount != toSendAmount
+        var payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 128 : inputDataBytes.count + 64
+        var payload: [UInt8] = [0x80, 0x00, 0x00]
+        payload = payload + inputDataBytes
+        if needsTwoOutputTransactions {
+            payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
+            var amountToSendInMemory = UInt64(toSendAmount * 100000000)
+            payload = payload + toByteArray(amountToSendInMemory)
+            var amountToGetBackInMemory = UInt64((runningAmount - toSendAmount) * 100000000)
+            payload = payload + toByteArray(amountToGetBackInMemory)
+        } else {
+            payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
+            var amountToSendInMemory = UInt64(toSendAmount * 100000000)
+            payload = payload + toByteArray(amountToSendInMemory)
+        }
+    }
 }
 
 

@@ -33,8 +33,8 @@ public extension String {
         return finalKeyData.fullHexEncodedString()
     }
     
-    func dataWithHexString(hex: String) -> Data {
-        var hex = hex
+    func dataWithHexString() -> Data {
+        var hex = self
         var data = Data()
         while(hex.characters.count > 0) {
             let c: String = hex.substring(to: hex.index(hex.startIndex, offsetBy: 2))
@@ -48,7 +48,7 @@ public extension String {
     }
     
     func toWifFromPrivateKey() -> String {
-        let decoded = dataWithHexString(hex: self.lowercased())
+        let decoded = self.lowercased().dataWithHexString()
         var bytes = [UInt8](decoded)
         bytes = [0x80] + bytes
         let hashOne = bytes.sha256()
