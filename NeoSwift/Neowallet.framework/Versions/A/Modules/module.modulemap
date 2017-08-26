@@ -1,0 +1,8 @@
+framework module "Neowallet" {
+	header "ref.h"
+    header "GoNeowallet.objc.h"
+    header "GoUniverse.objc.h"
+    header "Neowallet.h"
+
+    export *
+}

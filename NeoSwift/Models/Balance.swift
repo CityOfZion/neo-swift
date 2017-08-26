@@ -142,7 +142,7 @@ public struct Balance: Codable {
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func getTransactionPayload(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double) {
+    func getTransactionPayload(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, hashedSignature: Data) {
         var inputDataBytes = inputData.bytes
         var needsTwoOutputTransactions = runningAmount != toSendAmount
         var payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 128 : inputDataBytes.count + 64
@@ -154,10 +154,12 @@ public struct Balance: Codable {
             payload = payload + toByteArray(amountToSendInMemory)
             var amountToGetBackInMemory = UInt64((runningAmount - toSendAmount) * 100000000)
             payload = payload + toByteArray(amountToGetBackInMemory)
+            payload = payload + hashedSignature.bytes
         } else {
             payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
             var amountToSendInMemory = UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToSendInMemory)
+            payload = payload + hashedSignature.bytes   
         }
     }
 }

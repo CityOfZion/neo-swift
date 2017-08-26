@@ -9,21 +9,23 @@
 //
 
 import Foundation
-import Keygen
+import Neowallet
 
 public class Account {
     var wif: String
     var publicKey: Data
     var privateKey: Data
     var address: String
+    var hashedSignature: Data
     
     public init(wif: String) {
         var error: NSError?
-        let wallet = GoKeygenGenerateFromWIF(wif, &error)
+        let wallet = GoNeowalletGenerateFromWIF(wif, &error)
         self.wif = wif
         self.publicKey = (wallet?.publicKey())!
         self.privateKey = (wallet?.privateKey())!
         self.address = (wallet?.address())!
+        self.hashedSignature = (wallet?.hashedSignature())!
     }
     
     /*
