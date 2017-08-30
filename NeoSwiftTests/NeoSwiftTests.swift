@@ -141,11 +141,10 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
-    func testGetBalance() {
+    func testGetAssets() {
         let exp = expectation(description: "Wait for block hash response")
-        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
     
-        neo.getBalance(with: []) { json, error in
+        NeoClient.shared.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { json, error in
             exp.fulfill()
             return
         }
@@ -153,14 +152,32 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testSendRawTransaction() {
-        let exp = expectation(description: "Wait for block hash response")
-        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
+        //I am exposing the following private keys for testing purposes only
+        //Please only use them them to send transactions between each other on
+        //the test network, and for the love of god never use them for real funds
         
-        neo.getBalance(with: []) { json, error in
+        // TESTPRIVATEKEY1 -> DO NOT USE FOR REAL FUNDS EVER
+            // d59208b9228bff23009a666262a800f20f9dad38b0d9291f445215a0d4542beb hex
+            // L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL WIF
+            // AMpupnF6QweQXLfCtF4dR45FDdKbTXkLsr Address
+            // 0398b8d209365a197311d1b288424eaea556f6235f5730598dede5647f6a11d99a pubkey
+        // TESTPRIVAATEKEY2 -> DO NOT USE FOR REAL FUNDS EVER
+            // e444ec65fbb94aac0e7fc6bd7f0de64f22513d50c022d3d6e159c24e90b54d8d hex
+            // L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf wif
+            // ATLoURz25z4PpsrzZmnowRT3dya44LGEpS Address
+            // 03aa0047673b0bf10f936bb45a909bc70eeef396de934429c796ad496d94911820 pub key
+        let wif = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let account = Account(wif: wif)
+       
+        
+        /*let exp = expectation(description: "Wait for block hash response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
+        //test address AJs38kijktEuM22sjfXqfjZ734RqR4H6JW
+        NeoClient.shared.getBalance(for: "AJs38kijktEuM22sjfXqfjZ734RqR4H6JW", params: : []) { json, error in
             exp.fulfill()
             return
         }
-        waitForExpectations(timeout: 20, handler: nil)
+        waitForExpectations(timeout: 20, handler: nil)*/
     }
     
 
