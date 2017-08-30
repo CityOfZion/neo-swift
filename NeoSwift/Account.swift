@@ -159,7 +159,7 @@ public class Account {
     }
 
 
-    func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
+    public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
         self.address = "AJs38kijktEuM22sjfXqfjZ734RqR4H6JW"
         NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
             let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets!)

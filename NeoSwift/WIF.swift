@@ -13,26 +13,6 @@ import SwiftBaseX
 import CryptoSwift
     
 public extension String {
-    func toPrivateKeyFromWif() -> String {
-        let decoded = try! self.decodeBase58()
-        let bytes  = [UInt8](decoded)
-      //  if bytes.count != 37 || bytes[0] != 0x80 /*|| bytes[33] != 0x01*/  { //may need to re add this, not sure if its NEO specific check
-        //    return ""
-        //}
-        //Make sure we have a valid checksum
-        let checkSum = bytes[bytes.count - 4...bytes.count - 1]
-        let shortened = bytes[0...bytes.count - 5]
-        let substringData = Data(bytes: shortened)
-        let hashOne = substringData.sha256()
-        let hashTwo = hashOne.sha256()
-        let bytesTwo = [UInt8](hashTwo)
-        if checkSum != bytesTwo[0...3] {
-            return ""
-        }
-        let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
-        return finalKeyData.fullHexEncodedString()
-    }
-    
     func dataWithHexString() -> Data {
         var hex = self
         var data = Data()
@@ -45,17 +25,5 @@ public extension String {
             data.append(&char, count: 1)
         }
         return data
-    }
-    
-    func toWifFromPrivateKey() -> String {
-        let decoded = self.lowercased().dataWithHexString()
-        var bytes = [UInt8](decoded)
-        bytes = [0x80] + bytes
-        let hashOne = bytes.sha256()
-        let hashTwo = hashOne.sha256()
-        let checksum = hashTwo[0...3]
-        bytes = bytes + checksum
-        let bytesData = Data(bytes: bytes)
-        return bytesData.base58EncodedString()
     }
 }

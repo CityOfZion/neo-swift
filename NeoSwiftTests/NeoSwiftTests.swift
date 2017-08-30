@@ -166,18 +166,17 @@ class NeoSwiftTests: XCTestCase {
             // L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf wif
             // ATLoURz25z4PpsrzZmnowRT3dya44LGEpS Address
             // 03aa0047673b0bf10f936bb45a909bc70eeef396de934429c796ad496d94911820 pub key
-        let wif = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
-        let account = Account(wif: wif)
-       
+        let wifSender = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let addressRecipient = "ATLoURz25z4PpsrzZmnowRT3dya44LGEpS"
+        let senderAccount = Account(wif: wifSender)
         
-        /*let exp = expectation(description: "Wait for block hash response")
-        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
-        //test address AJs38kijktEuM22sjfXqfjZ734RqR4H6JW
-        NeoClient.shared.getBalance(for: "AJs38kijktEuM22sjfXqfjZ734RqR4H6JW", params: : []) { json, error in
+        let exp = expectation(description: "Wait for block hash response")
+
+        senderAccount.sendAssetTransaction(asset: .gasAssetId, amount: 0.1, toAddress: addressRecipient) { success, error in
             exp.fulfill()
             return
         }
-        waitForExpectations(timeout: 20, handler: nil)*/
+        waitForExpectations(timeout: 20, handler: nil)
     }
     
 
