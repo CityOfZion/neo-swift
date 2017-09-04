@@ -185,12 +185,23 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 50, handler: nil)
     }
     
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testSendGasTransaction() {
+        let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
+        let accountA = Account(wif: wifPersonA)
+        let accountB = Account(wif: wifPersonB)
+        
+        let exp1 = expectation(description: "Wait for transaction one to go through")
+        let exp2 = expectation(description: "Wait for transaction two to go through")
+        
+        accountA.sendAssetTransaction(asset: .gasAssetId, amount: 1, toAddress: accountB.address) { success, error in
+            assert(success ?? false)
+            exp1.fulfill()
+            accountB.sendAssetTransaction(asset: .gasAssetId, amount: 1, toAddress: accountA.address) {success, error in
+                assert(success ?? false)
+                exp2.fulfill()
+            }
         }
+        waitForExpectations(timeout: 50, handler: nil)
     }
-    
 }
