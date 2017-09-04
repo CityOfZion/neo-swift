@@ -86,12 +86,12 @@ public class Account {
             if assets.neo.balance < amount {
                 return (nil, nil, NSError())
             }
-            sortedUnspents = assets.neo.unspent.sorted {$0.value < $1.value }
+            sortedUnspents = assets.neo.unspent.sorted {$0.value > $1.value }
         } else {
             if assets.gas.balance < amount {
                 return (nil, nil, NSError())
             }
-            sortedUnspents = assets.gas.unspent.sorted { $0.value < $1.value }
+            sortedUnspents = assets.gas.unspent.sorted { $0.value > $1.value }
         }
         var runningAmount = 0.0
         var index = 0
@@ -108,33 +108,37 @@ public class Account {
         for x in 0..<neededForTransaction.count {
             let data = neededForTransaction[x].txId.dataWithHexString()
             let reversedBytes = data.bytes.reversed()
-            inputData = inputData + reversedBytes + [0x00, UInt8(neededForTransaction[x].index)] //Need to do this as a 16 bit integer instead of auto padding the 0
+            inputData = inputData + reversedBytes + [0x00, UInt8(neededForTransaction[x].index)].reversed() //Need to do this as a 16 bit integer instead of auto padding the 0
         }
         
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, hashedSignature: Data, toAddress: String) -> Data {
+    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String) -> Data {
         var inputDataBytes = inputData.bytes
         var needsTwoOutputTransactions = runningAmount != toSendAmount
-        var payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 128 : inputDataBytes.count + 64
+        var payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 124 : inputDataBytes.count + 64
         var payload: [UInt8] = [0x80, 0x00, 0x00]
         payload = payload + inputDataBytes
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
-            var amountToSendInMemory = UInt64(toSendAmount * 100000000)
+            var amountToSendInMemory = UInt64(toSendAmount * 100000000) //NEEDS TO BE REVERSED
             payload = payload + toByteArray(amountToSendInMemory)
             
+            //reciever addressHash
+            payload = payload + toAddress.programHashFromAddress().dataWithHexString()
+            
             //Transaction To Sender
-            var amountToGetBackInMemory = UInt64((runningAmount - toSendAmount) * 100000000)
+            payload = payload + asset.rawValue.dataWithHexString().bytes.reversed()
+            var amountToGetBackInMemory = UInt64(runningAmount * 100000000) - UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToGetBackInMemory)
             payload = payload + hashedSignature.bytes
         } else {
             payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
             var amountToSendInMemory = UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToSendInMemory)
-            payload = payload + hashedSignature.bytes
+            payload = payload + toAddress.programHashFromAddress().dataWithHexString()
         }
         return Data(bytes: payload)
     }
@@ -151,16 +155,18 @@ public class Account {
     
     func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets) -> Data {
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
-        let rawTransation = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
-                                                    toSendAmount: amount, hashedSignature: /*Todo*/Data(), toAddress: toAddress)
-        let finalPayload = concatenatePayloadData(txData: rawTransation, signatureData: Data()/*Generated from go mobile*/)
+        let rawTransaction = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
+                                                    toSendAmount: amount, toAddress: toAddress)
+        print(rawTransaction.hexEncodedString())
+        var error: NSError?
+        let signatureData = GoNeowalletSign(rawTransaction, privateKey.toHexString(), &error)
+        let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
     }
 
 
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
-        self.address = "AJs38kijktEuM22sjfXqfjZ734RqR4H6JW"
         NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
             let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets!)
             NeoClient.shared.sendRawTransaction(with: payload) {_,_ in

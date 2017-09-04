@@ -221,7 +221,7 @@ public class NeoClient {
     
     
     public func sendRawTransaction(with data: Data, completion: @escaping([String]?, Error?) -> Void) {
-        sendRequest(.sendTransaction, params: [data]) { json, error in
+        sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { json, error in
             guard error == nil else {
                 completion(nil, nil)
                 return

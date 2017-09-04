@@ -33,6 +33,6 @@ FOUNDATION_EXPORT GoNeowalletWallet* GoNeowalletGenerateFromWIF(NSString* wif, N
 
 FOUNDATION_EXPORT GoNeowalletWallet* GoNeowalletGeneratePublicKeyFromPrivateKey(NSString* privateKey, NSError** error);
 
-FOUNDATION_EXPORT NSData* GoNeowalletSign(NSData* data, int64_t key, NSError** error);
+FOUNDATION_EXPORT NSData* GoNeowalletSign(NSData* data, NSString* key, NSError** error);
 
 #endif

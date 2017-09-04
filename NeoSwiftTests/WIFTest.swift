@@ -23,6 +23,7 @@ class WIFTest: XCTestCase {
         super.tearDown()
     }
     
+    /*
     func testToWifFromPrivateKey() {
         let pkey = "0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D"
         assert(pkey.toWifFromPrivateKey() == "5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ")
@@ -33,7 +34,7 @@ class WIFTest: XCTestCase {
         let derp = wif.toPrivateKeyFromWif().uppercased()
         print(derp)
         assert (wif.toPrivateKeyFromWif().uppercased() == "0C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D")
-    }
+    }*/
     
     func testWalletGenerator() {
         let wallet = Account(wif: "KzULqzStT2tseGnqogXnTLG5NCT1YXa3F9Wp1Kdv9xMxFhvV6H2A")

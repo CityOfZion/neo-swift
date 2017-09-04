@@ -172,7 +172,7 @@ class NeoSwiftTests: XCTestCase {
         
         let exp = expectation(description: "Wait for block hash response")
 
-        senderAccount.sendAssetTransaction(asset: .gasAssetId, amount: 0.1, toAddress: addressRecipient) { success, error in
+        senderAccount.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: addressRecipient) { success, error in
             exp.fulfill()
             return
         }
