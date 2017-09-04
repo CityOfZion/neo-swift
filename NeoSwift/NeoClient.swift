@@ -9,7 +9,7 @@
 import Foundation
 
 public class NeoClient {
-    public var seed = "http://seed4.neo.org:10332"
+    public var seed = "http://seed4.neo.org:20332"
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v1/"
     public static let shared = NeoClient()
     private init() {} 
@@ -23,7 +23,7 @@ public class NeoClient {
         case getTransaction = "getrawtransaction"
         case getTransactionOutput = "gettxout"
         case getUnconfirmedTransactions = "getrawmempool"
-        case sendTransaction = "sendrawransaction"
+        case sendTransaction = "sendrawtransaction"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
@@ -48,7 +48,7 @@ public class NeoClient {
         
         let requestDictionary: [String: Any?] = [
             "jsonrpc" : "2.0",
-            "id"      : 1,
+            "id"      : 4,
             "method"  : method.rawValue,
             "params"  : params ?? []
         ]
@@ -220,13 +220,15 @@ public class NeoClient {
     }
     
     
-    public func sendRawTransaction(with data: Data, completion: @escaping([String]?, Error?) -> Void) {
+    public func sendRawTransaction(with data: Data, completion: @escaping(Bool?, Error?) -> Void) {
         sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { json, error in
-            guard error == nil else {
-                completion(nil, nil)
-                return
+            guard error == nil,
+                let success = json?["result"] as? Bool else {
+                    completion(nil, error)
+                    return
             }
-            completion(nil, nil)
+            completion(success, error)
+            return
         }
     }
 }

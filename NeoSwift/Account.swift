@@ -12,11 +12,11 @@ import Foundation
 import Neowallet
 
 public class Account {
-    var wif: String
-    var publicKey: Data
-    var privateKey: Data
-    var address: String
-    var hashedSignature: Data
+    public var wif: String
+    public var publicKey: Data
+    public var privateKey: Data
+    public var address: String
+    public var hashedSignature: Data
     
     lazy var publicKeyString : String = {
         return publicKey.bytes.toHexString()
@@ -160,6 +160,7 @@ public class Account {
         print(rawTransaction.hexEncodedString())
         var error: NSError?
         let signatureData = GoNeowalletSign(rawTransaction, privateKey.toHexString(), &error)
+        print(signatureData!.hexEncodedString())
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         

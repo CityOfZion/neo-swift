@@ -151,32 +151,38 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
-    func testSendRawTransaction() {
-        //I am exposing the following private keys for testing purposes only
-        //Please only use them them to send transactions between each other on
-        //the test network, and for the love of god never use them for real funds
+    //I am exposing the following private keys for testing purposes only
+    //Please only use them them to send transactions between each other on
+    //the test network, and for the love of god never use them for real funds
+    
+    // TESTPRIVATEKEY1 -> DO NOT USE FOR REAL FUNDS EVER
+    //      d59208b9228bff23009a666262a800f20f9dad38b0d9291f445215a0d4542beb        HEX
+    //      L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL                    WIF
+    //      AMpupnF6QweQXLfCtF4dR45FDdKbTXkLsr                                  ADDRESS
+    //      0398b8d209365a197311d1b288424eaea556f6235f5730598dede5647f6a11d99a   PUBKEY
+    // TESTPRIVAATEKEY2 -> DO NOT USE FOR REAL FUNDS EVER
+    //      e444ec65fbb94aac0e7fc6bd7f0de64f22513d50c022d3d6e159c24e90b54d8d        HEX
+    //      L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf                    WIF
+    //      ATLoURz25z4PpsrzZmnowRT3dya44LGEpS                                  ADDRESS
+    //      03aa0047673b0bf10f936bb45a909bc70eeef396de934429c796ad496d94911820   PUBKEY
+    func testSendNeoTransaction() {
+        let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
+        let accountA = Account(wif: wifPersonA)
+        let accountB = Account(wif: wifPersonB)
         
-        // TESTPRIVATEKEY1 -> DO NOT USE FOR REAL FUNDS EVER
-            // d59208b9228bff23009a666262a800f20f9dad38b0d9291f445215a0d4542beb hex
-            // L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL WIF
-            // AMpupnF6QweQXLfCtF4dR45FDdKbTXkLsr Address
-            // 0398b8d209365a197311d1b288424eaea556f6235f5730598dede5647f6a11d99a pubkey
-        // TESTPRIVAATEKEY2 -> DO NOT USE FOR REAL FUNDS EVER
-            // e444ec65fbb94aac0e7fc6bd7f0de64f22513d50c022d3d6e159c24e90b54d8d hex
-            // L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf wif
-            // ATLoURz25z4PpsrzZmnowRT3dya44LGEpS Address
-            // 03aa0047673b0bf10f936bb45a909bc70eeef396de934429c796ad496d94911820 pub key
-        let wifSender = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
-        let addressRecipient = "ATLoURz25z4PpsrzZmnowRT3dya44LGEpS"
-        let senderAccount = Account(wif: wifSender)
-        
-        let exp = expectation(description: "Wait for block hash response")
+        let exp1 = expectation(description: "Wait for transaction one to go through")
+        let exp2 = expectation(description: "Wait for transaction two to go through")
 
-        senderAccount.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: addressRecipient) { success, error in
-            exp.fulfill()
-            return
+        accountA.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountB.address) { success, error in
+            assert(success ?? false)
+            exp1.fulfill()
+            accountB.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountA.address) {success, error in
+                assert(success ?? false)
+                exp2.fulfill()
+            }
         }
-        waitForExpectations(timeout: 20, handler: nil)
+        waitForExpectations(timeout: 50, handler: nil)
     }
     
 
