@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		75631AD31F4FB8D5008546CF /* SwiftBaseX.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75631AD21F4FB8D5008546CF /* SwiftBaseX.framework.dSYM */; };
 		75631AD51F5013BC008546CF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
-		75631AD71F502D24008546CF /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD61F502D24008546CF /* Keys.swift */; };
 		75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
 		75631ADD1F516D94008546CF /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
 		75CDAE161F47F96000B05C51 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE151F47F96000B05C51 /* Block.swift */; };
@@ -23,7 +22,6 @@
 		75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
 		75E8E4991F4DBD5300DBCD8E /* SwiftBaseX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */; };
 		75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
-		75E8E4A01F4EA71E00DBCD8E /* WIFTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49F1F4EA71E00DBCD8E /* WIFTest.swift */; };
 		75E8E4A21F4EAA6700DBCD8E /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */; };
 		75E8E4A41F4EAB2E00DBCD8E /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */; };
 		75E8E4A51F4EAB2E00DBCD8E /* SwiftBaseX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */; };
@@ -58,7 +56,6 @@
 /* Begin PBXFileReference section */
 		75631AD21F4FB8D5008546CF /* SwiftBaseX.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftBaseX.framework.dSYM; path = Carthage/Build/iOS/SwiftBaseX.framework.dSYM; sourceTree = "<group>"; };
 		75631AD41F5013BC008546CF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		75631AD61F502D24008546CF /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		75631ADA1F5162F6008546CF /* AssetIdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIdConstants.swift; sourceTree = "<group>"; };
 		75631ADC1F516D94008546CF /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
 		75CDAE091F47F90800B05C51 /* NeoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NeoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +72,6 @@
 		75DBF7271F5D7714006C87F3 /* Neowallet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Neowallet.framework; sourceTree = "<group>"; };
 		75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBaseX.framework; path = Carthage/Build/iOS/SwiftBaseX.framework; sourceTree = "<group>"; };
 		75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIF.swift; sourceTree = "<group>"; };
-		75E8E49F1F4EA71E00DBCD8E /* WIFTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIFTest.swift; sourceTree = "<group>"; };
 		75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +128,6 @@
 				75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */,
 				75CDAE141F47F92400B05C51 /* Models */,
 				75CDAE0D1F47F90800B05C51 /* Info.plist */,
-				75631AD61F502D24008546CF /* Keys.swift */,
 			);
 			path = NeoSwift;
 			sourceTree = "<group>";
@@ -155,7 +150,6 @@
 			children = (
 				75CDAE271F48680500B05C51 /* NeoSwiftTests.swift */,
 				75CDAE291F48680500B05C51 /* Info.plist */,
-				75E8E49F1F4EA71E00DBCD8E /* WIFTest.swift */,
 			);
 			path = NeoSwiftTests;
 			sourceTree = "<group>";
@@ -326,7 +320,6 @@
 				75CDAE1E1F4803E200B05C51 /* Transaction.swift in Sources */,
 				75631ADD1F516D94008546CF /* Balance.swift in Sources */,
 				75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */,
-				75631AD71F502D24008546CF /* Keys.swift in Sources */,
 				75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,7 +328,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E8E4A01F4EA71E00DBCD8E /* WIFTest.swift in Sources */,
 				75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,14 +6,12 @@
 //  Copyright © 2017 drei. All rights reserved.
 //
 
-// Learn more about WIF format here https://en.bitcoin.it/wiki/Wallet_import_format
-
 import Foundation
 import SwiftBaseX
 import CryptoSwift
     
 public extension String {
-    func programHashFromAddress() -> String {
+    func hashFromAddress() -> String {
         let decoded = try! self.decodeBase58()
         let bytes  = [UInt8](decoded)
         let shortened = bytes[0...20] //need exactly twenty one bytes
@@ -37,17 +35,5 @@ public extension String {
             data.append(&char, count: 1)
         }
         return data
-    }
-    
-    func toWifFromPrivateKey() -> String {
-        let decoded = self.lowercased().dataWithHexString()
-        var bytes = [UInt8](decoded)
-        bytes = [0x80] + bytes
-        let hashOne = bytes.sha256()
-        let hashTwo = hashOne.sha256()
-        let checksum = hashTwo[0...3]
-        bytes = bytes + checksum
-        let bytesData = Data(bytes: bytes)
-        return bytesData.base58EncodedString()
     }
 }

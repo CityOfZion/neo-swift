@@ -204,7 +204,6 @@ public class NeoClient {
     }
     
     public func getAssets(for address: String, params: [Any]?, completion: @escaping(Assets?, Error?) -> Void) {
-        //test address AJs38kijktEuM22sjfXqfjZ734RqR4H6JW
         let url = apiURL.getBalance.rawValue + address
         sendFullNodeRequest(url, params: params) { json, error in
             let decoder = JSONDecoder()
@@ -218,7 +217,6 @@ public class NeoClient {
 
         }
     }
-    
     
     public func sendRawTransaction(with data: Data, completion: @escaping(Bool?, Error?) -> Void) {
         sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { json, error in

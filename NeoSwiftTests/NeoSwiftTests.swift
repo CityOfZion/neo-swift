@@ -10,17 +10,6 @@ import XCTest
 import NeoSwift
 
 class NeoSwiftTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testGetBlockCount() {
         let exp = expectation(description: "Wait for block count response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
@@ -87,7 +76,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testConnectionCount() {
-        let exp = expectation(description: "Wait for block count response")
+        let exp = expectation(description: "Wait for connection count response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
         neo.getConnectionCount() { count, error in
@@ -100,7 +89,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testGetMemPool() {
-        let exp = expectation(description: "Wait for block hash response")
+        let exp = expectation(description: "Wait for mem pool response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
         neo.getUnconfirmedTransactions() { transactions, error in
@@ -113,7 +102,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testTransactionForHash() {
-        let exp = expectation(description: "Wait for block hash response")
+        let exp = expectation(description: "Wait for transaction response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
         let hash = "2288ba9bd93da4ac4c414048f019300c8adadc6df5e4bfeb6fc79da7f955e638"
@@ -142,7 +131,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testGetAssets() {
-        let exp = expectation(description: "Wait for block hash response")
+        let exp = expectation(description: "Wait for asset response")
     
         NeoClient.shared.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { json, error in
             exp.fulfill()
@@ -182,7 +171,7 @@ class NeoSwiftTests: XCTestCase {
                 exp2.fulfill()
             }
         }
-        waitForExpectations(timeout: 50, handler: nil)
+        waitForExpectations(timeout: 60, handler: nil)
     }
     
     func testSendGasTransaction() {
@@ -202,6 +191,6 @@ class NeoSwiftTests: XCTestCase {
                 exp2.fulfill()
             }
         }
-        waitForExpectations(timeout: 50, handler: nil)
+        waitForExpectations(timeout: 60, handler: nil)
     }
 }

@@ -35,8 +35,8 @@ public struct Block: Codable {
         case size = "size"
         case time = "time"
         case version = "version"
-        case script = "script" //To be implemented
-        case transactions = "tx" //To be implemented
+        case script = "script"
+        case transactions = "tx"
     }
     
     public init (confirmations: Int64, hash: String, index: Int64, merkleRoot: String, nextBlockHash: String, nextConsensus: String, nonce: String,
