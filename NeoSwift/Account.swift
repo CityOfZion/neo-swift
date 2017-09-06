@@ -48,9 +48,15 @@ public class Account {
     
     public init() {
         let bytesCount = 32
-        var randomBytes = [UInt8]()
-        SecRandomCopyBytes(kSecRandomDefault, bytesCount, &randomBytes)
-        let pkeyData = Data(bytes: randomBytes)
+        var pkeyData = Data(count: 32)
+        let result = pkeyData.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, pkeyData.count, $0)
+        }
+        
+        if result != errSecSuccess {
+            fatalError()
+        }
+        
         var error: NSError?
         let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(pkeyData.toHexString(), &error)
         self.wif = (wallet?.wif())!
