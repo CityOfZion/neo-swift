@@ -177,9 +177,9 @@ public class NeoClient {
         }
     }
     
-    //NEED TO GUARD ON THE VALUE OUTS
+    //NEED TO GUARD ON THE VALUE OUTS IF NO OUTPUTS
     public func getTransactionOutput(with hash: String, and index: Int64, completion: @escaping (ValueOut?, Error?) -> Void) {
-        sendRequest(.getTransaction, params: [hash, index]) { json, error in
+        sendRequest(.getTransactionOutput, params: [hash, index]) { json, error in
             let decoder = JSONDecoder()
             guard error == nil else {
                 completion(nil, error)

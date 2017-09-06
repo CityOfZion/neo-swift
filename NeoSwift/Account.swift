@@ -1,5 +1,3 @@
-
-
 //
 //  Account.swift
 //  NeoSwift
@@ -10,6 +8,8 @@
 
 import Foundation
 import Neowallet
+import Security
+
 
 public class Account {
     public var wif: String
@@ -44,7 +44,20 @@ public class Account {
         self.privateKey = privateKey.dataWithHexString()
         self.address = (wallet?.address())!
         self.hashedSignature = (wallet?.hashedSignature())!
-        
+    }
+    
+    public init() {
+        let bytesCount = 32
+        var randomBytes = [UInt8]()
+        SecRandomCopyBytes(kSecRandomDefault, bytesCount, &randomBytes)
+        let pkeyData = Data(bytes: randomBytes)
+        var error: NSError?
+        let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(pkeyData.toHexString(), &error)
+        self.wif = (wallet?.wif())!
+        self.publicKey = (wallet?.publicKey())!
+        self.privateKey = (wallet?.privateKey())!
+        self.address = (wallet?.address())!
+        self.hashedSignature = (wallet?.hashedSignature())!
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
