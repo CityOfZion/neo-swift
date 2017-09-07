@@ -10,9 +10,28 @@ import Foundation
 
 typealias JSONDictionary = [String : Any]
 
+public enum NeoClientError: Error {
+    case invalidSeed, invalidBodyRequest, invalidData, invalidRequest, noInternet
+    
+    var localizedDescription: String {
+        switch self {
+        case .invalidSeed:
+            return "Invalid seed"
+        case .invalidBodyRequest:
+            return "Invalid body Request"
+        case .invalidData:
+            return "Invalid response data"
+        case .invalidRequest:
+            return "Invalid server request"
+        case .noInternet:
+            return "No Internet connection"
+        }
+    }
+}
+
 public enum NeoClientResult<T> {
     case success(T)
-    case failure(Error?)
+    case failure(NeoClientError)
 }
 
 public class NeoClient {
@@ -20,23 +39,6 @@ public class NeoClient {
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v1/"
     public static let shared = NeoClient()
     private init() {}
-    
-    enum NeoClientError: Error {
-        case invalidSeed, invalidBodyRequest, invalidData, noInternet
-        
-        var localizedDescription: String {
-            switch self {
-            case .invalidSeed:
-                return "Invalid seed"
-            case .invalidBodyRequest:
-                return "Invalid body Request"
-            case .invalidData:
-                return "Invalid response data"
-            case .noInternet:
-                return "No Internet connection"
-            }
-        }
-    }
     
     enum RPCMethod: String {
         case getBestBlockHash = "getbestblockhash"
@@ -63,7 +65,7 @@ public class NeoClient {
     
     func sendRequest(_ method: RPCMethod, params: [Any]?, completion: @escaping (NeoClientResult<JSONDictionary>) -> ()) {
         guard let url = URL(string: seed) else {
-            completion(.failure(NeoClientError.invalidSeed))
+            completion(.failure(.invalidSeed))
             return
         }
         
@@ -79,19 +81,19 @@ public class NeoClient {
         ]
         
         guard let body = try? JSONSerialization.data(withJSONObject: requestDictionary, options: []) else {
-            completion(.failure(NeoClientError.invalidBodyRequest))
+            completion(.failure(.invalidBodyRequest))
             return
         }
         request.httpBody = body
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
-                completion(.failure(err))
+                completion(.failure(.invalidRequest))
                 return
             }
             
             guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! JSONDictionary else {
-                completion(.failure(NeoClientError.invalidData))
+                completion(.failure(.invalidData))
                 return
             }
             
@@ -107,12 +109,12 @@ public class NeoClient {
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
-                completion(.failure(err))
+                completion(.failure(.invalidRequest))
                 return
             }
             
             guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! JSONDictionary else {
-                completion(.failure(NeoClientError.invalidData))
+                completion(.failure(.invalidData))
                 return
             }
             
@@ -130,12 +132,11 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let hash = response["result"] as? String else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 let result = NeoClientResult.success(hash)
                 completion(result)
-                break
             }
         }
     }
@@ -150,13 +151,12 @@ public class NeoClient {
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Block.self, from: data) else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
-                break
             }
         }
     }
@@ -171,13 +171,12 @@ public class NeoClient {
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Block.self, from: data) else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
-                break
             }
         }
     }
@@ -190,13 +189,12 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let count = response["result"] as? Int64 else {
-                    completion(.failure(NeoClientError.invalidData))
+                    completion(.failure(.invalidData))
                     return
                 }
                 
                 let result = NeoClientResult.success(count)
                 completion(result)
-                break
             }
         }
     }
@@ -209,13 +207,12 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let hash = response["result"] as? String else {
-                    completion(.failure(NeoClientError.invalidData))
+                    completion(.failure(.invalidData))
                     return
                 }
                 
                 let result = NeoClientResult.success(hash)
                 completion(result)
-                break
             }
         }
     }
@@ -228,13 +225,12 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let count = response["result"] as? Int64 else {
-                    completion(.failure(NeoClientError.invalidData))
+                    completion(.failure(.invalidData))
                     return
                 }
                 
                 let result = NeoClientResult.success(count)
                 completion(result)
-                break
             }
         }
     }
@@ -249,13 +245,12 @@ public class NeoClient {
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Transaction.self, from: data) else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
-                break
             }
         }
     }
@@ -271,13 +266,12 @@ public class NeoClient {
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(ValueOut.self, from: data) else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
-                break
             }
         }
     }
@@ -290,14 +284,12 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let txs = response["result"] as? [String] else {
-                    completion(.failure(NeoClientError.invalidData))
+                    completion(.failure(.invalidData))
                     return
                 }
                 
                 let result = NeoClientResult.success(txs)
                 completion(result)
-                
-                break
             }
         }
     }
@@ -314,13 +306,12 @@ public class NeoClient {
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
                     let assets = try? decoder.decode(Assets.self, from: data) else {
-                        completion(.failure(NeoClientError.invalidData))
+                        completion(.failure(.invalidData))
                         return
                 }
                 
                 let result = NeoClientResult.success(assets)
                 completion(result)
-                break
             }
         }
     }
@@ -333,12 +324,11 @@ public class NeoClient {
                 break
             case .success(let response):
                 guard let success = response["result"] as? Bool else {
-                    completion(.failure(NeoClientError.invalidData))
+                    completion(.failure(.invalidData))
                     return
                 }
                 let result = NeoClientResult.success(success)
                 completion(result)
-                break
             }
         }
     }

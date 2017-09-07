@@ -194,7 +194,7 @@ public class Account {
                 break
             case .success(let assets):
                 let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
-                NeoClient.shared.sendRawTransaction(with: payload, completion: { (result) in
+                NeoClient.shared.sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)
@@ -203,8 +203,7 @@ public class Account {
                         completion(response, nil)
                         break
                     }
-                })
-                break
+                }
             }
         }
     }
