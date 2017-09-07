@@ -26,25 +26,24 @@ public class Account {
         return privateKey.bytes.toHexString()
     }()
     
-    public init(wif: String) {
+    public init?(wif: String) {
         var error: NSError?
-        let wallet = GoNeowalletGenerateFromWIF(wif, &error)
+        guard let wallet = GoNeowalletGenerateFromWIF(wif, &error) else { return nil }
         self.wif = wif
-        self.publicKey = (wallet?.publicKey())!
-        self.privateKey = (wallet?.privateKey())!
-        self.address = (wallet?.address())!
-        self.hashedSignature = (wallet?.hashedSignature())!
+        self.publicKey = wallet.publicKey()
+        self.privateKey = wallet.privateKey()
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
     }
     
-    public init(privateKey: String) {
+    public init?(privateKey: String) {
         var error: NSError?
-        let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(privateKey, &error)
-        self.wif = (wallet?.wif())!
-        self.publicKey = (wallet?.publicKey())!
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(privateKey, &error) else { return nil }
+        self.wif = wallet.wif()
+        self.publicKey = wallet.publicKey()
         self.privateKey = privateKey.dataWithHexString()
-        self.address = (wallet?.address())!
-        self.hashedSignature = (wallet?.hashedSignature())!
-        
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {

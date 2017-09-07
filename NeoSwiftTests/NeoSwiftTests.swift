@@ -157,8 +157,10 @@ class NeoSwiftTests: XCTestCase {
     func testSendNeoTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
-        let accountA = Account(wif: wifPersonA)
-        let accountB = Account(wif: wifPersonB)
+        guard let accountA = Account(wif: wifPersonA),
+            let accountB = Account(wif: wifPersonB) else {
+                assert(false)
+        }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
         let exp2 = expectation(description: "Wait for transaction two to go through")
@@ -177,8 +179,10 @@ class NeoSwiftTests: XCTestCase {
     func testSendGasTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
-        let accountA = Account(wif: wifPersonA)
-        let accountB = Account(wif: wifPersonB)
+        guard let accountA = Account(wif: wifPersonA),
+            let accountB = Account(wif: wifPersonB) else {
+                assert(false)
+        }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
         let exp2 = expectation(description: "Wait for transaction two to go through")
