@@ -47,8 +47,15 @@ public class Account {
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
-            completion(assets, error)
+        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+                break
+            case .success(let assets):
+                completion(assets, nil)
+                break
+            }
         }
     }
     
@@ -180,11 +187,24 @@ public class Account {
 
 
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
-            let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets!)
-            NeoClient.shared.sendRawTransaction(with: payload) { success, error in
-                completion(success, error)
-                return
+        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+                break
+            case .success(let assets):
+                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
+                NeoClient.shared.sendRawTransaction(with: payload, completion: { (result) in
+                    switch result {
+                    case .failure(let error):
+                        completion(nil, error)
+                        break
+                    case .success(let response):
+                        completion(response, nil)
+                        break
+                    }
+                })
+                break
             }
         }
     }
