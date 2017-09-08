@@ -129,7 +129,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let hash = response["result"] as? String else {
                         completion(.failure(.invalidData))
@@ -146,7 +145,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
@@ -166,7 +164,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
@@ -186,7 +183,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let count = response["result"] as? Int64 else {
                     completion(.failure(.invalidData))
@@ -204,7 +200,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let hash = response["result"] as? String else {
                     completion(.failure(.invalidData))
@@ -222,7 +217,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let count = response["result"] as? Int64 else {
                     completion(.failure(.invalidData))
@@ -240,7 +234,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
@@ -261,7 +254,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
@@ -281,7 +273,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let txs = response["result"] as? [String] else {
                     completion(.failure(.invalidData))
@@ -301,7 +292,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
@@ -321,7 +311,6 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-                break
             case .success(let response):
                 guard let success = response["result"] as? Bool else {
                     completion(.failure(.invalidData))
