@@ -1,0 +1,33 @@
+PODS:
+  - BaseX (0.0.7)
+  - CryptoSwift (0.7.1-alpha.1)
+  - SwiftLint (0.22.0)
+
+DEPENDENCIES:
+  - BaseX (from `https://github.com/Sajjon/SwiftBaseX.git`)
+  - CryptoSwift (from `https://github.com/krzyzanowskim/CryptoSwift.git`, branch `swift4`)
+  - SwiftLint (~> 0.16)
+
+EXTERNAL SOURCES:
+  BaseX:
+    :git: https://github.com/Sajjon/SwiftBaseX.git
+  CryptoSwift:
+    :branch: swift4
+    :git: https://github.com/krzyzanowskim/CryptoSwift.git
+
+CHECKOUT OPTIONS:
+  BaseX:
+    :commit: 81783fbad15e0b78c9403a92f8518d9ecadc27cb
+    :git: https://github.com/Sajjon/SwiftBaseX.git
+  CryptoSwift:
+    :commit: 26236083901dec1b5ad4b5ad296461cf22945a9e
+    :git: https://github.com/krzyzanowskim/CryptoSwift.git
+
+SPEC CHECKSUMS:
+  BaseX: 46a1a8952db758f75868bca4f3ee84ce552fd7c8
+  CryptoSwift: 3dc7406a81f056ba9d149a95d1b3d3f56f726ad8
+  SwiftLint: 1134786caedd2caab0560d2f36b76414a5a56808
+
+PODFILE CHECKSUM: b3b3cdae4ec5d27057ee4f8810eeef10dbec4587
+
+COCOAPODS: 1.3.1

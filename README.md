@@ -83,7 +83,18 @@ func demo() {
 - Send a message to **@andreit1** on the [NEO Slack](https://join.slack.com/t/neoblockchainteam/shared_invite/MjE3ODMxNDUzMDE1LTE1MDA4OTY3NDQtNTMwM2MyMTc2NA).
 - If there's a feature you'd like to see included feel free to drop me a line or submit a pull request
 
+## Getting started with development
+
+* Install [rbenv](https://github.com/rbenv/rbenv#homebrew-on-macos)`
+* Install [bundler](http://bundler.io/)
+* Run `bundle install`
+* Open `NeoSwift.xcworkspace` (**not** `.xcodeproj`)
+
 ## License
 
 - Open-source [MIT](https://github.com/CityOfZion/neo-swift/blob/master/LICENSE).
-- Main authors are [@saltyskip](https://github.com/saltyskip) and [@apisit](https://github.com/apisit).
+- Main authors are:
+  * [@saltyskip](https://github.com/saltyskip)
+  * [@apisit](https://github.com/apisit)
+  * [@Sajjon](https://github.com/Sajjon)
+
