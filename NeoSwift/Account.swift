@@ -10,7 +10,6 @@ import Foundation
 import Neowallet
 import Security
 
-
 public class Account {
     public var wif: String
     public var publicKey: Data
@@ -26,24 +25,24 @@ public class Account {
         return privateKey.bytes.toHexString()
     }()
     
-    public init(wif: String) {
+    public init?(wif: String) {
         var error: NSError?
-        let wallet = GoNeowalletGenerateFromWIF(wif, &error)
+        guard let wallet = GoNeowalletGenerateFromWIF(wif, &error) else { return nil }
         self.wif = wif
-        self.publicKey = (wallet?.publicKey())!
-        self.privateKey = (wallet?.privateKey())!
-        self.address = (wallet?.address())!
-        self.hashedSignature = (wallet?.hashedSignature())!
+        self.publicKey = wallet.publicKey()
+        self.privateKey = wallet.privateKey()
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
     }
     
-    public init(privateKey: String) {
+    public init?(privateKey: String) {
         var error: NSError?
-        let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(privateKey, &error)
-        self.wif = (wallet?.wif())!
-        self.publicKey = (wallet?.publicKey())!
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(privateKey, &error) else { return nil }
+        self.wif = wallet.wif()
+        self.publicKey = wallet.publicKey()
         self.privateKey = privateKey.dataWithHexString()
-        self.address = (wallet?.address())!
-        self.hashedSignature = (wallet?.hashedSignature())!
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
     }
     
     public init?() {
@@ -66,8 +65,13 @@ public class Account {
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
-            completion(assets, error)
+        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let assets):
+                completion(assets, nil)
+            }
         }
     }
     
@@ -199,11 +203,20 @@ public class Account {
 
 
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { assets, error in
-            let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets!)
-            NeoClient.shared.sendRawTransaction(with: payload) { success, error in
-                completion(success, error)
-                return
+        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let assets):
+                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
+                NeoClient.shared.sendRawTransaction(with: payload) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        completion(nil, error)
+                    case .success(let response):
+                        completion(response, nil)
+                    }
+                }
             }
         }
     }
