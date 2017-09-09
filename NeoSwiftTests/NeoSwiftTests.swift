@@ -14,11 +14,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for block count response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getBlockCount() { count, error in
-            assert(count != nil)
-            print(count!)
-            exp.fulfill()
-            return
+        neo.getBlockCount() { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let count):
+                print(count)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -27,11 +31,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for block hash response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getBestBlockHash() { hash, error in
-            assert(hash != nil)
-            print(hash!)
-            exp.fulfill()
-            return
+        neo.getBestBlockHash() { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let hash):
+                print(hash)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -40,11 +48,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for block hash response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getBlockBy(hash: "f7bcd551a40398ce51e65317fc4d2b48bde3743d563af16c2ca145d08b074461") { block, error in
-            assert(block != nil)
-            print(block!)
-            exp.fulfill()
-            return
+        neo.getBlockBy(hash: "f7bcd551a40398ce51e65317fc4d2b48bde3743d563af16c2ca145d08b074461") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let block):
+                print(block)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -53,11 +65,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for block hash response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getBlockBy(index: 42) { block, error in
-            assert(block != nil)
-            print(block!)
-            exp.fulfill()
-            return
+        neo.getBlockBy(index: 42) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let block):
+                print(block)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -66,11 +82,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for block hash response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
     
-        neo.getBlockHash(for: 42) { hash, error in
-            assert(hash != nil)
-            print(hash!)
-            exp.fulfill()
-            return
+        neo.getBlockHash(for: 42) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let hash):
+                print(hash)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -79,11 +99,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for connection count response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getConnectionCount() { count, error in
-            assert(count != nil)
-            print(count!)
-            exp.fulfill()
-            return
+        neo.getConnectionCount() { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let count):
+                print(count)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -92,11 +116,15 @@ class NeoSwiftTests: XCTestCase {
         let exp = expectation(description: "Wait for mem pool response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
-        neo.getUnconfirmedTransactions() { transactions, error in
-            assert(transactions != nil)
-            print(transactions!)
-            exp.fulfill()
-            return
+        neo.getUnconfirmedTransactions() { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let transactions):
+                print(transactions)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -106,11 +134,15 @@ class NeoSwiftTests: XCTestCase {
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
         
         let hash = "2288ba9bd93da4ac4c414048f019300c8adadc6df5e4bfeb6fc79da7f955e638"
-        neo.getTransaction(for: hash) { transaction, error in
-            assert(transaction != nil)
-            print(transaction!)
-            exp.fulfill()
-            return
+        neo.getTransaction(for: hash) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let transaction):
+                print(transaction)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -121,11 +153,15 @@ class NeoSwiftTests: XCTestCase {
         
         let hash = "2288ba9bd93da4ac4c414048f019300c8adadc6df5e4bfeb6fc79da7f955e638"
         let index: Int64 = 0
-        neo.getTransactionOutput(with: hash, and: index) { valueOut, error in
-            assert(valueOut != nil)
-            print(valueOut!)
-            exp.fulfill()
-            return
+        neo.getTransactionOutput(with: hash, and: index) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let value):
+                print(value)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -133,9 +169,15 @@ class NeoSwiftTests: XCTestCase {
     func testGetAssets() {
         let exp = expectation(description: "Wait for asset response")
     
-        NeoClient.shared.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { json, error in
-            exp.fulfill()
-            return
+        NeoClient.shared.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let value):
+                print(value)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -157,8 +199,10 @@ class NeoSwiftTests: XCTestCase {
     func testSendNeoTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
-        let accountA = Account(wif: wifPersonA)
-        let accountB = Account(wif: wifPersonB)
+        guard let accountA = Account(wif: wifPersonA),
+            let accountB = Account(wif: wifPersonB) else {
+                assert(false)
+        }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
         let exp2 = expectation(description: "Wait for transaction two to go through")
@@ -177,8 +221,10 @@ class NeoSwiftTests: XCTestCase {
     func testSendGasTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
-        let accountA = Account(wif: wifPersonA)
-        let accountB = Account(wif: wifPersonB)
+        guard let accountA = Account(wif: wifPersonA),
+            let accountB = Account(wif: wifPersonB) else {
+                assert(false)
+        }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
         let exp2 = expectation(description: "Wait for transaction two to go through")
