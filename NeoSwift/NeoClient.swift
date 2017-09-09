@@ -92,12 +92,14 @@ public class NeoClient {
                 return
             }
             
-            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! JSONDictionary else {
+            guard
+                let json = try? JSONSerialization.jsonObject(with: data!, options: []),
+                let jsonDictionary = json as? JSONDictionary else {
                 completion(.failure(.invalidData))
                 return
             }
             
-            let result = NeoClientResult.success(json)
+            let result = NeoClientResult.success(jsonDictionary)
             completion(result)
         }
         task.resume()
@@ -113,12 +115,14 @@ public class NeoClient {
                 return
             }
             
-            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! JSONDictionary else {
+            guard
+                let json = try? JSONSerialization.jsonObject(with: data!, options: []),
+                let jsonDictionary = json as? JSONDictionary else {
                 completion(.failure(.invalidData))
                 return
             }
             
-            let result = NeoClientResult.success(json)
+            let result = NeoClientResult.success(jsonDictionary)
             completion(result)
         }
         task.resume()
@@ -147,7 +151,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as? JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Block.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
@@ -166,7 +170,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as? JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Block.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
@@ -236,7 +240,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as? JSONDictionary), options: .prettyPrinted),
                     let block = try? decoder.decode(Transaction.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
@@ -256,8 +260,11 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let block = try? decoder.decode(ValueOut.self, from: data) else {
+                guard
+                    let responseResult = response["result"] as? JSONDictionary,
+                    let data = try? JSONSerialization.data(withJSONObject: responseResult, options: []),
+                    let block = try? decoder.decode(ValueOut.self, from: data)
+                    else {
                         completion(.failure(.invalidData))
                         return
                 }

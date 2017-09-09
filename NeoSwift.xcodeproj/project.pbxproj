@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		75631AD31F4FB8D5008546CF /* SwiftBaseX.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 75631AD21F4FB8D5008546CF /* SwiftBaseX.framework.dSYM */; };
+		1E8F78AAEEA56907AAD029F6 /* Pods_NeoSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6981DDFD1D889BC328AC6FC0 /* Pods_NeoSwiftTests.framework */; };
+		4857D3241F64259100A1AA7C /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4857D3231F64259100A1AA7C /* WIF.swift */; };
 		75631AD51F5013BC008546CF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
 		75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
 		75631ADD1F516D94008546CF /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
@@ -21,14 +22,8 @@
 		75CDAE2A1F48680500B05C51 /* NeoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
 		75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE301F48750E00B05C51 /* NeoClient.swift */; };
 		75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
-		75E8E4991F4DBD5300DBCD8E /* SwiftBaseX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */; };
-		75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
-		75E8E4A21F4EAA6700DBCD8E /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */; };
-		75E8E4A41F4EAB2E00DBCD8E /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */; };
-		75E8E4A51F4EAB2E00DBCD8E /* SwiftBaseX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */; };
 		75E8E4A61F4EAB5800DBCD8E /* NeoSwift.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
-		75E8E4A71F4EABC600DBCD8E /* CryptoSwift.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */; };
-		75E8E4A81F4EABC600DBCD8E /* SwiftBaseX.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */; };
+		CB68822CB8F0BD7F4BFD92A4 /* Pods_NeoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ECC3FB2BDCFCF9FEC436CCE /* Pods_NeoSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,14 +43,16 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				75631AD31F4FB8D5008546CF /* SwiftBaseX.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		75631AD21F4FB8D5008546CF /* SwiftBaseX.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftBaseX.framework.dSYM; path = Carthage/Build/iOS/SwiftBaseX.framework.dSYM; sourceTree = "<group>"; };
+		098E3B6F604F3D75B0694550 /* Pods-NeoSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NeoSwiftTests/Pods-NeoSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		4857D3231F64259100A1AA7C /* WIF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WIF.swift; sourceTree = "<group>"; };
+		4ECC3FB2BDCFCF9FEC436CCE /* Pods_NeoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6981DDFD1D889BC328AC6FC0 /* Pods_NeoSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeoSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75631AD41F5013BC008546CF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		75631ADA1F5162F6008546CF /* AssetIdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIdConstants.swift; sourceTree = "<group>"; };
 		75631ADC1F516D94008546CF /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
@@ -72,9 +69,9 @@
 		75CDAE291F48680500B05C51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75CDAE301F48750E00B05C51 /* NeoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NeoClient.swift; path = NeoSwift/NeoClient.swift; sourceTree = SOURCE_ROOT; };
 		75DBF7271F5D7714006C87F3 /* Neowallet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Neowallet.framework; sourceTree = "<group>"; };
-		75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBaseX.framework; path = Carthage/Build/iOS/SwiftBaseX.framework; sourceTree = "<group>"; };
-		75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIF.swift; sourceTree = "<group>"; };
-		75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
+		8F7C733B4895A08F76645FBE /* Pods-NeoSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NeoSwiftTests/Pods-NeoSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B435BCDD9D81922599D32648 /* Pods-NeoSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-NeoSwift/Pods-NeoSwift.release.xcconfig"; sourceTree = "<group>"; };
+		D8E5A7FAAE5322201EDF89FD /* Pods-NeoSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NeoSwift/Pods-NeoSwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E8E4A21F4EAA6700DBCD8E /* CryptoSwift.framework in Frameworks */,
 				75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */,
-				75E8E4991F4DBD5300DBCD8E /* SwiftBaseX.framework in Frameworks */,
+				CB68822CB8F0BD7F4BFD92A4 /* Pods_NeoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,22 +89,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				75CDAE2A1F48680500B05C51 /* NeoSwift.framework in Frameworks */,
-				75E8E4A41F4EAB2E00DBCD8E /* CryptoSwift.framework in Frameworks */,
-				75E8E4A51F4EAB2E00DBCD8E /* SwiftBaseX.framework in Frameworks */,
+				1E8F78AAEEA56907AAD029F6 /* Pods_NeoSwiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4857D3211F64259100A1AA7C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4857D3221F64259100A1AA7C /* String */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4857D3221F64259100A1AA7C /* String */ = {
+			isa = PBXGroup;
+			children = (
+				4857D3231F64259100A1AA7C /* WIF.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
 		75CDADFF1F47F90800B05C51 = {
 			isa = PBXGroup;
 			children = (
-				75631AD21F4FB8D5008546CF /* SwiftBaseX.framework.dSYM */,
 				75CDAE0B1F47F90800B05C51 /* NeoSwift */,
 				75CDAE261F48680500B05C51 /* NeoSwiftTests */,
 				75CDAE0A1F47F90800B05C51 /* Products */,
 				75E8E4971F4DBD5300DBCD8E /* Frameworks */,
+				DB4EE292F2DC2380F6104A69 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,10 +135,10 @@
 		75CDAE0B1F47F90800B05C51 /* NeoSwift */ = {
 			isa = PBXGroup;
 			children = (
+				4857D3211F64259100A1AA7C /* Extensions */,
 				75CDAE301F48750E00B05C51 /* NeoClient.swift */,
 				75631AD41F5013BC008546CF /* Account.swift */,
 				75631ADA1F5162F6008546CF /* AssetIdConstants.swift */,
-				75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */,
 				75CDAE141F47F92400B05C51 /* Models */,
 				75CDAE0D1F47F90800B05C51 /* Info.plist */,
 			);
@@ -161,10 +172,21 @@
 			isa = PBXGroup;
 			children = (
 				75DBF7271F5D7714006C87F3 /* Neowallet.framework */,
-				75E8E4A11F4EAA6600DBCD8E /* CryptoSwift.framework */,
-				75E8E4981F4DBD5300DBCD8E /* SwiftBaseX.framework */,
+				4ECC3FB2BDCFCF9FEC436CCE /* Pods_NeoSwift.framework */,
+				6981DDFD1D889BC328AC6FC0 /* Pods_NeoSwiftTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB4EE292F2DC2380F6104A69 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D8E5A7FAAE5322201EDF89FD /* Pods-NeoSwift.debug.xcconfig */,
+				B435BCDD9D81922599D32648 /* Pods-NeoSwift.release.xcconfig */,
+				8F7C733B4895A08F76645FBE /* Pods-NeoSwiftTests.debug.xcconfig */,
+				098E3B6F604F3D75B0694550 /* Pods-NeoSwiftTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,12 +206,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75CDAE111F47F90800B05C51 /* Build configuration list for PBXNativeTarget "NeoSwift" */;
 			buildPhases = (
+				A08B1EA549D80668C9DE432D /* [CP] Check Pods Manifest.lock */,
 				75CDAE041F47F90800B05C51 /* Sources */,
 				75CDAE051F47F90800B05C51 /* Frameworks */,
 				75CDAE061F47F90800B05C51 /* Headers */,
 				75CDAE071F47F90800B05C51 /* Resources */,
-				75E8E49A1F4DBDA300DBCD8E /* ShellScript */,
 				75631AD11F4FB8B6008546CF /* CopyFiles */,
+				74A499D140B39A7C221E68EA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -204,10 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75CDAE2D1F48680500B05C51 /* Build configuration list for PBXNativeTarget "NeoSwiftTests" */;
 			buildPhases = (
+				2CC71C5593F9DCF98F476C79 /* [CP] Check Pods Manifest.lock */,
 				75CDAE211F48680500B05C51 /* Sources */,
 				75CDAE221F48680500B05C51 /* Frameworks */,
 				75CDAE231F48680500B05C51 /* Resources */,
-				75E8E4A31F4EAAA400DBCD8E /* ShellScript */,
+				E078A86E8A175D2F569875F8 /* [CP] Embed Pods Frameworks */,
+				EA2B21A4957B3206CDB5897D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -268,8 +293,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75E8E4A71F4EABC600DBCD8E /* CryptoSwift.framework in Resources */,
-				75E8E4A81F4EABC600DBCD8E /* SwiftBaseX.framework in Resources */,
 				75E8E4A61F4EAB5800DBCD8E /* NeoSwift.framework in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,35 +300,91 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		75E8E49A1F4DBDA300DBCD8E /* ShellScript */ = {
+		2CC71C5593F9DCF98F476C79 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftBaseX.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NeoSwiftTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
-		75E8E4A31F4EAAA400DBCD8E /* ShellScript */ = {
+		74A499D140B39A7C221E68EA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftBaseX.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
 			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NeoSwift/Pods-NeoSwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A08B1EA549D80668C9DE432D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NeoSwift-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E078A86E8A175D2F569875F8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NeoSwiftTests/Pods-NeoSwiftTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BaseX/BaseX.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BaseX.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NeoSwiftTests/Pods-NeoSwiftTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA2B21A4957B3206CDB5897D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NeoSwiftTests/Pods-NeoSwiftTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -315,10 +394,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				75CDAE181F47FFDA00B05C51 /* Script.swift in Sources */,
-				75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */,
 				75CDAE161F47F96000B05C51 /* Block.swift in Sources */,
 				75CDAE1C1F48036C00B05C51 /* ValueOut.swift in Sources */,
 				75CDAE1A1F4801F500B05C51 /* ValueIn.swift in Sources */,
+				4857D3241F64259100A1AA7C /* WIF.swift in Sources */,
 				75631AD51F5013BC008546CF /* Account.swift in Sources */,
 				75CDAE1E1F4803E200B05C51 /* Transaction.swift in Sources */,
 				75631ADD1F516D94008546CF /* Balance.swift in Sources */,
@@ -462,6 +541,7 @@
 		};
 		75CDAE121F47F90800B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8E5A7FAAE5322201EDF89FD /* Pods-NeoSwift.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -490,6 +570,7 @@
 		};
 		75CDAE131F47F90800B05C51 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B435BCDD9D81922599D32648 /* Pods-NeoSwift.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -517,6 +598,7 @@
 		};
 		75CDAE2E1F48680500B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F7C733B4895A08F76645FBE /* Pods-NeoSwiftTests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 5C4B7MW8PU;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -534,6 +616,7 @@
 		};
 		75CDAE2F1F48680500B05C51 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 098E3B6F604F3D75B0694550 /* Pods-NeoSwiftTests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 5C4B7MW8PU;
 				FRAMEWORK_SEARCH_PATHS = (
