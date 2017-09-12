@@ -14,6 +14,7 @@ public class TransactionAttritbute: NSObject {
         case TooLongDescription
     }
     
+    //http://docs.neo.org/en-us/node/network-protocol.html
     enum Usage : UInt8 {
         case contractHash = 0x00
         case ECDH02 = 0x02
