@@ -239,4 +239,16 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 60, handler: nil)
     }
+    
+    func testGetClaimsTransaction() {
+        let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        guard let accountA = Account(wif: wifPersonA) else {
+            assert(false)
+        }
+        let exp = expectation(description: "Wait for fas claim to complete")
+        accountA.claimGas { _, _ in
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 60, handler: nil)
+    }
 }

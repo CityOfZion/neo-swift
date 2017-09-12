@@ -183,7 +183,7 @@ public class Account {
         
     }
 
-
+    //NEED TO UPDATE THESE TO FOLLOW SAME ERROR HANDLING STRUCTURE
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
         NeoClient.shared.getAssets(for: self.address, params: []) { result in
             switch result {
@@ -192,6 +192,64 @@ public class Account {
             case .success(let assets):
                 let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
                 NeoClient.shared.sendRawTransaction(with: payload) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        completion(nil, error)
+                    case .success(let response):
+                        completion(response, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    /*
+     * Please see the documentation here for a full description of the gas claiming
+     * system in the Neo Protocol, under the section entitled "Claiming Gas"
+     *
+     * https://github.com/CityOfZion/neon-wallet-db
+     */
+    
+    func generateClaimInputData(claims: Claims) -> Data {
+        var payload: [UInt8] = [0x02] // Claim Transaction Type
+        payload = payload + [0x00]    // Version
+        //let claimsCount = UInt8(claims.claims.count)
+        let claimsCount = UInt8(claims.claims.count)
+        payload = payload + [claimsCount]
+        
+        for claim in claims.claims {
+            payload = payload + claim.txId.dataWithHexString().bytes.reversed()
+            payload = payload + toByteArray(claim.index)
+        }
+        
+        payload = payload + [0x00] // Attributes
+        payload = payload + [0x00] // Inputs
+        payload = payload + [0x01] // Output Count
+        payload = payload + AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
+        payload = payload + toByteArray(claims.totalClaim)
+        payload = payload + hashedSignature.bytes
+        
+        return Data(bytes: payload)
+    }
+    
+    func generateClaimTransactionPayload(claims: Claims) -> Data {
+        var error: NSError?
+        let rawClaim = generateClaimInputData(claims: claims)
+        let signatureData = GoNeowalletSign(rawClaim, privateKey.toHexString(), &error)
+        let finalPayload = concatenatePayloadData(txData: rawClaim, signatureData: signatureData!)
+        return finalPayload
+    }
+    
+    public func claimGas(completion: @escaping(Bool?, Error?) -> Void) {
+        NeoClient.shared.getClaims(address: self.address) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let claims):
+                let claimData = self.generateClaimTransactionPayload(claims: claims)
+                print(claimData.fullHexEncodedString())
+                //return
+                NeoClient.shared.sendRawTransaction(with: claimData) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)

@@ -57,6 +57,7 @@ public class NeoClient {
     
     enum apiURL: String {
         case getBalance = "http://testnet-api.wallet.cityofzion.io/v1/address/balance/"
+        case getClaims = "http://testnet-api.wallet.cityofzion.io/v1/address/claims/"
     }
     
     public init(seed: String) {
@@ -75,7 +76,7 @@ public class NeoClient {
         
         let requestDictionary: [String: Any?] = [
             "jsonrpc" : "2.0",
-            "id"      : 4,
+            "id"      : 2,
             "method"  : method.rawValue,
             "params"  : params ?? []
         ]
@@ -162,15 +163,15 @@ public class NeoClient {
     public func getBlockBy(index: Int64, completion: @escaping (NeoClientResult<Block>) -> ()) {
         sendRequest(.getBlock, params: [index, 1]) { result in
             switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let block = try? decoder.decode(Block.self, from: data) else {
-                        completion(.failure(.invalidData))
-                        return
-                }
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let response):
+                    let decoder = JSONDecoder()
+                    guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                        let block = try? decoder.decode(Block.self, from: data) else {
+                            completion(.failure(.invalidData))
+                            return
+                    }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
@@ -306,8 +307,30 @@ public class NeoClient {
         }
     }
     
+    public func getClaims(address: String, completion: @escaping(NeoClientResult<Claims>) -> ()) {
+        let url = apiURL.getClaims.rawValue + address
+        sendFullNodeRequest(url, params: nil) { result in
+            
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
+                    let claims = try? decoder.decode(Claims.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(claims)
+                completion(result)
+            }
+        }
+    }
+    
     public func sendRawTransaction(with data: Data, completion: @escaping(NeoClientResult<Bool>) -> ()) {
-        sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { result in
+        sendRequest(.sendTransaction, params: [data.fullHexEncodedString()]) { result in
+            
             switch result {
             case .failure(let error):
                 completion(.failure(error))
