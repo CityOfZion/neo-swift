@@ -329,7 +329,7 @@ public class NeoClient {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let response):
-                guard let jsonResult: [String: Any] = response["result"] as? [String: Any] else {
+                guard let jsonResult: [String: Any] = response["result"] as? JSONDictionary else {
                     completion(.failure(.invalidData))
                     return
                 }
