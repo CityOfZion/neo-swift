@@ -50,6 +50,7 @@ public class NeoClient {
         case getTransactionOutput = "gettxout"
         case getUnconfirmedTransactions = "getrawmempool"
         case sendTransaction = "sendrawtransaction"
+        case validateAddress = "validateaddress"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
@@ -131,8 +132,8 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 guard let hash = response["result"] as? String else {
-                        completion(.failure(.invalidData))
-                        return
+                    completion(.failure(.invalidData))
+                    return
                 }
                 let result = NeoClientResult.success(hash)
                 completion(result)
@@ -317,6 +318,28 @@ public class NeoClient {
                     return
                 }
                 let result = NeoClientResult.success(success)
+                completion(result)
+            }
+        }
+    }
+    
+    public func validateAddress(_ address: String, completion: @escaping(NeoClientResult<Bool>) -> ()) {
+        sendRequest(.validateAddress, params: [address]) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                guard let jsonResult: [String: Any] = response["result"] as? JSONDictionary else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                
+                guard let isValid = jsonResult["isvalid"] as? Bool else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                
+                let result = NeoClientResult.success(isValid)
                 completion(result)
             }
         }
