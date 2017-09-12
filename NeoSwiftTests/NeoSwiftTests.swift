@@ -268,7 +268,7 @@ class NeoSwiftTests: XCTestCase {
     func testValidateAddress() {
         let exp = expectation(description: "Wait for validate address response")
         let neo = NeoClient(seed: "http://seed4.neo.org:10332")
-        neo.validateAddress(address: "AKcm7eABuW1Pjb5HsTwiq7iARSatim9tQ6") { result in
+        neo.validateAddress("AKcm7eABuW1Pjb5HsTwiq7iARSatim9tQ6") { result in
             switch result {
             case .failure:
                 assert(false)
