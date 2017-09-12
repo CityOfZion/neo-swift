@@ -218,6 +218,31 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 60, handler: nil)
     }
     
+    func testSendGasTransactionWithAttribute() {
+        let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
+        guard let accountA = Account(wif: wifPersonA),
+            let accountB = Account(wif: wifPersonB) else {
+                assert(false)
+        }
+        
+        let exp1 = expectation(description: "Wait for transaction one to go through")
+        let exp2 = expectation(description: "Wait for transaction two to go through")
+        
+        let attribute = TransactionAttritbute(description: "This is my message when sending gas")
+        let attribute2 = TransactionAttritbute(description: "another description attribute")
+        accountA.sendAssetTransaction(asset: .gasAssetId, amount: 1, toAddress: accountB.address, attributes: [attribute, attribute2]) { success, error in
+            assert(success ?? false)
+            exp1.fulfill()
+            accountB.sendAssetTransaction(asset: .gasAssetId, amount: 1, toAddress: accountA.address) {success, error in
+                assert(success ?? false)
+                exp2.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 60, handler: nil)
+    }
+    
+    
     func testSendGasTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf"
@@ -238,5 +263,21 @@ class NeoSwiftTests: XCTestCase {
             }
         }
         waitForExpectations(timeout: 60, handler: nil)
+    }
+    
+    func testValidateAddress() {
+        let exp = expectation(description: "Wait for validate address response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:10332")
+        neo.validateAddress(for: "AKcm7eABuW1Pjb5HsTwiq7iARSatim9tQ6") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let isValid):
+                print(isValid)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
     }
 }
