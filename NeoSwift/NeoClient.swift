@@ -323,8 +323,8 @@ public class NeoClient {
         }
     }
     
-    public func validateAddress(for address: String, completion: @escaping(NeoClientResult<Bool>) -> ()) {
-        sendRequest(.validateAddress, params: [address]) { result in
+    public func validateAddress(address data: String, completion: @escaping(NeoClientResult<Bool>) -> ()) {
+        sendRequest(.validateAddress, params: [data]) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
