@@ -280,4 +280,40 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testGetAccountState() {
+        let exp = expectation(description: "Wait for GetAccountState response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:20332")
+        let address = "AUkVH4k8gPowAEpvQVAmNEkriX96CrKzk9"
+        
+        neo.getAccountState(for: address) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let accountState):
+                print(accountState)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetAssetState() {
+        let exp = expectation(description: "Wait for GetAssetState response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:20332")
+        let asset = "0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b"
+        
+        neo.getAssetState(for: asset) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let assetState):
+                print(assetState)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
 }
