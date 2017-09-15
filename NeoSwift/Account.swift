@@ -150,12 +150,24 @@ public class Account {
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String) -> Data {
-        let inputDataBytes = Array<UInt8>(inputData)
+    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
+        let inputDataBytes = inputData.bytes
         let needsTwoOutputTransactions = runningAmount != toSendAmount
-        let payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 124 : inputDataBytes.count + 64
-        var payload: [UInt8] = [0x80, 0x00, 0x00]
-        payload = payload + inputDataBytes
+        
+        var numberOfAttributes: UInt8 = 0x00
+        var attributesPayload: [UInt8] = []
+        if attributes != nil {
+            for attribute in attributes! {
+                if attribute.data != nil {
+                    attributesPayload = attributesPayload + attribute.data!
+                    numberOfAttributes = numberOfAttributes + 1
+                }
+            }
+        }
+        
+        var payload: [UInt8] = [0x80, 0x00, numberOfAttributes]
+        payload = payload + attributesPayload + inputDataBytes
+        
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + Array<UInt8>(asset.rawValue.dataWithHexString()).reversed()
@@ -190,25 +202,25 @@ public class Account {
         return Data(bytes: payload)
     }
     
-    func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets) -> Data {
+    func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets, attributes: [TransactionAttritbute]? = nil) -> Data {
         var error: NSError?
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
         let rawTransaction = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
-                                                    toSendAmount: amount, toAddress: toAddress)
-        let signatureData = GoNeowalletSign(rawTransaction, privateKey.fullHexString, &error)
+                                                     toSendAmount: amount, toAddress: toAddress, attributes: attributes)
+        let signatureData = GoNeowalletSign(rawTransaction, privateKey.toHexString(), &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
     }
-
-
-    public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
+    
+    
+    public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
         NeoClient.shared.getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
             case .success(let assets):
-                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
+                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets, attributes: attributes)
                 NeoClient.shared.sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
@@ -220,4 +232,5 @@ public class Account {
             }
         }
     }
+    
 }

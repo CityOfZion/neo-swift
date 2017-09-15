@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E013E2E1F694B77006EE34F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
+		6E013E301F695337006EE34F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
+		6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
+		75631AD51F5013BC008546CF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
+		75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
+		75631ADD1F516D94008546CF /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
 		7575ADF61F602C590077007B /* NeoWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF51F602C590077007B /* NeoWalletTests.swift */; };
 		75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE271F48680500B05C51 /* NeoSwiftTests.swift */; };
 		F3229C8C1F69B41600A030CC /* SHA256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229C8A1F69B41600A030CC /* SHA256Tests.swift */; };
@@ -19,10 +25,7 @@
 		F331D1F11F6A729F00EED9F0 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE151F47F96000B05C51 /* Block.swift */; };
 		F331D1F21F6A729F00EED9F0 /* ValueOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1B1F48036C00B05C51 /* ValueOut.swift */; };
 		F331D1F31F6A729F00EED9F0 /* ValueIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE191F4801F500B05C51 /* ValueIn.swift */; };
-		F331D1F41F6A729F00EED9F0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
 		F331D1F51F6A729F00EED9F0 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1D1F4803E200B05C51 /* Transaction.swift */; };
-		F331D1F61F6A729F00EED9F0 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
-		F331D1F71F6A729F00EED9F0 /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
 		F331D1F81F6A729F00EED9F0 /* NeoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE301F48750E00B05C51 /* NeoClient.swift */; };
 		F331D1F91F6A729F00EED9F0 /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229C811F69A94900A030CC /* SHA256.swift */; };
 		F331D1FB1F6A729F00EED9F0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3229C851F69A95E00A030CC /* Security.framework */; };
@@ -32,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E013E2D1F694B77006EE34F /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		6E013E2F1F695337006EE34F /* AccountState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountState.swift; sourceTree = "<group>"; };
+		6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAttritbute.swift; sourceTree = "<group>"; };
 		75631AD41F5013BC008546CF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		75631ADA1F5162F6008546CF /* AssetIdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIdConstants.swift; sourceTree = "<group>"; };
 		75631ADC1F516D94008546CF /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
@@ -119,6 +125,9 @@
 				75CDAE1B1F48036C00B05C51 /* ValueOut.swift */,
 				75631ADC1F516D94008546CF /* Balance.swift */,
 				75CDAE1D1F4803E200B05C51 /* Transaction.swift */,
+				6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */,
+				6E013E2D1F694B77006EE34F /* Asset.swift */,
+				6E013E2F1F695337006EE34F /* AccountState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +273,19 @@
 				F3C154371F69183D00D96074 /* Base58Tests.swift in Sources */,
 				F3229C8C1F69B41600A030CC /* SHA256Tests.swift in Sources */,
 				7575ADF61F602C590077007B /* NeoWalletTests.swift in Sources */,
+				75CDAE181F47FFDA00B05C51 /* Script.swift in Sources */,
+				75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */,
+				6E013E301F695337006EE34F /* AccountState.swift in Sources */,
+				75CDAE161F47F96000B05C51 /* Block.swift in Sources */,
+				6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */,
+				75CDAE1C1F48036C00B05C51 /* ValueOut.swift in Sources */,
+				75CDAE1A1F4801F500B05C51 /* ValueIn.swift in Sources */,
+				6E013E2E1F694B77006EE34F /* Asset.swift in Sources */,
+				75631AD51F5013BC008546CF /* Account.swift in Sources */,
+				75CDAE1E1F4803E200B05C51 /* Transaction.swift in Sources */,
+				75631ADD1F516D94008546CF /* Balance.swift in Sources */,
+				75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */,
+				75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
