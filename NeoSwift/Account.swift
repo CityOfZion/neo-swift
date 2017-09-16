@@ -142,7 +142,7 @@ public class Account {
         inputData.append(count)
         for x in 0..<neededForTransaction.count {
             let data = neededForTransaction[x].txId.dataWithHexString()
-            let reversedBytes = Array<UInt8>(data).reversed()
+            let reversedBytes = data.bytes.reversed()
             inputData = inputData + reversedBytes + toByteArray(UInt16(neededForTransaction[x].index))
         }
         
@@ -150,7 +150,7 @@ public class Account {
     }
     
     func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
-        let inputDataBytes = Array<UInt8>(inputData)
+        let inputDataBytes = inputData.bytes
         let needsTwoOutputTransactions = runningAmount != toSendAmount
         
         var numberOfAttributes: UInt8 = 0x00
@@ -169,7 +169,7 @@ public class Account {
         
         if needsTwoOutputTransactions {
             //Transaction To Reciever
-            payload = payload + [0x02] + Array<UInt8>(asset.rawValue.dataWithHexString()).reversed()
+            payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
             let amountToSendInMemory = UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToSendInMemory)
             
@@ -177,13 +177,13 @@ public class Account {
             payload = payload + toAddress.hashFromAddress().dataWithHexString()
             
             //Transaction To Sender
-            payload = payload + Array<UInt8>(asset.rawValue.dataWithHexString()).reversed()
+            payload = payload + asset.rawValue.dataWithHexString().bytes.reversed()
             let amountToGetBackInMemory = UInt64(runningAmount * 100000000) - UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToGetBackInMemory)
-            payload = payload + Array<UInt8>(hashedSignature)
+            payload = payload + hashedSignature.bytes
             
         } else {
-            payload = payload + [0x01] + Array<UInt8>(asset.rawValue.dataWithHexString()).reversed()
+            payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
             let amountToSendInMemory = UInt64(toSendAmount * 100000000)
             payload = payload + toByteArray(amountToSendInMemory)
             payload = payload + toAddress.hashFromAddress().dataWithHexString()
@@ -192,10 +192,10 @@ public class Account {
     }
     
     func concatenatePayloadData(txData: Data, signatureData: Data) -> Data {
-        var payload = Array<UInt8>(txData) + [0x01]                // signature number
+        var payload = txData.bytes + [0x01]                // signature number
         payload = payload + [0x41]                                 // signature struct length
         payload = payload + [0x40]                                 // signature data length
-        payload = payload + Array<UInt8>(signatureData)            // signature
+        payload = payload + signatureData.bytes            // signature
         payload = payload + [0x23]                                 // contract data length
         payload = payload + [0x21] + self.publicKey + [0xac] // NeoSigned publicKey
         return Data(bytes: payload)

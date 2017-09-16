@@ -11,7 +11,7 @@ import CommonCrypto
 
 extension Data {
     public var sha256: Data {
-        let bytes = Array<UInt8>(self)
+        let bytes = [UInt8](self)
         
         let mutablePointer = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(CC_SHA256_DIGEST_LENGTH))
         

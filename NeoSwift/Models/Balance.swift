@@ -9,9 +9,9 @@
 import Foundation
 
 public struct Unspent: Codable {
-    var index: Int
-    var txId: String
-    var value: Double
+    public var index: Int
+    public var txId: String
+    public var value: Double
     
     enum CodingKeys: String, CodingKey {
         case index = "index"

@@ -8,7 +8,7 @@
 
 import Foundation
 
-let base56Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
 extension Array where Element == UInt8 {
     public var base58String: String? {
@@ -59,7 +59,7 @@ extension Array where Element == UInt8 {
         }
         
         for b in base58 {
-            str = "\(str)\(base56Alphabet[String.Index(encodedOffset: Int(b))])"
+            str = "\(str)\(base58Alphabet[String.Index(encodedOffset: Int(b))])"
         }
         
         return str
@@ -68,7 +68,7 @@ extension Array where Element == UInt8 {
 
 extension String {
     public var base58String: String? {
-        return Array<UInt8>(utf8).base58String
+        return [UInt8](utf8).base58String
     }
     
     public var fromBase58: String? {
@@ -94,7 +94,7 @@ extension String {
         var base58: [UInt8] = Array(repeating: 0, count: size)
         for c in string.characters where c != " " {
             // search for base58 character
-            guard let base58Index = base56Alphabet.index(of: c) else { return nil }
+            guard let base58Index = base58Alphabet.index(of: c) else { return nil }
             
             var carry = base58Index.encodedOffset
             var i = 0

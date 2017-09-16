@@ -10,8 +10,8 @@ import Foundation
 
 public struct AssetName: Codable {
     
-    var languageCode: String
-    var name: String
+    public var languageCode: String
+    public var name: String
     
     enum CodingKeys : String, CodingKey {
         case languageCode = "lang"
@@ -33,17 +33,17 @@ public struct AssetName: Codable {
 
 public struct AssetState: Codable {
 
-    var version: Int
-    var id: String
-    var type: String
-    var names: [AssetName]
-    var amount: String
-    var available: String
-    var precision: Int
-    var admin: String
-    var issuer: String
-    var expiration: Int
-    var frozen: Bool
+    public var version: Int
+    public var id: String
+    public var type: String
+    public var names: [AssetName]
+    public var amount: String
+    public var available: String
+    public var precision: Int
+    public var admin: String
+    public var issuer: String
+    public var expiration: Int
+    public var frozen: Bool
     
     enum CodingKeys : String, CodingKey {
         case version = "version"
@@ -91,8 +91,8 @@ public struct AssetState: Codable {
 }
 
 public struct Asset: Codable {
-     var id: String
-     var value: String
+     public var id: String
+     public var value: String
     
     enum CodingKeys : String, CodingKey {
         case id = "asset"

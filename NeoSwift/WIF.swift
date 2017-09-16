@@ -11,12 +11,12 @@ import Foundation
 public extension String {
     func hashFromAddress() -> String {
         let decoded = self.fromBase58! // FIXME: remove forced unwrap
-        let bytes = Array<UInt8>(decoded.utf8)
+        let bytes = [UInt8](decoded.utf8)
         let shortened = bytes[0...20] //need exactly twenty one bytes
         let substringData = Data(bytes: shortened)
         let hashOne = substringData.sha256
         let hashTwo = hashOne.sha256
-        let bytesTwo = [UInt8](hashTwo)
+        let bytesTwo = hashTwo.bytes
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
         return finalKeyData.fullHexString
     }

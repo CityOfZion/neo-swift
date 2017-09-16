@@ -9,19 +9,19 @@
 import Foundation
 
 public struct Block: Codable {
-    var confirmations: Int64
-    var hash: String
-    var index: Int64
-    var merkleRoot: String
-    var nextBlockHash: String
-    var nextConsensus: String
-    var nonce: String
-    var previousBlockHash: String
-    var size: Int64
-    var time: Int64
-    var version: Int64
-    var script: Script
-    var transactions: [Transaction] 
+    public var confirmations: Int64
+    public var hash: String
+    public var index: Int64
+    public var merkleRoot: String
+    public var nextBlockHash: String
+    public var nextConsensus: String
+    public var nonce: String
+    public var previousBlockHash: String
+    public var size: Int64
+    public var time: Int64
+    public var version: Int64
+    public var script: Script
+    public var transactions: [Transaction] 
     
     enum CodingKeys : String, CodingKey {
         case confirmations = "confirmations"

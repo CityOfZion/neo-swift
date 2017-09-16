@@ -13,7 +13,7 @@ typealias JSONDictionary = [String : Any]
 public enum NeoClientError: Error {
     case invalidSeed, invalidBodyRequest, invalidData, invalidRequest, noInternet
     
-    var localizedDescription: String {
+    public var localizedDescription: String {
         switch self {
         case .invalidSeed:
             return "Invalid seed"
