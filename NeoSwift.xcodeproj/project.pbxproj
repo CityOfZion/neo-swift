@@ -29,6 +29,8 @@
 		F318CBF21F6C4DFE00B7E648 /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F318CBEB1F6C4DB700B7E648 /* Data+Util.swift */; };
 		F318CBF31F6C4DFE00B7E648 /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F318CBEC1F6C4DB700B7E648 /* SHA256.swift */; };
 		F318CC851F6DABF700B7E648 /* NeoCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F318CC841F6DABF700B7E648 /* NeoCryptoTests.swift */; };
+		F318CC871F6DBF0600B7E648 /* TransactionHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F318CC861F6DBF0600B7E648 /* TransactionHistoryEntry.swift */; };
+		F3A3424B1F6DBFC80055EA22 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3424A1F6DBFC80055EA22 /* TransactionHistory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		F318CBEB1F6C4DB700B7E648 /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		F318CBEC1F6C4DB700B7E648 /* SHA256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
 		F318CC841F6DABF700B7E648 /* NeoCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoCryptoTests.swift; sourceTree = "<group>"; };
+		F318CC861F6DBF0600B7E648 /* TransactionHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryEntry.swift; sourceTree = "<group>"; };
+		F3A3424A1F6DBFC80055EA22 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */,
 				6E013E2D1F694B77006EE34F /* Asset.swift */,
 				6E013E2F1F695337006EE34F /* AccountState.swift */,
+				F3A3424A1F6DBFC80055EA22 /* TransactionHistory.swift */,
+				F318CC861F6DBF0600B7E648 /* TransactionHistoryEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,7 +284,9 @@
 				F318CBF11F6C4DFE00B7E648 /* Base58.swift in Sources */,
 				F318CBF21F6C4DFE00B7E648 /* Data+Util.swift in Sources */,
 				F318CBF31F6C4DFE00B7E648 /* SHA256.swift in Sources */,
+				F318CC871F6DBF0600B7E648 /* TransactionHistoryEntry.swift in Sources */,
 				75CDAE181F47FFDA00B05C51 /* Script.swift in Sources */,
+				F3A3424B1F6DBFC80055EA22 /* TransactionHistory.swift in Sources */,
 				75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */,
 				6E013E301F695337006EE34F /* AccountState.swift in Sources */,
 				75CDAE161F47F96000B05C51 /* Block.swift in Sources */,
