@@ -182,6 +182,22 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
+    func testGetTransactionHistory() {
+        let exp = expectation(description: "Wait for transaction history response")
+        
+        NeoClient.shared.getTransactionHistory(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let value):
+                print(value)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
     //I am exposing the following private keys for testing purposes only
     //Please only use them them to send transactions between each other on
     //the test network, and for the love of god never use them for real funds

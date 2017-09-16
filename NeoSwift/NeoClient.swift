@@ -13,7 +13,7 @@ typealias JSONDictionary = [String : Any]
 public enum NeoClientError: Error {
     case invalidSeed, invalidBodyRequest, invalidData, invalidRequest, noInternet
     
-    var localizedDescription: String {
+    public var localizedDescription: String {
         switch self {
         case .invalidSeed:
             return "Invalid seed"
@@ -36,7 +36,7 @@ public enum NeoClientResult<T> {
 
 public class NeoClient {
     public var seed = "http://seed4.neo.org:20332"
-    public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v1/"
+    public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
     public static let shared = NeoClient()
     private init() {}
     
@@ -59,7 +59,8 @@ public class NeoClient {
     }
     
     enum apiURL: String {
-        case getBalance = "http://testnet-api.wallet.cityofzion.io/v1/address/balance/"
+        case getBalance = "http://testnet-api.wallet.cityofzion.io/v2/address/balance/"
+        case getTransactionHistory = "http://testnet-api.neonwallet.com/v2/address/history/"
     }
     
     public init(seed: String) {
@@ -288,6 +289,26 @@ public class NeoClient {
         }
     }
     
+    public func getTransactionHistory(for address: String, completion: @escaping (NeoClientResult<TransactionHistory>) -> ()) {
+        let url = apiURL.getTransactionHistory.rawValue + address
+        sendFullNodeRequest(url, params: nil) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
+                    let history = try? decoder.decode(TransactionHistory.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(history)
+                completion(result)
+            }
+        }
+    }
+    
     public func getAssets(for address: String, params: [Any]?, completion: @escaping(NeoClientResult<Assets>) -> ()) {
         let url = apiURL.getBalance.rawValue + address
         sendFullNodeRequest(url, params: params) { result in
@@ -310,7 +331,7 @@ public class NeoClient {
     }
     
     public func sendRawTransaction(with data: Data, completion: @escaping(NeoClientResult<Bool>) -> ()) {
-        sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { result in
+        sendRequest(.sendTransaction, params: [data.hexString]) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))

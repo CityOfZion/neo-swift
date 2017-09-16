@@ -9,9 +9,9 @@
 import Foundation
 
 public struct Unspent: Codable {
-    var index: Int
-    var txId: String
-    var value: Double
+    public var index: Int
+    public var txId: String
+    public var value: Double
     
     enum CodingKeys: String, CodingKey {
         case index = "index"
@@ -35,8 +35,8 @@ public struct Unspent: Codable {
 }
 
 public struct Gas: Codable {
-    var balance: Double
-    var unspent: [Unspent]
+    public var balance: Double
+    public var unspent: [Unspent]
     
     enum CodingKeys: String, CodingKey {
         case balance = "balance"
@@ -57,8 +57,8 @@ public struct Gas: Codable {
 }
 
 public struct Neo: Codable {
-    var balance: Double
-    var unspent: [Unspent]
+    public var balance: Double
+    public var unspent: [Unspent]
     
     enum CodingKeys: String, CodingKey {
         case balance = "balance"
@@ -79,10 +79,10 @@ public struct Neo: Codable {
 }
 
 public struct Assets: Codable {
-    var gas: Gas
-    var neo: Neo
-    var address: String
-    var net: String
+    public var gas: Gas
+    public var neo: Neo
+    public var address: String
+    public var net: String
     
     enum CodingKeys: String, CodingKey {
         case gas = "GAS"

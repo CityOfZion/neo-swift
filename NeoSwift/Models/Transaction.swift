@@ -9,16 +9,16 @@
 import Foundation
 
 public struct Transaction: Codable {
-    var transactionID: String
-    var size: Int64
-    var type: String
-    var version: Int64
+    public var transactionID: String
+    public var size: Int64
+    public var type: String
+    public var version: Int64
    // var attributes: [] //Need to handle this, not really sure what kind of objects it can give bakc
-    var valueIns: [ValueIn]
-    var valueOuts: [ValueOut]
-    var systemFee: String
-    var networkFee: String
-    var scripts: [Script]
+    public var valueIns: [ValueIn]
+    public var valueOuts: [ValueOut]
+    public var systemFee: String
+    public var networkFee: String
+    public var scripts: [Script]
    // var nonce: Int64
     
     //TODO: FIGURE OUT THE ATTRIBUTES

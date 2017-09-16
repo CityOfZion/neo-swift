@@ -8,7 +8,6 @@
 
 import Foundation
 import Neowallet
-import Security
 
 public class Account {
     public var wif: String
@@ -18,11 +17,11 @@ public class Account {
     public var hashedSignature: Data
     
     lazy var publicKeyString : String = {
-        return publicKey.bytes.toHexString()
+        return publicKey.fullHexString
     }()
     
     lazy var privateKeyString : String = {
-        return privateKey.bytes.toHexString()
+        return privateKey.fullHexString
     }()
     
     public init?(wif: String) {
@@ -56,7 +55,7 @@ public class Account {
         }
         
         var error: NSError?
-        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(pkeyData.toHexString(), &error) else { return nil }
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = pkeyData
@@ -193,12 +192,12 @@ public class Account {
     }
     
     func concatenatePayloadData(txData: Data, signatureData: Data) -> Data {
-        var payload = txData.bytes + [0x01]                        // signature number
+        var payload = txData.bytes + [0x01]                // signature number
         payload = payload + [0x41]                                 // signature struct length
         payload = payload + [0x40]                                 // signature data length
-        payload = payload + signatureData.bytes                    // signature
+        payload = payload + signatureData.bytes            // signature
         payload = payload + [0x23]                                 // contract data length
-        payload = payload + [0x21] + self.publicKey.bytes + [0xac] // NeoSigned publicKey
+        payload = payload + [0x21] + self.publicKey + [0xac] // NeoSigned publicKey
         return Data(bytes: payload)
     }
     
@@ -207,7 +206,7 @@ public class Account {
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
         let rawTransaction = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
                                                      toSendAmount: amount, toAddress: toAddress, attributes: attributes)
-        let signatureData = GoNeowalletSign(rawTransaction, privateKey.toHexString(), &error)
+        let signatureData = GoNeowalletSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
