@@ -9,10 +9,10 @@
 import Foundation
 
 public struct ValueOut: Codable {
-    var n: Int
-    var asset: String
-    var value: String
-    var address: String
+    public var n: Int
+    public var asset: String
+    public var value: String
+    public var address: String
     
     enum CodingKeys: String, CodingKey {
         case n = "n" // need clarification on this value better naming over all would be good

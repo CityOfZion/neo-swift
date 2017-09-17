@@ -9,8 +9,8 @@
 import Foundation
 
 public struct ValueIn: Codable {
-    var transactionID: String
-    var valueOut: Int
+    public var transactionID: String
+    public var valueOut: Int
     
     enum CodingKeys: String, CodingKey {
         case transactionID = "txid"

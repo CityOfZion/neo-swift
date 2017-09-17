@@ -9,11 +9,11 @@
 import UIKit
 
 public struct AccountState: Codable {
-    var version: Int
-    var scriptHash: String
-    var frozen: Bool
+    public var version: Int
+    public var scriptHash: String
+    public var frozen: Bool
     //var votes: it's there in JSON response but I don't know what type is it.
-    var balances: [Asset]
+    public var balances: [Asset]
     
     enum CodingKeys : String, CodingKey {
         case version = "version"

@@ -9,8 +9,8 @@
 import Foundation
 
 public struct Script: Codable {
-    var invocation: String
-    var verification: String
+    public var invocation: String
+    public var verification: String
     
     enum CodingKeys: String, CodingKey {
         case invocation = "invocation"
