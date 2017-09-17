@@ -316,4 +316,22 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testGetTransactionHistory() {
+        let exp = expectation(description: "Wait for TransactionHistory Response")
+        let neo = NeoClient(seed: "http://seed4.neo.org:20332")
+        let address = "AMpupnF6QweQXLfCtF4dR45FDdKbTXkLsr"
+        
+        neo.getTransactionHistory(for: address) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let history):
+                print(history)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
 }
