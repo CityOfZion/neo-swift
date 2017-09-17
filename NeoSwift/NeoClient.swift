@@ -36,7 +36,7 @@ public enum NeoClientResult<T> {
 
 public class NeoClient {
     public var seed = "http://seed4.neo.org:20332"
-    public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v1/"
+    public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
     public static let shared = NeoClient()
     private init() {}
     
@@ -59,7 +59,7 @@ public class NeoClient {
     }
     
     enum apiURL: String {
-        case getBalance = "http://testnet-api.wallet.cityofzion.io/v1/address/balance/"
+        case getBalance = "http://testnet-api.wallet.cityofzion.io/v2/address/balance/"
         case getTransactionHistory = "http://testnet-api.neonwallet.com/v2/address/history/"
     }
     
@@ -331,7 +331,7 @@ public class NeoClient {
     }
     
     public func sendRawTransaction(with data: Data, completion: @escaping(NeoClientResult<Bool>) -> ()) {
-        sendRequest(.sendTransaction, params: [data.hexEncodedString()]) { result in
+        sendRequest(.sendTransaction, params: [data.fullHexString]) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))

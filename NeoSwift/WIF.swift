@@ -7,20 +7,18 @@
 //
 
 import Foundation
-import SwiftBaseX
-import CryptoSwift
     
 public extension String {
     func hashFromAddress() -> String {
-        let decoded = try! self.decodeBase58()
+        let decoded = self.fromBase58!
         let bytes  = [UInt8](decoded)
         let shortened = bytes[0...20] //need exactly twenty one bytes
         let substringData = Data(bytes: shortened)
-        let hashOne = substringData.sha256()
-        let hashTwo = hashOne.sha256()
+        let hashOne = substringData.sha256
+        let hashTwo = hashOne.sha256
         let bytesTwo = [UInt8](hashTwo)
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
-        return finalKeyData.fullHexEncodedString()
+        return finalKeyData.fullHexString
     }
     
     func dataWithHexString() -> Data {
