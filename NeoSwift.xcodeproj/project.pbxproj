@@ -6,10 +6,25 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 6E7E08861F6E9AE2000B86A9 /* Build configuration list for PBXAggregateTarget "NeoSwiftAggregate" */;
+			buildPhases = (
+				6E7E08891F6E9B26000B86A9 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = NeoSwiftAggregate;
+			productName = NeoSwiftAggregate;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		6E013E2E1F694B77006EE34F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
 		6E013E301F695337006EE34F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
 		6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
+		6E7E088C1F6E9C02000B86A9 /* strip-frameworks.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */; };
 		753518DE1F6E365500453245 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753518DD1F6E365500453245 /* TransactionHistory.swift */; };
 		75631AD51F5013BC008546CF /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
 		75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
@@ -58,6 +73,7 @@
 		6E013E2D1F694B77006EE34F /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		6E013E2F1F695337006EE34F /* AccountState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountState.swift; sourceTree = "<group>"; };
 		6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAttritbute.swift; sourceTree = "<group>"; };
+		6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "strip-frameworks.sh"; sourceTree = "<group>"; };
 		753518DD1F6E365500453245 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		75631AD41F5013BC008546CF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		75631ADA1F5162F6008546CF /* AssetIdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIdConstants.swift; sourceTree = "<group>"; };
@@ -102,6 +118,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E7E088A1F6E9BEC000B86A9 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
 		75CDADFF1F47F90800B05C51 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +148,7 @@
 		75CDAE0B1F47F90800B05C51 /* NeoSwift */ = {
 			isa = PBXGroup;
 			children = (
+				6E7E088A1F6E9BEC000B86A9 /* scripts */,
 				75CDAE301F48750E00B05C51 /* NeoClient.swift */,
 				75631AD41F5013BC008546CF /* Account.swift */,
 				75631ADA1F5162F6008546CF /* AssetIdConstants.swift */,
@@ -241,6 +266,10 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = drei;
 				TargetAttributes = {
+					6E7E08851F6E9AE2000B86A9 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 					75CDAE081F47F90800B05C51 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
@@ -264,6 +293,7 @@
 			targets = (
 				75CDAE081F47F90800B05C51 /* NeoSwift */,
 				75CDAE241F48680500B05C51 /* NeoSwiftTests */,
+				6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */,
 			);
 		};
 /* End PBXProject section */
@@ -273,6 +303,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7E088C1F6E9C02000B86A9 /* strip-frameworks.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +316,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6E7E08891F6E9B26000B86A9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n\n# Step 6. Convenience step to open the project's directory in Finder\nopen \"${PROJECT_DIR}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		75CDAE041F47F90800B05C51 /* Sources */ = {
@@ -332,6 +379,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		6E7E08871F6E9AE2000B86A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6E7E08881F6E9AE2000B86A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		75CDAE0F1F47F90800B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -455,6 +520,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NeoSwift",
@@ -483,6 +549,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/NeoSwift",
@@ -533,6 +600,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6E7E08861F6E9AE2000B86A9 /* Build configuration list for PBXAggregateTarget "NeoSwiftAggregate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E7E08871F6E9AE2000B86A9 /* Debug */,
+				6E7E08881F6E9AE2000B86A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		75CDAE031F47F90800B05C51 /* Build configuration list for PBXProject "NeoSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

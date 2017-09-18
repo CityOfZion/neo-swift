@@ -77,6 +77,18 @@ func demo() {
 }
 ```
 
+### Dynamic framework
+If you are linking NeoSwift as a Dynamic framework. Create a new “Run Script Phase” in your app’s target’s “Build Phases” and paste the following snippet in the script text field:
+
+
+```
+bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/NeoSwift.framework/strip-frameworks.sh"
+```
+
+This step is required to work around an App Store submission bug when archiving universal binaries.
+
+
+
 ## Help
 
 - Open a new [issue](https://github.com/CityOfZion/neo-swift/issues/new) for any problems.
