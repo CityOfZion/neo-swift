@@ -2,6 +2,6 @@
 
 * Apisit Toompakadee @apisit
 
-* Juame Navas @jaumevn
+* Juame Viñas @jaumevn
 
 * Luís Silva @lm2s
