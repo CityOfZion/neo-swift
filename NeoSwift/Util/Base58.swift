@@ -8,14 +8,12 @@
 
 import Foundation
 
-let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-
-extension Array where Element == UInt8 {
-    public var base58String: String? {
-        guard !self.isEmpty else { return nil }
-        
-        var bytes = self
-        
+struct Base58 {
+    static let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+    
+    // Encode
+    static func base58FromBytes(_ bytes: [UInt8]) -> String {
+        var bytes = bytes
         var zerosCount = 0
         var length = 0
         
@@ -39,8 +37,9 @@ extension Array where Element == UInt8 {
                 carry /= 58
                 i += 1
             }
-            
+
             assert(carry == 0)
+            
             length = i
         }
         
@@ -64,23 +63,13 @@ extension Array where Element == UInt8 {
         
         return str
     }
-}
-
-extension String {
-    public var base58String: String? {
-        return [UInt8](utf8).base58String
-    }
     
-    public var fromBase58: Data? {
-        guard let array = self.arrayFromBase58 else { return nil }
-        return Data(array)
-    }
-    
-    public var arrayFromBase58: [UInt8]? {
+    // Decode
+    static func bytesFromBase58(_ base58: String) -> [UInt8] {
         // remove leading and trailing whitespaces
-        var string = self.trimmingCharacters(in: CharacterSet.whitespaces)
+        var string = base58.trimmingCharacters(in: CharacterSet.whitespaces)
         
-        guard !string.isEmpty else { return nil }
+        guard !string.isEmpty else { return [] }
         
         var zerosCount = 0
         var length = 0
@@ -93,7 +82,7 @@ extension String {
         var base58: [UInt8] = Array(repeating: 0, count: size)
         for c in string.characters where c != " " {
             // search for base58 character
-            guard let base58Index = base58Alphabet.index(of: c) else { return nil }
+            guard let base58Index = base58Alphabet.index(of: c) else { return [] }
             
             var carry = base58Index.encodedOffset
             var i = 0
@@ -117,17 +106,65 @@ extension String {
         }
         base58.removeFirst(zerosToRemove)
         
-        var result: [UInt8] = Array(repeating: 0, count: zerosCount + base58.count)
-        while 0 < zerosCount {
-            result[zerosCount] = 0
-            zerosCount -= 1
-        }
-        
-        var i = 0
+        var result: [UInt8] = Array(repeating: 0, count: zerosCount)
         for b in base58 {
-            result[i] = b
-            i += 1
+            result.append(b)
         }
         return result
     }
+}
+
+
+
+extension Array where Element == UInt8 {
+    public var base58EncodedString: String {
+        guard !self.isEmpty else { return "" }
+        return Base58.base58FromBytes(self)
+    }
+    
+    public var base58CheckEncodedString: String {
+        var bytes = self
+        let checksum = [UInt8](bytes.sha256.sha256[0..<4])
+        
+        print("checksum \(checksum)")
+        
+        bytes.append(contentsOf: checksum)
+        
+        return Base58.base58FromBytes(bytes)
+    }
+}
+
+extension String {
+    public var base58EncodedString: String {
+        return [UInt8](utf8).base58EncodedString
+    }
+    
+    public var base58DecodedData: Data? {
+        let bytes = Base58.bytesFromBase58(self)
+        return Data(bytes)
+    }
+    
+    public var base58CheckDecodedData: Data? {
+        guard let bytes = self.base58CheckDecodedBytes else { return nil }
+        return Data(bytes)
+    }
+    
+    public var base58CheckDecodedBytes: [UInt8]? {
+        var bytes = Base58.bytesFromBase58(self)
+        guard 4 <= bytes.count else { return nil }
+        
+        let checksum = [UInt8](bytes[bytes.count-4..<bytes.count])
+        bytes = [UInt8](bytes[0..<bytes.count-4])
+        
+        print("checksum \(checksum)")
+        
+        let calculatedChecksum = [UInt8](bytes.sha256.sha256[0...3])
+        
+        print("calculated checksum \(calculatedChecksum)")
+        
+        if checksum != calculatedChecksum { return nil }
+        
+        return bytes
+    }
+    
 }
