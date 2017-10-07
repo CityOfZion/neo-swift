@@ -265,7 +265,7 @@ public class Account {
     func generateClaimTransactionPayload(claims: Claims) -> Data {
         var error: NSError?
         let rawClaim = generateClaimInputData(claims: claims)
-        let signatureData = GoNeowalletSign(rawClaim, privateKey.toHexString(), &error)
+        let signatureData = GoNeowalletSign(rawClaim, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawClaim, signatureData: signatureData!)
         return finalPayload
     }
@@ -277,9 +277,7 @@ public class Account {
                 completion(nil, error)
             case .success(let claims):
                 let claimData = self.generateClaimTransactionPayload(claims: claims)
-                print(claimData.fullHexEncodedString())
-                //return
-                NeoClient.shared.sendRawTransaction(with: claimData) { (result) in
+                NeoClient(network: self.network).sendRawTransaction(with: claimData) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)

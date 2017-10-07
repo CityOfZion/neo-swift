@@ -380,7 +380,7 @@ public class NeoClient {
     }
     
     public func sendRawTransaction(with data: Data, completion: @escaping(NeoClientResult<Bool>) -> ()) {
-        sendRequest(.sendTransaction, params: [data.fullHexEncodedString()]) { result in
+        sendRequest(.sendTransaction, params: [data.fullHexString]) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
