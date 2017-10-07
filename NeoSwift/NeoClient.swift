@@ -70,7 +70,6 @@ public class NeoClient {
         case getClaims = "address/claims/"
         case getTransactionHistory = "address/history/"
         case getBestNode = "network/best_node"
-        case getClaimableGAS = "address/claims/"
     }
     
     public init(seed: String) {
@@ -472,24 +471,5 @@ public class NeoClient {
             }
         }
     }
-    
-    public func getClaimableGAS(for address: String, completion: @escaping(NeoClientResult<Double>) -> ()) {
-        let url = fullNodeAPI + apiURL.getClaimableGAS.rawValue + address
-        sendFullNodeRequest(url, params: nil) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                guard let claimableGas = response["total_unspent_claim"] as? Double else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                //the endpoint returns Int
-                let gas = claimableGas / 100000000.0
-                let result = NeoClientResult.success(gas)
-                completion(result)
-            }
-        }
-        
-    }
+
 }
