@@ -9,11 +9,11 @@
 import Foundation
 
 public struct Claims: Codable {
-    var address: String
-    var claims: [Claim]
-    var net: String
-    var totalClaim: UInt64
-    var totalUnspentClaim: Int
+    public var address: String
+    public var claims: [Claim]
+    public var net: String
+    public var totalClaim: UInt64
+    public var totalUnspentClaim: Int
     
     
     enum CodingKeys: String, CodingKey {
