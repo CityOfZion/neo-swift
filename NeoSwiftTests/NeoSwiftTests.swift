@@ -187,22 +187,7 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
-    
-    func testGetClaimableGas() {
-        let exp = expectation(description: "Wait for asset response")
-        
-        NeoClient.sharedTest.getClaimableGAS(for :"AJs38kijktEuM22sjfXqfjZ734RqR4H6JW") { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let value):
-                print(value)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
+
     
     //I am exposing the following private keys for testing purposes only
     //Please only use them them to send transactions between each other on
