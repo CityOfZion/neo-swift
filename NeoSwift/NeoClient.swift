@@ -34,10 +34,17 @@ public enum NeoClientResult<T> {
     case failure(NeoClientError)
 }
 
+public enum Network: String {
+    case test
+    case main
+}
+
 public class NeoClient {
-    public var seed = "http://seed4.neo.org:20332"
+    public var network: Network = .test
+    public var seed = "http://test4.cityofzion.io:8880"
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
-    public static let shared = NeoClient()
+    public static let sharedTest = NeoClient(network: .test)
+    public static let sharedMain = NeoClient(network: .main)
     private init() {}
     
     enum RPCMethod: String {
@@ -59,12 +66,32 @@ public class NeoClient {
     }
     
     enum apiURL: String {
-        case getBalance = "http://testnet-api.wallet.cityofzion.io/v2/address/balance/"
-        case getTransactionHistory = "http://testnet-api.neonwallet.com/v2/address/history/"
+        case getBalance = "address/balance/"
+        case getTransactionHistory = "address/history/"
+        case getBestNode = "network/best_node"
     }
     
     public init(seed: String) {
         self.seed = seed
+    }
+    
+    public init(network: Network) {
+        self.network = network
+        switch self.network {
+        case .test:
+            fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
+        case .main:
+            fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
+        }
+        
+        self.getBestNode() { result in
+            switch result {
+            case .failure:
+                fatalError("Could not initialize Neo Client")
+            case .success(let value):
+                self.seed = value
+            }
+        }
     }
     
     func sendRequest(_ method: RPCMethod, params: [Any]?, completion: @escaping (NeoClientResult<JSONDictionary>) -> ()) {
@@ -290,7 +317,7 @@ public class NeoClient {
     }
     
     public func getAssets(for address: String, params: [Any]?, completion: @escaping(NeoClientResult<Assets>) -> ()) {
-        let url = apiURL.getBalance.rawValue + address
+        let url = fullNodeAPI + apiURL.getBalance.rawValue + address
         sendFullNodeRequest(url, params: params) { result in
             
             switch result {
@@ -311,7 +338,7 @@ public class NeoClient {
     }
     
     public func getTransactionHistory(for address: String, completion: @escaping (NeoClientResult<TransactionHistory>) -> ()) {
-        let url = apiURL.getTransactionHistory.rawValue + address
+        let url = fullNodeAPI + apiURL.getTransactionHistory.rawValue + address
         sendFullNodeRequest(url, params: nil) { result in
             switch result {
             case .failure(let error):
@@ -401,6 +428,23 @@ public class NeoClient {
                 }
                 
                 let result = NeoClientResult.success(assetState)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getBestNode(completion: @escaping (NeoClientResult<String>) -> ()) {
+        let url = fullNodeAPI + apiURL.getBestNode.rawValue
+        sendFullNodeRequest(url, params: nil) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                guard let node = response["node"] as? String else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                let result = NeoClientResult.success(node)
                 completion(result)
             }
         }
