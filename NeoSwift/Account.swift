@@ -11,6 +11,7 @@ import Neowallet
 import Security
 
 public class Account {
+    public var network: Network = .test
     public var wif: String
     public var publicKey: Data
     public var privateKey: Data
@@ -65,7 +66,7 @@ public class Account {
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
@@ -215,13 +216,13 @@ public class Account {
     
     
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
             case .success(let assets):
                 let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets, attributes: attributes)
-                NeoClient.shared.sendRawTransaction(with: payload) { (result) in
+                NeoClient(network: self.network).sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)
