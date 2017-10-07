@@ -277,7 +277,8 @@ class NeoSwiftTests: XCTestCase {
             assert(false)
         }
         let exp = expectation(description: "Wait for fas claim to complete")
-        accountA.claimGas { _, _ in
+        accountA.claimGas { result, error in
+            assert(result!)
             exp.fulfill()
         }
         waitForExpectations(timeout: 60, handler: nil)
