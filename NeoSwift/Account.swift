@@ -1,5 +1,3 @@
-
-
 //
 //  Account.swift
 //  NeoSwift
@@ -10,8 +8,10 @@
 
 import Foundation
 import Neowallet
+import Security
 
 public class Account {
+    public var network: Network = .test
     public var wif: String
     public var publicKey: Data
     public var privateKey: Data
@@ -19,11 +19,11 @@ public class Account {
     public var hashedSignature: Data
     
     lazy var publicKeyString : String = {
-        return publicKey.bytes.toHexString()
+        return publicKey.fullHexString
     }()
     
     lazy var privateKeyString : String = {
-        return privateKey.bytes.toHexString()
+        return privateKey.fullHexString
     }()
     
     public init?(wif: String) {
@@ -46,8 +46,27 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
+    public init?() {
+        var pkeyData = Data(count: 32)
+        let result = pkeyData.withUnsafeMutableBytes {
+            SecRandomCopyBytes(kSecRandomDefault, pkeyData.count, $0)
+        }
+        
+        if result != errSecSuccess {
+            fatalError()
+        }
+        
+        var error: NSError?
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
+        self.wif = wallet.wif()
+        self.publicKey = wallet.publicKey()
+        self.privateKey = pkeyData
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
+    }
+    
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
@@ -132,12 +151,24 @@ public class Account {
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String) -> Data {
+    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
         let inputDataBytes = inputData.bytes
         let needsTwoOutputTransactions = runningAmount != toSendAmount
-        let payloadLength = needsTwoOutputTransactions ? inputDataBytes.count + 124 : inputDataBytes.count + 64
-        var payload: [UInt8] = [0x80, 0x00, 0x00]
-        payload = payload + inputDataBytes
+        
+        var numberOfAttributes: UInt8 = 0x00
+        var attributesPayload: [UInt8] = []
+        if attributes != nil {
+            for attribute in attributes! {
+                if attribute.data != nil {
+                    attributesPayload = attributesPayload + attribute.data!
+                    numberOfAttributes = numberOfAttributes + 1
+                }
+            }
+        }
+        
+        var payload: [UInt8] = [0x80, 0x00, numberOfAttributes]
+        payload = payload + attributesPayload + inputDataBytes
+        
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
@@ -172,26 +203,25 @@ public class Account {
         return Data(bytes: payload)
     }
     
-    func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets) -> Data {
+    func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets, attributes: [TransactionAttritbute]? = nil) -> Data {
         var error: NSError?
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
         let rawTransaction = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
-                                                    toSendAmount: amount, toAddress: toAddress)
-        let signatureData = GoNeowalletSign(rawTransaction, privateKey.toHexString(), &error)
+                                                     toSendAmount: amount, toAddress: toAddress, attributes: attributes)
+        let signatureData = GoNeowalletSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
     }
 
-    //NEED TO UPDATE THESE TO FOLLOW SAME ERROR HANDLING STRUCTURE
-    public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient.shared.getAssets(for: self.address, params: []) { result in
+    public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
+        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
             case .success(let assets):
-                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets)
-                NeoClient.shared.sendRawTransaction(with: payload) { (result) in
+                let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets, attributes: attributes)
+                NeoClient(network: self.network).sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)
@@ -241,7 +271,7 @@ public class Account {
     }
     
     public func claimGas(completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient.shared.getClaims(address: self.address) { result in
+        NeoClient(network: network).getClaims(address: self.address) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
