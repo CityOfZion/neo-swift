@@ -84,7 +84,7 @@ public class NeoClient {
             seed = "http://test4.cityofzion.io:8880"
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
-            seed = "http://seed3.cityofzion.io:8880"
+            seed = "http://seed3.neo.org:10332"
         }
         
         self.getBestNode() { result in
