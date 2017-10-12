@@ -126,8 +126,6 @@ extension Array where Element == UInt8 {
         var bytes = self
         let checksum = [UInt8](bytes.sha256.sha256[0..<4])
         
-        print("checksum \(checksum)")
-        
         bytes.append(contentsOf: checksum)
         
         return Base58.base58FromBytes(bytes)
@@ -156,12 +154,7 @@ extension String {
         let checksum = [UInt8](bytes[bytes.count-4..<bytes.count])
         bytes = [UInt8](bytes[0..<bytes.count-4])
         
-        print("checksum \(checksum)")
-        
         let calculatedChecksum = [UInt8](bytes.sha256.sha256[0...3])
-        
-        print("calculated checksum \(calculatedChecksum)")
-        
         if checksum != calculatedChecksum { return nil }
         
         return bytes
