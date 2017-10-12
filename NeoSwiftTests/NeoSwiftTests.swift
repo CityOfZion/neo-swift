@@ -279,6 +279,7 @@ class NeoSwiftTests: XCTestCase {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         guard let accountA = Account(wif: wifPersonA) else {
             assert(false)
+            return
         }
         let exp = expectation(description: "Wait for fas claim to complete")
         accountA.claimGas { result, error in
