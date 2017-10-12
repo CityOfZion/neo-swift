@@ -202,6 +202,7 @@ class NeoSwiftTests: XCTestCase {
         guard let accountA = Account(wif: wifPersonA),
             let accountB = Account(wif: wifPersonB) else {
                 assert(false)
+                return
         }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
@@ -224,6 +225,7 @@ class NeoSwiftTests: XCTestCase {
         guard let accountA = Account(wif: wifPersonA),
             let accountB = Account(wif: wifPersonB) else {
                 assert(false)
+                return
         }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
@@ -249,6 +251,7 @@ class NeoSwiftTests: XCTestCase {
         guard let accountA = Account(wif: wifPersonA),
             let accountB = Account(wif: wifPersonB) else {
                 assert(false)
+                return
         }
         
         let exp1 = expectation(description: "Wait for transaction one to go through")

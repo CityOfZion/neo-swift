@@ -9,40 +9,52 @@
 import Foundation
 
 extension Array where Element == UInt8 {
-    
-    func toWordArray() -> [UInt32] {
-        let input = self
-        var words: [UInt32] = []
-        for i in 0..<input.count / 4 {
-            let offset = i * 4
-            let w0 = UInt32(input[offset])
-            let w1 = UInt32(input[offset + 1]) << 8
-            let w2 = UInt32(input[offset + 2]) << 16
-            let w3 = UInt32(input[offset + 3]) << 24
-            let w = w0 | w1 | w2 | w3
-            words.append(w)
-        }
-        return words
+    public var hexString: String {
+        return self.map { return String(format: "%x", $0) }.joined()
     }
     
+    public var hexStringWithPrefix: String {
+        return "0x\(hexString)"
+    }
     
+    public var fullHexString: String {
+        return self.map { return String(format: "%02x", $0) }.joined()
+    }
     
+    public var fullHexStringWithPrefix: String {
+        return "0x\(fullHexString)"
+    }
+    
+    func toWordArray() -> [UInt32] {
+        return arrayUtil_convertArray(self, to: UInt32.self)
+    }
+    
+    func xor(other: [UInt8]) -> [UInt8] {
+        assert(self.count == other.count)
+        
+        var result: [UInt8] = []
+        for i in 0..<self.count {
+            result.append(self[i] ^ other[i])
+        }
+        return result
+    }
 }
 
 extension Array where Element == UInt32 {
-    func toByteArray() -> [UInt8] {
-        let input = self
-        var bytes: [UInt8] = []
-        for i in 0..<input.count {
-            let offset = i
-            let b0 = UInt8(input[offset] & 0xFF)
-            let b1 = UInt8(input[offset] >> 8 & 0xFF)
-            let b2 = UInt8(input[offset] >> 16 & 0xFF)
-            let b3 = UInt8(input[offset] >> 24 & 0xFF)
-            
-            bytes.append(contentsOf: [b0,b1,b2,b3])
-        }
-        return bytes
+    func toByteArrayFast() -> [UInt8] {
+        return arrayUtil_convertArray(self, to: UInt8.self)
     }
     
+    func toByteArray() -> [UInt8] {
+        return arrayUtil_convertArray(self, to: UInt8.self)
+    }
+}
+
+func arrayUtil_convertArray<S, T>(_ source: [S], to: T.Type) -> [T] {
+    let count = source.count * MemoryLayout<S>.stride/MemoryLayout<T>.stride
+    return source.withUnsafeBufferPointer {
+        $0.baseAddress!.withMemoryRebound(to: T.self, capacity: count) {
+            Array(UnsafeBufferPointer(start: $0, count: count))
+        }
+    }
 }

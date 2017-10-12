@@ -45,6 +45,20 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
+    public init?(encryptedPrivateKey: String, passphrase: String) {
+        var error: NSError?
+        guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
+        
+        self.wif = wallet.wif()
+        self.publicKey = wallet.publicKey()
+        self.privateKey = Data(decryptedKey)
+        self.address = wallet.address()
+        self.hashedSignature = wallet.hashedSignature()
+        
+        guard NEP2.verify(addressHash: hash, address: wallet.address()) else { return nil }
+    }
+    
     public init?() {
         var pkeyData = Data(count: 32)
         let result = pkeyData.withUnsafeMutableBytes {
@@ -233,4 +247,7 @@ public class Account {
         }
     }
     
+    public func exportEncryptedKey(with passphrase: String) -> String {
+        return NEP2.encryptKey(self.privateKey.bytes, passphrase: passphrase, address: self.address)
+    }
 }

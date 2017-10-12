@@ -112,7 +112,8 @@ class NeoCryptoTests: XCTestCase {
         
         let inputWords = input.toWordArray()
         
-        let outputWords = scrypt.salsa(inputWords)
+        var outputWords: [UInt32] = Array<UInt32>(repeating: 0, count: 16)
+        scrypt().salsa(inputWords, output: &outputWords)
         let outBytes = outputWords.toByteArray()
         
         XCTAssert(outBytes == output)
@@ -167,7 +168,7 @@ class NeoCryptoTests: XCTestCase {
         
         let bWords: [UInt32] = B.toWordArray()
         
-        XCTAssert(scrypt.scryptBlockMix(bWords, r: 1).toByteArray() == B_)
+        XCTAssert(scrypt().scryptBlockMix(bWords, r: 1).toByteArray() == B_)
         
     }
     
@@ -194,7 +195,7 @@ class NeoCryptoTests: XCTestCase {
             0x4e, 0x90, 0x87, 0xcb, 0x33, 0x39, 0x6a, 0x68, 0x73, 0xe8, 0xf9, 0xd2, 0x53, 0x9a, 0x4b, 0x8e
         ]
         
-        XCTAssert(scrypt.scryptROMix(I, r: 1, N: 16) == O)
+        XCTAssert(scrypt().scryptROMix(I, r: 1, N: 16) == O)
     }
     
     func testScrypt() {
@@ -240,7 +241,7 @@ class NeoCryptoTests: XCTestCase {
             0xfc, 0xd0, 0x06, 0x9d, 0xed, 0x09, 0x48, 0xf8, 0x32, 0x6a, 0x75, 0x3a, 0x0f, 0xc8, 0x1f, 0x17,
             0xe8, 0xd3, 0xe0, 0xfb, 0x2e, 0x0d, 0x36, 0x28, 0xcf, 0x35, 0xe2, 0x0c, 0x38, 0xd1, 0x89, 0x06
         ]
-        XCTAssert(scrypt.scrypt(passphrase: [], salt: [], n: 16, r: 1, p: 1, dkLen: 64) == t0)
+        XCTAssert(scrypt().scrypt(passphrase: [], salt: [], n: 16, r: 1, p: 1, dkLen: 64) == t0)
         
         let t1: [UInt8] = [
             0xfd, 0xba, 0xbe, 0x1c, 0x9d, 0x34, 0x72, 0x00, 0x78, 0x56, 0xe7, 0x19, 0x0d, 0x01, 0xe9, 0xfe,
@@ -248,7 +249,7 @@ class NeoCryptoTests: XCTestCase {
             0x2e, 0xaf, 0x30, 0xd9, 0x2e, 0x22, 0xa3, 0x88, 0x6f, 0xf1, 0x09, 0x27, 0x9d, 0x98, 0x30, 0xda,
             0xc7, 0x27, 0xaf, 0xb9, 0x4a, 0x83, 0xee, 0x6d, 0x83, 0x60, 0xcb, 0xdf, 0xa2, 0xcc, 0x06, 0x40
         ]
-        XCTAssert(scrypt.scrypt(passphrase: [UInt8]("password".utf8), salt: [UInt8]("NaCl".utf8), n: 1024, r: 8, p: 16, dkLen: 64) == t1)
+        XCTAssert(scrypt().scrypt(passphrase: [UInt8]("password".utf8), salt: [UInt8]("NaCl".utf8), n: 1024, r: 8, p: 16, dkLen: 64) == t1)
         
         let t2: [UInt8] = [
             0x70, 0x23, 0xbd, 0xcb, 0x3a, 0xfd, 0x73, 0x48, 0x46, 0x1c, 0x06, 0xcd, 0x81, 0xfd, 0x38, 0xeb,
@@ -256,18 +257,45 @@ class NeoCryptoTests: XCTestCase {
             0xd5, 0x43, 0x29, 0x55, 0x61, 0x3f, 0x0f, 0xcf, 0x62, 0xd4, 0x97, 0x05, 0x24, 0x2a, 0x9a, 0xf9,
             0xe6, 0x1e, 0x85, 0xdc, 0x0d, 0x65, 0x1e, 0x40, 0xdf, 0xcf, 0x01, 0x7b, 0x45, 0x57, 0x58, 0x87
         ]
-        XCTAssert(scrypt.scrypt(passphrase: [UInt8]("pleaseletmein".utf8), salt: [UInt8]("SodiumChloride".utf8), n: 16384, r: 8, p: 1, dkLen: 64) == t2)
+        XCTAssert(scrypt().scrypt(passphrase: [UInt8]("pleaseletmein".utf8), salt: [UInt8]("SodiumChloride".utf8), n: 16384, r: 8, p: 1, dkLen: 64) == t2)
 
-        // This test takes a lot of time
+        
+//        // This test takes a lot of time
 //        let t3: [UInt8] = [
 //            0x21, 0x01, 0xcb, 0x9b, 0x6a, 0x51, 0x1a, 0xae, 0xad, 0xdb, 0xbe, 0x09, 0xcf, 0x70, 0xf8, 0x81,
 //            0xec, 0x56, 0x8d, 0x57, 0x4a, 0x2f, 0xfd, 0x4d, 0xab, 0xe5, 0xee, 0x98, 0x20, 0xad, 0xaa, 0x47,
 //            0x8e, 0x56, 0xfd, 0x8f, 0x4b, 0xa5, 0xd0, 0x9f, 0xfa, 0x1c, 0x6d, 0x92, 0x7c, 0x40, 0xf4, 0xc3,
 //            0x37, 0x30, 0x40, 0x49, 0xe8, 0xa9, 0x52, 0xfb, 0xcb, 0xf4, 0x5c, 0x6f, 0xa7, 0x7a, 0x41, 0xa4
 //        ]
-//        XCTAssert(scrypt.scrypt(passphrase: [UInt8]("pleaseletmein".utf8), salt: [UInt8]("SodiumChloride".utf8), n: 1048576, r: 8, p: 1, dkLen: 64) == t3)
-
+//        XCTAssert(scrypt().scrypt(passphrase: [UInt8]("pleaseletmein".utf8), salt: [UInt8]("SodiumChloride".utf8), n: 16384, r: 2, p: 2, dkLen: 64) == t3)
+//
+    }
+    
+    func testScryptPerf() {
+        let start = Date()
+        _ = scrypt().scrypt(passphrase: [UInt8]("password".utf8), salt: [UInt8]("NaCl".utf8), n: 16384, r: 2, p: 2, dkLen: 64)
+        print(abs(start.timeIntervalSinceNow))
+    }
+    
+    // MARK: - NEP-2
+    
+    func testNEP2Encrypt() {
+        let account1 = Account(wif: "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
+        let encryptedKey1 = account1?.exportEncryptedKey(with: "TestingOneTwoThree")
+        XCTAssert(encryptedKey1 == "6PYVPVe1fQznphjbUxXP9KZJqPMVnVwCx5s5pr5axRJ8uHkMtZg97eT5kL")
         
+        let account2 = Account(wif: "KwYgW8gcxj1JWJXhPSu4Fqwzfhp5Yfi42mdYmMa4XqK7NJxXUSK7")
+        let encryptedKey2 = account2?.exportEncryptedKey(with: "Satoshi")
+        XCTAssert(encryptedKey2 == "6PYN6mjwYfjPUuYT3Exajvx25UddFVLpCw4bMsmtLdnKwZ9t1Mi3CfKe8S")
+    }
+    
+    func testNEP2Decrypt() {
+        let passphrase1 = "TestingOneTwoThree"
+        let encryptedKey1 = "6PYVPVe1fQznphjbUxXP9KZJqPMVnVwCx5s5pr5axRJ8uHkMtZg97eT5kL"
+        
+        let account1 = Account(encryptedPrivateKey: encryptedKey1, passphrase: passphrase1)
+
+        XCTAssert(account1?.wif == "L44B5gGEpqEDRS9vVPz7QT35jcBG2r3CZwSwQ4fCewXAhAhqGVpP")
     }
 }
 

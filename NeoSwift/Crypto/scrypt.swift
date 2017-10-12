@@ -9,70 +9,76 @@
 
 import Foundation
 
-struct scrypt {
+var salsaCount = 0
+var blockMixCount = 0
+var roMixCount = 0
+
+class scrypt {
     
-    internal static func R(_ a: UInt32, _ b: UInt32) -> UInt32 {
+    final private var salsaBuffer: [UInt32] = [UInt32](repeating: 0, count: 16)
+    final private var salsaOutput: [UInt32] = [UInt32](repeating: 0, count: 16)
+    
+    internal final func R(_ a: UInt32, _ b: UInt32) -> UInt32 {
         return (a << b) | (a >> (32 - b))
     }
     
     // Salsa20/8 Core
-    static func salsa(_ input: [UInt32]) -> [UInt32] {
+    final func salsa(_ input: [UInt32], output: inout [UInt32]) {
         assert(input.count == 16)
-        
-        var x = input
-        var output: [UInt32] = Array<UInt32>(repeating: 0, count: 16)
+
+        salsaBuffer = input
         
         var i = 8
         while 0 < i {
-            x[ 4] ^= R(x[ 0]&+x[12], 7);  x[ 8] ^= R(x[ 4]&+x[ 0], 9);
-            x[12] ^= R(x[ 8]&+x[ 4],13);  x[ 0] ^= R(x[12]&+x[ 8],18);
-            x[ 9] ^= R(x[ 5]&+x[ 1], 7);  x[13] ^= R(x[ 9]&+x[ 5], 9);
-            x[ 1] ^= R(x[13]&+x[ 9],13);  x[ 5] ^= R(x[ 1]&+x[13],18);
-            x[14] ^= R(x[10]&+x[ 6], 7);  x[ 2] ^= R(x[14]&+x[10], 9);
-            x[ 6] ^= R(x[ 2]&+x[14],13);  x[10] ^= R(x[ 6]&+x[ 2],18);
-            x[ 3] ^= R(x[15]&+x[11], 7);  x[ 7] ^= R(x[ 3]&+x[15], 9);
-            x[11] ^= R(x[ 7]&+x[ 3],13);  x[15] ^= R(x[11]&+x[ 7],18);
-            x[ 1] ^= R(x[ 0]&+x[ 3], 7);  x[ 2] ^= R(x[ 1]&+x[ 0], 9);
-            x[ 3] ^= R(x[ 2]&+x[ 1],13);  x[ 0] ^= R(x[ 3]&+x[ 2],18);
-            x[ 6] ^= R(x[ 5]&+x[ 4], 7);  x[ 7] ^= R(x[ 6]&+x[ 5], 9);
-            x[ 4] ^= R(x[ 7]&+x[ 6],13);  x[ 5] ^= R(x[ 4]&+x[ 7],18);
-            x[11] ^= R(x[10]&+x[ 9], 7);  x[ 8] ^= R(x[11]&+x[10], 9);
-            x[ 9] ^= R(x[ 8]&+x[11],13);  x[10] ^= R(x[ 9]&+x[ 8],18);
-            x[12] ^= R(x[15]&+x[14], 7);  x[13] ^= R(x[12]&+x[15], 9);
-            x[14] ^= R(x[13]&+x[12],13);  x[15] ^= R(x[14]&+x[13],18);
+            salsaBuffer[ 4] ^= R(salsaBuffer[ 0]&+salsaBuffer[12], 7);  salsaBuffer[ 8] ^= R(salsaBuffer[ 4]&+salsaBuffer[ 0], 9);
+            salsaBuffer[12] ^= R(salsaBuffer[ 8]&+salsaBuffer[ 4],13);  salsaBuffer[ 0] ^= R(salsaBuffer[12]&+salsaBuffer[ 8],18);
+            salsaBuffer[ 9] ^= R(salsaBuffer[ 5]&+salsaBuffer[ 1], 7);  salsaBuffer[13] ^= R(salsaBuffer[ 9]&+salsaBuffer[ 5], 9);
+            salsaBuffer[ 1] ^= R(salsaBuffer[13]&+salsaBuffer[ 9],13);  salsaBuffer[ 5] ^= R(salsaBuffer[ 1]&+salsaBuffer[13],18);
+            salsaBuffer[14] ^= R(salsaBuffer[10]&+salsaBuffer[ 6], 7);  salsaBuffer[ 2] ^= R(salsaBuffer[14]&+salsaBuffer[10], 9);
+            salsaBuffer[ 6] ^= R(salsaBuffer[ 2]&+salsaBuffer[14],13);  salsaBuffer[10] ^= R(salsaBuffer[ 6]&+salsaBuffer[ 2],18);
+            salsaBuffer[ 3] ^= R(salsaBuffer[15]&+salsaBuffer[11], 7);  salsaBuffer[ 7] ^= R(salsaBuffer[ 3]&+salsaBuffer[15], 9);
+            salsaBuffer[11] ^= R(salsaBuffer[ 7]&+salsaBuffer[ 3],13);  salsaBuffer[15] ^= R(salsaBuffer[11]&+salsaBuffer[ 7],18);
+            salsaBuffer[ 1] ^= R(salsaBuffer[ 0]&+salsaBuffer[ 3], 7);  salsaBuffer[ 2] ^= R(salsaBuffer[ 1]&+salsaBuffer[ 0], 9);
+            salsaBuffer[ 3] ^= R(salsaBuffer[ 2]&+salsaBuffer[ 1],13);  salsaBuffer[ 0] ^= R(salsaBuffer[ 3]&+salsaBuffer[ 2],18);
+            salsaBuffer[ 6] ^= R(salsaBuffer[ 5]&+salsaBuffer[ 4], 7);  salsaBuffer[ 7] ^= R(salsaBuffer[ 6]&+salsaBuffer[ 5], 9);
+            salsaBuffer[ 4] ^= R(salsaBuffer[ 7]&+salsaBuffer[ 6],13);  salsaBuffer[ 5] ^= R(salsaBuffer[ 4]&+salsaBuffer[ 7],18);
+            salsaBuffer[11] ^= R(salsaBuffer[10]&+salsaBuffer[ 9], 7);  salsaBuffer[ 8] ^= R(salsaBuffer[11]&+salsaBuffer[10], 9);
+            salsaBuffer[ 9] ^= R(salsaBuffer[ 8]&+salsaBuffer[11],13);  salsaBuffer[10] ^= R(salsaBuffer[ 9]&+salsaBuffer[ 8],18);
+            salsaBuffer[12] ^= R(salsaBuffer[15]&+salsaBuffer[14], 7);  salsaBuffer[13] ^= R(salsaBuffer[12]&+salsaBuffer[15], 9);
+            salsaBuffer[14] ^= R(salsaBuffer[13]&+salsaBuffer[12],13);  salsaBuffer[15] ^= R(salsaBuffer[14]&+salsaBuffer[13],18);
             
             i -= 2
         }
         
         i = 0
         for i in 0..<16 {
-            output[i] = x[i] &+ input[i]
+            output[i] = salsaBuffer[i] &+ input[i]
         }
         
-        return output
     }
     
-    static func scryptBlockMix(_ B: [UInt32], r: Int) -> [UInt32] {
+    final func scryptBlockMix(_ B: [UInt32], r: Int) -> [UInt32] {
         var B = B
-        var X: [UInt32] = Array<UInt32>(repeating: 0, count: 16)
         var B_: [UInt32] = Array<UInt32>(repeating: 0, count: B.count)
         
         let ptrB = UnsafeRawPointer(B).advanced(by: (2 * r - 1) * 64)
-        let ptrX = UnsafeMutableRawPointer(mutating: X)
+        let ptrX = UnsafeMutableRawPointer(mutating: salsaOutput)
         memcpy(ptrX, ptrB, 64)
         
         for i in 0..<(2 * r) {
             for j in 0..<16 {
-                X[j] ^= B[16 * i + j]
+                salsaOutput[j] ^= B[16 * i + j]
             }
-            X = salsa(X)
-            memcpy(&B_[(i / 2 + (i & 1) * r) * 16], X.toByteArray(), X.count * 4)
+
+            salsa(salsaOutput, output: &(salsaOutput))
+
+            memcpy(&B_[(i / 2 + (i & 1) * r) * 16], UnsafeRawPointer(salsaOutput), salsaOutput.count * 4)
         }
         
         return B_
     }
     
-    static func scryptROMix(_ B: [UInt8], r: Int, N: Int) -> [UInt8] {
+    final func scryptROMix(_ B: [UInt8], r: Int, N: Int) -> [UInt8] {
         var X = B
         var V: [[UInt8]] = []
         
@@ -94,7 +100,7 @@ struct scrypt {
         return X
     }
     
-    static func integerify(_ X: [UInt8], r: Int) -> UInt {
+    func integerify(_ X: [UInt8], r: Int) -> UInt {
         let x = [UInt8](X[((2 * r - 1) * 64)...])
         
         var i = UInt(x[0]) + UInt(x[1]) << 8
@@ -105,7 +111,7 @@ struct scrypt {
         return i
     }
     
-    static func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
+    func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
         var B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: p * 128 * r)
         
         var result: [UInt8] = []
