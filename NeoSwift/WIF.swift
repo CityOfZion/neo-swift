@@ -10,8 +10,7 @@ import Foundation
     
 public extension String {
     func hashFromAddress() -> String {
-        let decoded = self.fromBase58!
-        let bytes  = [UInt8](decoded)
+        let bytes = self.base58CheckDecodedBytes!
         let shortened = bytes[0...20] //need exactly twenty one bytes
         let substringData = Data(bytes: shortened)
         let hashOne = substringData.sha256
