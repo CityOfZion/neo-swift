@@ -14,6 +14,7 @@ class NeoWalletTests: XCTestCase {
         guard let a = Account(),
             let b = Account(wif: a.wif) else {
                 assert(false)
+                return
         }
         assert(a.privateKey == b.privateKey)
     }
