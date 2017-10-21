@@ -44,7 +44,7 @@ public class NEONetworkMonitor {
     private init() {
         self.network =  self.load()
     }
-    static let sharedInstance = NEONetworkMonitor()
+    public static let sharedInstance = NEONetworkMonitor()
     public var network: NEONetwork?
     
     private func load() -> NEONetwork? {
