@@ -217,6 +217,7 @@ class NeoSwiftTests: XCTestCase {
 
         accountA.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountB.address) { success, error in
             assert(success ?? false)
+            print(success)
             exp1.fulfill()
             accountB.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountA.address) {success, error in
                 assert(success ?? false)
@@ -353,5 +354,15 @@ class NeoSwiftTests: XCTestCase {
             }
         }
         waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testNetworkMonitor() {
+        let network = NEONetworkMonitor.sharedInstance.network
+        assert(network != nil)
+    }
+    
+    func testOverwriteSeedNode(){
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        assert(client.seed == "http://seed2.neo.org:10332")
     }
 }
