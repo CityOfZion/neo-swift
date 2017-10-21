@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 typealias JSONDictionary = [String : Any]
 
 public enum NeoClientError: Error {
@@ -39,9 +40,38 @@ public enum Network: String {
     case main
 }
 
+public class NEONetworkMonitor {
+    private init() {
+        self.network =  self.load()
+    }
+    static let sharedInstance = NEONetworkMonitor()
+    public var network: NEONetwork?
+    
+    private func load() -> NEONetwork? {
+        guard let path = Bundle(for: type(of: self)).path(forResource: "nodes", ofType: "json") else {
+            return nil
+        }
+        guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            return nil
+        }
+        let decoder = JSONDecoder()
+        
+        guard let json = try? JSONSerialization.jsonObject(with: fileData, options: []) as! JSONDictionary else {
+            return nil
+        }
+        
+        guard let data = try? JSONSerialization.data(withJSONObject: json, options: []),
+            let result = try? decoder.decode(NEONetwork.self, from: data) else {
+                return nil
+        }
+        return result
+    }
+    
+}
+
 public class NeoClient {
     public var network: Network = .test
-    public var seed = "http://test4.cityofzion.io:8880"
+    public var seed = "http://seed1.neo.org:10332"
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
     public static let sharedTest = NeoClient(network: .test)
     public static let sharedMain = NeoClient(network: .main)
@@ -60,6 +90,7 @@ public class NeoClient {
         case validateAddress = "validateaddress"
         case getAccountState = "getaccountstate"
         case getAssetState = "getassetstate"
+        case getPeers = "getpeers"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
@@ -84,7 +115,7 @@ public class NeoClient {
             seed = "http://test4.cityofzion.io:8880"
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
-            seed = "http://seed3.neo.org:10332"
+            seed = "http://seed1.neo.org:10332"
         }
         
         self.getBestNode() { result in
@@ -94,6 +125,18 @@ public class NeoClient {
             case .success(let value):
                 self.seed = value
             }
+        }
+    }
+    
+    public init(network: Network, seedURL: String) {
+        self.network = network
+        switch self.network {
+        case .test:
+            fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
+            seed = seedURL
+        case .main:
+            fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
+            seed = seedURL
         }
     }
     
@@ -196,15 +239,15 @@ public class NeoClient {
     public func getBlockBy(index: Int64, completion: @escaping (NeoClientResult<Block>) -> ()) {
         sendRequest(.getBlock, params: [index, 1]) { result in
             switch result {
-                case .failure(let error):
-                    completion(.failure(error))
-                case .success(let response):
-                    let decoder = JSONDecoder()
-                    guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                        let block = try? decoder.decode(Block.self, from: data) else {
-                            completion(.failure(.invalidData))
-                            return
-                    }
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let block = try? decoder.decode(Block.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
                 
                 let result = NeoClientResult.success(block)
                 completion(result)
@@ -224,6 +267,25 @@ public class NeoClient {
                 }
                 
                 let result = NeoClientResult.success(count)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getPeers(completion:  @escaping (NeoClientResult<GetPeersResult>) -> ()) {
+        sendRequest(.getPeers, params: nil) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let block = try? decoder.decode(GetPeersResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(block)
                 completion(result)
             }
         }
@@ -339,7 +401,7 @@ public class NeoClient {
             }
         }
     }
-  
+    
     public func getClaims(address: String, completion: @escaping(NeoClientResult<Claims>) -> ()) {
         let url = fullNodeAPI + apiURL.getClaims.rawValue + address
         sendFullNodeRequest(url, params: nil) { result in
@@ -360,7 +422,7 @@ public class NeoClient {
             }
         }
     }
-
+    
     public func getTransactionHistory(for address: String, completion: @escaping (NeoClientResult<TransactionHistory>) -> ()) {
         let url = fullNodeAPI + apiURL.getTransactionHistory.rawValue + address
         sendFullNodeRequest(url, params: nil) { result in
@@ -374,7 +436,7 @@ public class NeoClient {
                         completion(.failure(.invalidData))
                         return
                 }
-    
+                
                 let result = NeoClientResult.success(history)
                 completion(result)
             }
@@ -420,7 +482,7 @@ public class NeoClient {
     }
     
     public func getAccountState(for address: String, completion: @escaping(NeoClientResult<AccountState>) -> ()) {
-       sendRequest(.getAccountState, params: [address]) { result in
+        sendRequest(.getAccountState, params: [address]) { result in
             switch result {
             case .failure(let error):
                 completion(.failure(error))
@@ -473,5 +535,5 @@ public class NeoClient {
             }
         }
     }
-
+    
 }
