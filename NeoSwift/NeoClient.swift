@@ -117,15 +117,6 @@ public class NeoClient {
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
         }
-        
-        self.getBestNode() { result in
-            switch result {
-            case .failure:
-                fatalError("Could not initialize Neo Client")
-            case .success(let value):
-                self.seed = value
-            }
-        }
     }
     
     public init(network: Network, seedURL: String) {
