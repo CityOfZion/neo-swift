@@ -51,6 +51,7 @@
 		75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
 		75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
 		75E8E4A61F4EAB5800DBCD8E /* NeoSwift.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
+		75F0A39A1FA59CC1009E45CB /* NeoContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */; };
 		F31C7F0E1F6E759D0075688D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0B1F6E75530075688D /* Base58.swift */; };
 		F31C7F0F1F6E759D0075688D /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0C1F6E75530075688D /* Data+Util.swift */; };
 		F31C7F101F6E759D0075688D /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0D1F6E75530075688D /* SHA256.swift */; };
@@ -139,6 +140,7 @@
 		75CDAE301F48750E00B05C51 /* NeoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NeoClient.swift; path = NeoSwift/NeoClient.swift; sourceTree = SOURCE_ROOT; };
 		75DBF7271F5D7714006C87F3 /* Neowallet.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Neowallet.framework; sourceTree = "<group>"; };
 		75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIF.swift; sourceTree = "<group>"; };
+		75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoContractTests.swift; sourceTree = "<group>"; };
 		F31C7F0B1F6E75530075688D /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		F31C7F0C1F6E75530075688D /* Data+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Util.swift"; sourceTree = "<group>"; };
 		F31C7F0D1F6E75530075688D /* SHA256.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				7575ADF51F602C590077007B /* NeoWalletTests.swift */,
 				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
 				75CDAE291F48680500B05C51 /* Info.plist */,
+				75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */,
 			);
 			path = NeoSwiftTests;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				F389E27B1F8771170023BDC5 /* Account.swift in Sources */,
 				F359ED381F75B93900ED6E8E /* PBKDF2.swift in Sources */,
 				F359ED3C1F75BF2900ED6E8E /* scrypt.swift in Sources */,
+				75F0A39A1FA59CC1009E45CB /* NeoContractTests.swift in Sources */,
 				6E67B16F1F9B37B400C566B6 /* Peer.swift in Sources */,
 				F3B816911F7437CC0023A54E /* Base58.swift in Sources */,
 				F3B816921F7437CC0023A54E /* Data+Util.swift in Sources */,
@@ -703,13 +707,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = NeoSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -723,12 +727,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = NeoSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
