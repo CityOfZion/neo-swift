@@ -94,6 +94,7 @@ public class NeoClient {
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
+        case invokeContract = "invokescript"
     }
     
     enum apiURL: String {
@@ -491,6 +492,44 @@ public class NeoClient {
         }
     }
     
+    public func invokeContract(with script: String, completion: @escaping(NeoClientResult<ContractResult>) -> ()) {
+        sendRequest(.invokeContract, params: [script]) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                print (response)
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let contractResult = try? decoder.decode(ContractResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(contractResult)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getTokenInfo(with scriptHash: String, completion: @escaping(NeoClientResult<NEP5Token>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "name")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "symbol")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "decimals")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "totalSupply")
+        invokeContract(with: scriptBuilder.rawHexString) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let result):
+                print(result)
+                completion(.success(result as! NEP5Token))
+            }
+        }
+    }
+
+    
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {
@@ -526,5 +565,4 @@ public class NeoClient {
             }
         }
     }
-    
 }

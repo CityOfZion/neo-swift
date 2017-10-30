@@ -56,7 +56,14 @@ class NeoContractTests: XCTestCase {
                 "scriptHash": "db81b3d1e546a958e60c8ce33c766165100c04b7",
                 "operation": nil,
                 "args": 7
-            ]]
+            ],
+            [
+                "script": "00046e616d6567f91d6b7085db7c5aaf09f19eeec1ca3c0db2c6ec",
+                "scriptHash": "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9",
+                "operation": "name",
+                "args": nil
+            ]
+        ]
         let neoScript = ScriptBuilder()
         for testCase in testCases {
             guard let script = testCase["script"] as? String,
@@ -70,6 +77,41 @@ class NeoContractTests: XCTestCase {
             assert(neoScript.rawBytes.fullHexString == script)
             neoScript.resetScript()
         }
+    }
+    
+    func testInvokeContract() {
+        let exp = expectation(description: "Wait for Invoke contract response")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+         //get name of RPX contract
+        let script = "00046e616d6567f91d6b7085db7c5aaf09f19eeec1ca3c0db2c6ec"
+        client.invokeContract(with: script) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let result):
+                print(result)
+                exp.fulfill()
+                return
+            }
+        }
+            waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testNEP5Info() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        //get info
+        client.getTokenInfo(with: NEP5Token.tokens["RPX"]!) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let result):
+                print(result)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
     }
 }
 

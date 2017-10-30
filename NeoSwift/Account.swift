@@ -306,4 +306,13 @@ public class Account {
     public func exportEncryptedKey(with passphrase: String) -> String {
         return NEP2.encryptKey(self.privateKey.bytes, passphrase: passphrase, address: self.address)
     }
+    
+    public func getTokenBalance(_ token: String) -> Double {
+        let accountAddrScriptHash: [UInt8] = address.hashFromAddress().dataWithHexString().bytes.reversed()
+        let scriptBuilder = ScriptBuilder()
+        guard let tokenScriptHash = NEP5Token.tokens[token] as? String else {
+            return 0 //maybe make this error or seomething
+        }
+        scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args[accountAddrScriptHash.fullHexString])
+    }
 }
