@@ -42,7 +42,7 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
-     func testGetBlockByHash() {
+    func testGetBlockByHash() {
         let exp = expectation(description: "Wait for block hash response")
         
         NeoClient.sharedTest.getBlockBy(hash: "428cbb9661ec83c87a9944feff36d1146467028436e2f69bf57561d3206574c8") { result in
@@ -158,7 +158,7 @@ class NeoSwiftTests: XCTestCase {
     
     func testGetAssets() {
         let exp = expectation(description: "Wait for asset response")
-    
+        
         NeoClient.sharedTest.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { result in
             switch result {
             case .failure:
@@ -187,7 +187,7 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
-
+    
     
     //I am exposing the following private keys for testing purposes only
     //Please only use them them to send transactions between each other on
@@ -214,9 +214,10 @@ class NeoSwiftTests: XCTestCase {
         
         let exp1 = expectation(description: "Wait for transaction one to go through")
         let exp2 = expectation(description: "Wait for transaction two to go through")
-
+        
         accountA.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountB.address) { success, error in
             assert(success ?? false)
+            print(success)
             exp1.fulfill()
             accountB.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountA.address) {success, error in
                 assert(success ?? false)
@@ -250,7 +251,6 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 60, handler: nil)
     }*/
-    
     
     func testSendGasTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
@@ -288,7 +288,7 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 60, handler: nil)
     }
-  
+    
     func testValidateAddress() {
         let exp = expectation(description: "Wait for validate address response")
         NeoClient.sharedTest.validateAddress("AKcm7eABuW1Pjb5HsTwiq7iARSatim9tQ6") { result in
@@ -348,6 +348,49 @@ class NeoSwiftTests: XCTestCase {
                 assert(false)
             case .success(let history):
                 print(history)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testNetworkMonitor() {
+        let network = NEONetworkMonitor.sharedInstance.network
+        assert(network != nil)
+    }
+    
+    func testOverwriteSeedNode(){
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        assert(client.seed == "http://seed2.neo.org:10332")
+    }
+    
+    func testGetPeers() {
+        let exp = expectation(description: "Wait for GetPeers Response")
+        
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        client.getPeers { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let peersResult):
+                print(peersResult)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetConnectionCount() {
+        let exp = expectation(description: "Wait for connection count response")
+        
+        NeoClient.sharedMain.getConnectionCount() { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let count):
+                print(count)
                 exp.fulfill()
                 return
             }
