@@ -52,13 +52,43 @@
 		F31C7F0E1F6E759D0075688D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0B1F6E75530075688D /* Base58.swift */; };
 		F31C7F0F1F6E759D0075688D /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0C1F6E75530075688D /* Data+Util.swift */; };
 		F31C7F101F6E759D0075688D /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0D1F6E75530075688D /* SHA256.swift */; };
-		F31C7FA21F6E83D70075688D /* NeoCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */; };
 		F359ED371F75B93900ED6E8E /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED361F75B93900ED6E8E /* PBKDF2.swift */; };
 		F359ED381F75B93900ED6E8E /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED361F75B93900ED6E8E /* PBKDF2.swift */; };
 		F359ED3B1F75BF2900ED6E8E /* scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED3A1F75BF2900ED6E8E /* scrypt.swift */; };
 		F359ED3C1F75BF2900ED6E8E /* scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED3A1F75BF2900ED6E8E /* scrypt.swift */; };
 		F35E74E01F8FDE8300DF0927 /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF71F63B97B0077007B /* Claims.swift */; };
 		F35E74E11F8FDE8300DF0927 /* Claim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF91F63B98D0077007B /* Claim.swift */; };
+		F37FCFA51FABA9050016ABDD /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
+		F37FCFA61FABA9050016ABDD /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF71F63B97B0077007B /* Claims.swift */; };
+		F37FCFA71FABA9050016ABDD /* Claim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF91F63B98D0077007B /* Claim.swift */; };
+		F37FCFA81FABA9050016ABDD /* NeoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE301F48750E00B05C51 /* NeoClient.swift */; };
+		F37FCFA91FABA9050016ABDD /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
+		F37FCFAA1FABA9050016ABDD /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
+		F37FCFAB1FABA9050016ABDD /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE151F47F96000B05C51 /* Block.swift */; };
+		F37FCFAC1FABA9050016ABDD /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE171F47FFDA00B05C51 /* Script.swift */; };
+		F37FCFAD1FABA9050016ABDD /* ValueIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE191F4801F500B05C51 /* ValueIn.swift */; };
+		F37FCFAE1FABA9050016ABDD /* ValueOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1B1F48036C00B05C51 /* ValueOut.swift */; };
+		F37FCFAF1FABA9050016ABDD /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
+		F37FCFB01FABA9050016ABDD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1D1F4803E200B05C51 /* Transaction.swift */; };
+		F37FCFB11FABA9050016ABDD /* NEP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F0E1981F8E960500AAF53E /* NEP2.swift */; };
+		F37FCFB21FABA9050016ABDD /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
+		F37FCFB31FABA9050016ABDD /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
+		F37FCFB41FABA9050016ABDD /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
+		F37FCFB51FABA9050016ABDD /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753518DD1F6E365500453245 /* TransactionHistory.swift */; };
+		F37FCFB61FABA9050016ABDD /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
+		F37FCFB71FABA9050016ABDD /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED361F75B93900ED6E8E /* PBKDF2.swift */; };
+		F37FCFB81FABA9050016ABDD /* scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED3A1F75BF2900ED6E8E /* scrypt.swift */; };
+		F37FCFB91FABA9050016ABDD /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E67B16D1F9B368100C566B6 /* Peer.swift */; };
+		F37FCFBA1FABA9050016ABDD /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0B1F6E75530075688D /* Base58.swift */; };
+		F37FCFBB1FABA9050016ABDD /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0C1F6E75530075688D /* Data+Util.swift */; };
+		F37FCFBC1FABA9050016ABDD /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0D1F6E75530075688D /* SHA256.swift */; };
+		F37FCFBD1FABA9050016ABDD /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
+		F37FCFBE1FABA9050016ABDD /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
+		F37FCFBF1FABA9050016ABDD /* NeoCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */; };
+		F37FCFC31FABA9050016ABDD /* NeoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
+		F37FCFC41FABA9050016ABDD /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
+		F37FCFC61FABA9050016ABDD /* NeoSwift.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
+		F37FCFC71FABA9050016ABDD /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
 		F389E27B1F8771170023BDC5 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
 		F389E27C1F8771700023BDC5 /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
 		F389E27D1F8771850023BDC5 /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
@@ -87,6 +117,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		75CDAE2B1F48680500B05C51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75CDAE001F47F90800B05C51 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75CDAE081F47F90800B05C51;
+			remoteInfo = NeoSwift;
+		};
+		F37FCFA31FABA9050016ABDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 75CDAE001F47F90800B05C51 /* Project object */;
 			proxyType = 1;
@@ -141,6 +178,7 @@
 		F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoCryptoTests.swift; sourceTree = "<group>"; };
 		F359ED361F75B93900ED6E8E /* PBKDF2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBKDF2.swift; sourceTree = "<group>"; };
 		F359ED3A1F75BF2900ED6E8E /* scrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrypt.swift; sourceTree = "<group>"; };
+		F37FCFCB1FABA9050016ABDD /* NeoSwiftCryptoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NeoSwiftCryptoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3B8168F1F7432B60023A54E /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		F3F0E1981F8E960500AAF53E /* NEP2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP2.swift; sourceTree = "<group>"; };
 		F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Util.swift"; sourceTree = "<group>"; };
@@ -161,6 +199,15 @@
 			files = (
 				75CDAE2A1F48680500B05C51 /* NeoSwift.framework in Frameworks */,
 				F389E27C1F8771700023BDC5 /* Neowallet.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F37FCFC21FABA9050016ABDD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F37FCFC31FABA9050016ABDD /* NeoSwift.framework in Frameworks */,
+				F37FCFC41FABA9050016ABDD /* Neowallet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +245,7 @@
 			children = (
 				75CDAE091F47F90800B05C51 /* NeoSwift.framework */,
 				75CDAE251F48680500B05C51 /* NeoSwiftTests.xctest */,
+				F37FCFCB1FABA9050016ABDD /* NeoSwiftCryptoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -331,6 +379,24 @@
 			productReference = 75CDAE251F48680500B05C51 /* NeoSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		F37FCFA11FABA9050016ABDD /* NeoSwiftCryptoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F37FCFC81FABA9050016ABDD /* Build configuration list for PBXNativeTarget "NeoSwiftCryptoTests" */;
+			buildPhases = (
+				F37FCFA41FABA9050016ABDD /* Sources */,
+				F37FCFC21FABA9050016ABDD /* Frameworks */,
+				F37FCFC51FABA9050016ABDD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F37FCFA21FABA9050016ABDD /* PBXTargetDependency */,
+			);
+			name = NeoSwiftCryptoTests;
+			productName = NeoSwiftTests;
+			productReference = F37FCFCB1FABA9050016ABDD /* NeoSwiftCryptoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -369,6 +435,7 @@
 				75CDAE081F47F90800B05C51 /* NeoSwift */,
 				75CDAE241F48680500B05C51 /* NeoSwiftTests */,
 				6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */,
+				F37FCFA11FABA9050016ABDD /* NeoSwiftCryptoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -389,6 +456,15 @@
 			files = (
 				75E8E4A61F4EAB5800DBCD8E /* NeoSwift.framework in Resources */,
 				6E67B16C1F9B24B200C566B6 /* nodes.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F37FCFC51FABA9050016ABDD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F37FCFC61FABA9050016ABDD /* NeoSwift.framework in Resources */,
+				F37FCFC71FABA9050016ABDD /* nodes.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,9 +550,42 @@
 				F3B816931F7437CC0023A54E /* SHA256.swift in Sources */,
 				F3FBEE4D1F7AC81A00CF06A1 /* Array+Util.swift in Sources */,
 				F3B816941F7437CC0023A54E /* AES.swift in Sources */,
-				F31C7FA21F6E83D70075688D /* NeoCryptoTests.swift in Sources */,
 				75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */,
 				7575ADF61F602C590077007B /* NeoWalletTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F37FCFA41FABA9050016ABDD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F37FCFA51FABA9050016ABDD /* NEONetwork.swift in Sources */,
+				F37FCFA61FABA9050016ABDD /* Claims.swift in Sources */,
+				F37FCFA71FABA9050016ABDD /* Claim.swift in Sources */,
+				F37FCFA81FABA9050016ABDD /* NeoClient.swift in Sources */,
+				F37FCFA91FABA9050016ABDD /* AssetIdConstants.swift in Sources */,
+				F37FCFAA1FABA9050016ABDD /* WIF.swift in Sources */,
+				F37FCFAB1FABA9050016ABDD /* Block.swift in Sources */,
+				F37FCFAC1FABA9050016ABDD /* Script.swift in Sources */,
+				F37FCFAD1FABA9050016ABDD /* ValueIn.swift in Sources */,
+				F37FCFAE1FABA9050016ABDD /* ValueOut.swift in Sources */,
+				F37FCFAF1FABA9050016ABDD /* Balance.swift in Sources */,
+				F37FCFB01FABA9050016ABDD /* Transaction.swift in Sources */,
+				F37FCFB11FABA9050016ABDD /* NEP2.swift in Sources */,
+				F37FCFB21FABA9050016ABDD /* TransactionAttritbute.swift in Sources */,
+				F37FCFB31FABA9050016ABDD /* Asset.swift in Sources */,
+				F37FCFB41FABA9050016ABDD /* AccountState.swift in Sources */,
+				F37FCFB51FABA9050016ABDD /* TransactionHistory.swift in Sources */,
+				F37FCFB61FABA9050016ABDD /* Account.swift in Sources */,
+				F37FCFB71FABA9050016ABDD /* PBKDF2.swift in Sources */,
+				F37FCFB81FABA9050016ABDD /* scrypt.swift in Sources */,
+				F37FCFB91FABA9050016ABDD /* Peer.swift in Sources */,
+				F37FCFBA1FABA9050016ABDD /* Base58.swift in Sources */,
+				F37FCFBB1FABA9050016ABDD /* Data+Util.swift in Sources */,
+				F37FCFBC1FABA9050016ABDD /* SHA256.swift in Sources */,
+				F37FCFBD1FABA9050016ABDD /* Array+Util.swift in Sources */,
+				F37FCFBE1FABA9050016ABDD /* AES.swift in Sources */,
+				F37FCFBF1FABA9050016ABDD /* NeoCryptoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +596,11 @@
 			isa = PBXTargetDependency;
 			target = 75CDAE081F47F90800B05C51 /* NeoSwift */;
 			targetProxy = 75CDAE2B1F48680500B05C51 /* PBXContainerItemProxy */;
+		};
+		F37FCFA21FABA9050016ABDD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75CDAE081F47F90800B05C51 /* NeoSwift */;
+			targetProxy = F37FCFA31FABA9050016ABDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -687,13 +801,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = NeoSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -713,6 +827,47 @@
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F37FCFC91FABA9050016ABDD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = "NeoSwiftTests copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F37FCFCA1FABA9050016ABDD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = "NeoSwiftTests copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -753,6 +908,15 @@
 			buildConfigurations = (
 				75CDAE2E1F48680500B05C51 /* Debug */,
 				75CDAE2F1F48680500B05C51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F37FCFC81FABA9050016ABDD /* Build configuration list for PBXNativeTarget "NeoSwiftCryptoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F37FCFC91FABA9050016ABDD /* Debug */,
+				F37FCFCA1FABA9050016ABDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

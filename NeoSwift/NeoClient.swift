@@ -386,7 +386,7 @@ public class NeoClient {
                         completion(.failure(.invalidData))
                         return
                 }
-                
+				
                 let result = NeoClientResult.success(assets)
                 completion(result)
             }
