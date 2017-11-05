@@ -25,15 +25,13 @@ public struct StackEntry: Decodable {
     
     public init(type: VMOutputType, value: Any) {
         self.type = type
+        guard let stringValue = value as? String else {
+            fatalError("Unknown output from the VM")
+        }
         if type == .byteArray {
-            guard let hex = value as? String else {
-                fatalError("Unknown output from the vm")
-            }
-            self.hexDataValue = hex
+            self.hexDataValue = stringValue
         } else {
-            guard let int = value as? Int else {
-                fatalError("Unknown output from the vm")
-            }
+            let int = Int(stringValue) ?? 0
             self.intValue = int
         }
     }

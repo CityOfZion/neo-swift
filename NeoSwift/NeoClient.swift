@@ -522,9 +522,12 @@ public class NeoClient {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(let result):
-                print(result)
-                completion(.success(result as! NEP5Token))
+            case .success(let contractResult):
+                guard let token = NEP5Token(from: contractResult.stack) else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                completion(.success(token))
             }
         }
     }

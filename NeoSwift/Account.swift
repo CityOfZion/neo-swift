@@ -313,6 +313,7 @@ public class Account {
         guard let tokenScriptHash = NEP5Token.tokens[token] as? String else {
             return 0 //maybe make this error or seomething
         }
-        scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args[accountAddrScriptHash.fullHexString])
+        return 0
+       // scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args[accountAddrScriptHash.fullHexString])
     }
 }
