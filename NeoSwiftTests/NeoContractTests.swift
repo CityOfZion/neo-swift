@@ -113,5 +113,23 @@ class NeoContractTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testNEP5Balance() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        //get info
+        client.getTokenBalance("RPX", address: "ATW5cutjrtr3UWp6wUeNVSi9L89a8ApAPx") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let result):
+                print(result)
+                assert(result > 0)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
 }
 

@@ -531,6 +531,31 @@ public class NeoClient {
             }
         }
     }
+    
+    public func getTokenBalance(_ token: String, address: String, completion: @escaping(NeoClientResult<Int>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        guard let tokenScriptHash = NEP5Token.tokens[token] else {
+            completion(.success(0))
+            return
+        }
+        
+        scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
+        print (scriptBuilder.rawHexString)
+        NeoClient(network: network).invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let balanceData = response.stack[0].hexDataValue ?? ""
+                if balanceData == "" {
+                    completion(.success(0))
+                    return
+                }
+                let balance = UInt64(littleEndian: balanceData.dataWithHexString().withUnsafeBytes { $0.pointee })
+                completion(.success(Int(balance / 100000000)))
+            }
+        }
+    }
 
     
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
