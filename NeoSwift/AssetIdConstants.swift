@@ -17,3 +17,10 @@ func toByteArray<T>(_ value: T) -> [UInt8] {
     return withUnsafeBytes(of: &value) { Array($0) }
 }
 
+func toByteArrayWithoutTrailingZeros<T>(_ value: T) -> [UInt8] {
+    var value = value
+    var arr = withUnsafeBytes(of: &value) { Array($0) }
+    arr.removeTrailingZeros()
+    return arr
+}
+
