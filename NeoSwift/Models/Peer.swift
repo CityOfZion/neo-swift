@@ -6,8 +6,6 @@
 //  Copyright © 2017 drei. All rights reserved.
 //
 
-import UIKit
-
 public struct Peer: Codable {
 
     public var address: String

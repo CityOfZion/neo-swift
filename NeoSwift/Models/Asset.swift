@@ -6,8 +6,6 @@
 //  Copyright © 2017 drei. All rights reserved.
 //
 
-import UIKit
-
 public struct AssetName: Codable {
     
     public var languageCode: String
