@@ -91,9 +91,16 @@ public class NeoClient {
         case getAccountState = "getaccountstate"
         case getAssetState = "getassetstate"
         case getPeers = "getpeers"
+        case invokeFunction = "invokefunction"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
+    }
+    
+    enum NEP5Method: String {
+        case balanceOf = "balanceOf"
+        case decimal = "decimal"
+        case symbol = "symbol"
     }
     
     enum apiURL: String {
@@ -531,6 +538,41 @@ public class NeoClient {
                     return
                 }
                 let result = NeoClientResult.success(node)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getNEP5TokenBalance(for address: String, tokenHash: String, completion: @escaping (NeoClientResult<TokenBalance>) -> ()) {
+        //need to fetch decimals and cache it
+        var params:[Any] = []
+        params.append(tokenHash)
+        params.append(NEP5Method.balanceOf.rawValue)
+        var args:[String:String] = [:]
+        args["type"] = "Hash160"
+        args["value"] = address.hash160()
+        params.append([args])
+        print(params.description)
+        sendRequest(.invokeFunction, params: params) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                print(response)
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let invokeResponse = try? decoder.decode(BalanceOfResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                if invokeResponse.stack?.count == 1 {
+                    let v = invokeResponse.stack?.first
+                    //NEO system is little endian. The hex returns here is little endian byte array so we have to reverse it to BigEndian
+                    let tokenAmount = v!.value!.littleEndianHexToUInt
+                    print(tokenAmount)
+                }
+                let tokenBalance = TokenBalance(amount: 10)
+                let result = NeoClientResult.success(tokenBalance)
                 completion(result)
             }
         }
