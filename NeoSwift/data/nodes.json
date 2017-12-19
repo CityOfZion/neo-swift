@@ -52,10 +52,15 @@
 				"peercount": 0
 			},
 			{
-				"url": "http://api.otcgo.cn:10332",
+				"url": "http://node1.o3.network:10332",
 				"blockcount": 0,
 				"peercount": 0
-			}
+			},
+            {
+                "url": "http://node2.o3.network:10332",
+                "blockcount": 0,
+                "peercount": 0
+            }
 		]
 	},
 	"test": {

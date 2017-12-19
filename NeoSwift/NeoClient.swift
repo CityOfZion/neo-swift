@@ -94,6 +94,7 @@ public class NeoClient {
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
+        case invokeContract = "invokescript"
     }
     
     enum apiURL: String {
@@ -116,15 +117,6 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
-        }
-        
-        self.getBestNode() { result in
-            switch result {
-            case .failure:
-                fatalError("Could not initialize Neo Client")
-            case .success(let value):
-                self.seed = value
-            }
         }
     }
     
@@ -500,6 +492,72 @@ public class NeoClient {
         }
     }
     
+    public func invokeContract(with script: String, completion: @escaping(NeoClientResult<ContractResult>) -> ()) {
+        sendRequest(.invokeContract, params: [script]) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                print (response)
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let contractResult = try? decoder.decode(ContractResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(contractResult)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getTokenInfo(with scriptHash: String, completion: @escaping(NeoClientResult<NEP5Token>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "name")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "symbol")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "decimals")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "totalSupply")
+        invokeContract(with: scriptBuilder.rawHexString) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let contractResult):
+                guard let token = NEP5Token(from: contractResult.stack) else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                completion(.success(token))
+            }
+        }
+    }
+    
+    public func getTokenBalance(_ token: String, address: String, completion: @escaping(NeoClientResult<Int>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        guard let tokenScriptHash = NEP5Token.tokens[token] else {
+            completion(.success(0))
+            return
+        }
+        
+        scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
+        print (scriptBuilder.rawHexString)
+        NeoClient(network: network).invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let balanceData = response.stack[0].hexDataValue ?? ""
+                if balanceData == "" {
+                    completion(.success(0))
+                    return
+                }
+                let balance = UInt64(littleEndian: balanceData.dataWithHexString().withUnsafeBytes { $0.pointee })
+                completion(.success(Int(balance / 100000000)))
+            }
+        }
+    }
+
+    
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {
@@ -535,5 +593,4 @@ public class NeoClient {
             }
         }
     }
-    
 }

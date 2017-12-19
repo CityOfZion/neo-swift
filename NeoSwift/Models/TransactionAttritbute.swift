@@ -6,9 +6,7 @@
 //  Copyright © 2017 drei. All rights reserved.
 //
 
-import UIKit
-
-public class TransactionAttritbute: NSObject {
+public class TransactionAttritbute {
     
     enum AttributeError: Error {
         case TooLongDescription
