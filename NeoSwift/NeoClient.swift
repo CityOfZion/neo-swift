@@ -76,6 +76,7 @@ public class NeoClient {
     public static let sharedTest = NeoClient(network: .test)
     public static let sharedMain = NeoClient(network: .main)
     private init() {}
+    private let tokenInfoCache = NSCache<NSString, AnyObject>()
     
     enum RPCMethod: String {
         case getBestBlockHash = "getbestblockhash"
@@ -95,6 +96,7 @@ public class NeoClient {
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
+        case invokeContract = "invokescript"
     }
     
     enum NEP5Method: String {
@@ -123,15 +125,6 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
-        }
-        
-        self.getBestNode() { result in
-            switch result {
-            case .failure:
-                fatalError("Could not initialize Neo Client")
-            case .success(let value):
-                self.seed = value
-            }
         }
     }
     
@@ -507,6 +500,93 @@ public class NeoClient {
         }
     }
     
+    public func invokeContract(with script: String, completion: @escaping(NeoClientResult<ContractResult>) -> ()) {
+        sendRequest(.invokeContract, params: [script]) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                print (response)
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let contractResult = try? decoder.decode(ContractResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(contractResult)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getTokenInfo(with scriptHash: String, completion: @escaping(NeoClientResult<NEP5Token>) -> ()) {
+        let cacheKey: NSString = scriptHash as NSString
+        if let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token {
+            completion(.success(tokenInfo))
+            return
+        }
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "name")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "symbol")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "decimals")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "totalSupply")
+        invokeContract(with: scriptBuilder.rawHexString) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let contractResult):
+                guard let token = NEP5Token(from: contractResult.stack) else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                self.tokenInfoCache.setObject(token as AnyObject, forKey: cacheKey)
+                completion(.success(token))
+            }
+        }
+    }
+    
+    public func getTokenBalance(_ scriptHash: String, address: String, completion: @escaping(NeoClientResult<Double>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        let cacheKey: NSString = scriptHash as NSString
+        guard let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token else {
+            //Token info not in cache then fetch it.
+            self.getTokenInfo(with: scriptHash, completion: { result in
+                switch result {
+                 case .failure(let error):
+                    completion(.failure(error))
+                case .success:
+                   self.getTokenBalance(scriptHash, address: address, completion: completion)
+                    return
+                }
+            })
+            return
+        }
+        
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
+        NeoClient(network: network).invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                #if DEBUG
+                    print(response)
+                #endif
+                let balanceData = response.stack[0].hexDataValue ?? ""
+                if balanceData == "" {
+                    completion(.success(0))
+                    return
+                }
+                
+                let balance = Double(balanceData.littleEndianHexToUInt)
+                let divider = pow(Double(10), Double(tokenInfo.decimals))
+                let amount = balance / divider
+                completion(.success(amount))
+            }
+        }
+    }
+
+    
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {
@@ -542,40 +622,4 @@ public class NeoClient {
             }
         }
     }
-    
-    public func getNEP5TokenBalance(for address: String, tokenHash: String, completion: @escaping (NeoClientResult<TokenBalance>) -> ()) {
-        //need to fetch decimals and cache it
-        var params:[Any] = []
-        params.append(tokenHash)
-        params.append(NEP5Method.balanceOf.rawValue)
-        var args:[String:String] = [:]
-        args["type"] = "Hash160"
-        args["value"] = address.hash160()
-        params.append([args])
-        print(params.description)
-        sendRequest(.invokeFunction, params: params) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                let decoder = JSONDecoder()
-                print(response)
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let invokeResponse = try? decoder.decode(BalanceOfResult.self, from: data) else {
-                        completion(.failure(.invalidData))
-                        return
-                }
-                if invokeResponse.stack?.count == 1 {
-                    let v = invokeResponse.stack?.first
-                    //NEO system is little endian. The hex returns here is little endian byte array so we have to reverse it to BigEndian
-                    let tokenAmount = v!.value!.littleEndianHexToUInt
-                    print(tokenAmount)
-                }
-                let tokenBalance = TokenBalance(amount: 10)
-                let result = NeoClientResult.success(tokenBalance)
-                completion(result)
-            }
-        }
-    }
-    
 }

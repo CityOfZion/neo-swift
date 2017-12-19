@@ -29,6 +29,15 @@ extension Array where Element == UInt8 {
         return arrayUtil_convertArray(self, to: UInt32.self)
     }
     
+    mutating public func removeTrailingZeros() {
+        for i in (0..<self.endIndex).reversed() {
+            guard self[i] == 0 else {
+                break
+            }
+            self.remove(at: i)
+        }
+    }
+    
     func xor(other: [UInt8]) -> [UInt8] {
         assert(self.count == other.count)
         
