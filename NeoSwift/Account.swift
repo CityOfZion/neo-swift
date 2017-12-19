@@ -306,4 +306,6 @@ public class Account {
     public func exportEncryptedKey(with passphrase: String) -> String {
         return NEP2.encryptKey(self.privateKey.bytes, passphrase: passphrase, address: self.address)
     }
+    
+    
 }

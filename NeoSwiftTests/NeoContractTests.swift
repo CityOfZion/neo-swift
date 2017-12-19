@@ -114,17 +114,35 @@ class NeoContractTests: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
-    func testNEP5Balance() {
+    func testAphelionTokenInfo() {
         let exp = expectation(description: "Wait for NEP 5 response")
         let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
         //get info
-        client.getTokenBalance("RPX", address: "ATW5cutjrtr3UWp6wUeNVSi9L89a8ApAPx") { result in
+        client.getTokenInfo(with: "a0777c3ce2b169d4a23bcba4565e3225a0122d95") { result in
             switch result {
             case .failure:
                 assert(false)
             case .success(let result):
                 print(result)
-                assert(result > 0)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testNEP5Balance() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        //get info
+        let token = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9"
+        client.getTokenBalance(token, address: "AVUSCrS7HNTeY2J64DvpBsrttFArpWEqPR") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let result):
+                print(result)
+                XCTAssert(result > 0.0)
                 exp.fulfill()
                 return
             }

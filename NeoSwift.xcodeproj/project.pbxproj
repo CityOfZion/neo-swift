@@ -24,6 +24,8 @@
 		6E013E2E1F694B77006EE34F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
 		6E013E301F695337006EE34F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
 		6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
+		6E5747551FE7CE28004EB4C4 /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5747541FE7CE28004EB4C4 /* RIPEMD160.swift */; };
+		6E5747561FE7CEE3004EB4C4 /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5747541FE7CE28004EB4C4 /* RIPEMD160.swift */; };
 		6E67B16A1F9B22D800C566B6 /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
 		6E67B16B1F9B237700C566B6 /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
 		6E67B16C1F9B24B200C566B6 /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
@@ -120,6 +122,7 @@
 		6E013E2D1F694B77006EE34F /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		6E013E2F1F695337006EE34F /* AccountState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountState.swift; sourceTree = "<group>"; };
 		6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAttritbute.swift; sourceTree = "<group>"; };
+		6E5747541FE7CE28004EB4C4 /* RIPEMD160.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RIPEMD160.swift; sourceTree = "<group>"; };
 		6E67B16D1F9B368100C566B6 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "strip-frameworks.sh"; sourceTree = "<group>"; };
 		6EE8BB9B1F9B171100EF69D8 /* nodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nodes.json; sourceTree = "<group>"; };
@@ -181,6 +184,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6E0A713C1FE8AA4600027332 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		6E7E088A1F6E9BEC000B86A9 /* scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +224,7 @@
 				75CDAE261F48680500B05C51 /* NeoSwiftTests */,
 				75CDAE0A1F47F90800B05C51 /* Products */,
 				75E8E4971F4DBD5300DBCD8E /* Frameworks */,
+				6E0A713C1FE8AA4600027332 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -304,6 +315,7 @@
 				F359ED361F75B93900ED6E8E /* PBKDF2.swift */,
 				F31C7F0D1F6E75530075688D /* SHA256.swift */,
 				F359ED3A1F75BF2900ED6E8E /* scrypt.swift */,
+				6E5747541FE7CE28004EB4C4 /* RIPEMD160.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -452,6 +464,7 @@
 				75CDAE181F47FFDA00B05C51 /* Script.swift in Sources */,
 				7575ADF81F63B97B0077007B /* Claims.swift in Sources */,
 				75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */,
+				6E5747551FE7CE28004EB4C4 /* RIPEMD160.swift in Sources */,
 				6E013E301F695337006EE34F /* AccountState.swift in Sources */,
 				75670B8A1FA46ED100199380 /* ScriptBuilder.swift in Sources */,
 				75670B881FA46A7800199380 /* OpCodes.swift in Sources */,
@@ -512,6 +525,7 @@
 				F3B816941F7437CC0023A54E /* AES.swift in Sources */,
 				F31C7FA21F6E83D70075688D /* NeoCryptoTests.swift in Sources */,
 				75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */,
+				6E5747561FE7CEE3004EB4C4 /* RIPEMD160.swift in Sources */,
 				7575ADF61F602C590077007B /* NeoWalletTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
