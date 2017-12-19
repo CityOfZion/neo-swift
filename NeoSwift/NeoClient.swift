@@ -98,13 +98,7 @@ public class NeoClient {
         case getBalance = "getbalance"
         case invokeContract = "invokescript"
     }
-    
-    enum NEP5Method: String {
-        case balanceOf = "balanceOf"
-        case decimal = "decimal"
-        case symbol = "symbol"
-    }
-    
+
     enum apiURL: String {
         case getBalance = "address/balance/"
         case getClaims = "address/claims/"
