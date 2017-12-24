@@ -37,7 +37,7 @@ struct Base58 {
                 carry /= 58
                 i += 1
             }
-
+            
             assert(carry == 0)
             
             length = i
@@ -158,6 +158,10 @@ extension String {
         if checksum != calculatedChecksum { return nil }
         
         return bytes
+    }
+    
+    public var littleEndianHexToUInt: UInt {
+        return UInt(self.dataWithHexString().bytes.reversed().fullHexString,radix: 16)!
     }
     
 }

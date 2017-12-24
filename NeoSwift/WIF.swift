@@ -9,6 +9,16 @@
 import Foundation
     
 public extension String {
+    
+    
+    func hash160() -> String? {
+        //NEO Address hash160
+        //skip the first byte which is 0x17, revert it then convert to full hex
+        let bytes = self.base58CheckDecodedBytes!
+        let reverse = Data(bytes: bytes[1...bytes.count - 1].reversed())
+        return reverse.fullHexString
+    }
+    
     func hashFromAddress() -> String {
         let bytes = self.base58CheckDecodedBytes!
         let shortened = bytes[0...20] //need exactly twenty one bytes

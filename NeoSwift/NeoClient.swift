@@ -76,6 +76,7 @@ public class NeoClient {
     public static let sharedTest = NeoClient(network: .test)
     public static let sharedMain = NeoClient(network: .main)
     private init() {}
+    private let tokenInfoCache = NSCache<NSString, AnyObject>()
     
     enum RPCMethod: String {
         case getBestBlockHash = "getbestblockhash"
@@ -91,10 +92,17 @@ public class NeoClient {
         case getAccountState = "getaccountstate"
         case getAssetState = "getassetstate"
         case getPeers = "getpeers"
+        case invokeFunction = "invokefunction"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
         case invokeContract = "invokescript"
+    }
+    
+    enum NEP5Method: String {
+        case balanceOf = "balanceOf"
+        case decimal = "decimal"
+        case symbol = "symbol"
     }
     
     enum apiURL: String {
@@ -513,6 +521,11 @@ public class NeoClient {
     }
     
     public func getTokenInfo(with scriptHash: String, completion: @escaping(NeoClientResult<NEP5Token>) -> ()) {
+        let cacheKey: NSString = scriptHash as NSString
+        if let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token {
+            completion(.success(tokenInfo))
+            return
+        }
         let scriptBuilder = ScriptBuilder()
         scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "name")
         scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "symbol")
@@ -527,32 +540,48 @@ public class NeoClient {
                     completion(.failure(.invalidData))
                     return
                 }
+                self.tokenInfoCache.setObject(token as AnyObject, forKey: cacheKey)
                 completion(.success(token))
             }
         }
     }
     
-    public func getTokenBalance(_ token: String, address: String, completion: @escaping(NeoClientResult<Int>) -> ()) {
+    public func getTokenBalance(_ scriptHash: String, address: String, completion: @escaping(NeoClientResult<Double>) -> ()) {
         let scriptBuilder = ScriptBuilder()
-        guard let tokenScriptHash = NEP5Token.tokens[token] else {
-            completion(.success(0))
+        let cacheKey: NSString = scriptHash as NSString
+        guard let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token else {
+            //Token info not in cache then fetch it.
+            self.getTokenInfo(with: scriptHash, completion: { result in
+                switch result {
+                 case .failure(let error):
+                    completion(.failure(error))
+                case .success:
+                   self.getTokenBalance(scriptHash, address: address, completion: completion)
+                    return
+                }
+            })
             return
         }
         
-        scriptBuilder.pushContractInvoke(scriptHash: tokenScriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
-        print (scriptBuilder.rawHexString)
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
         NeoClient(network: network).invokeContract(with: scriptBuilder.rawHexString) { contractResult in
             switch contractResult {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let response):
+                #if DEBUG
+                    print(response)
+                #endif
                 let balanceData = response.stack[0].hexDataValue ?? ""
                 if balanceData == "" {
                     completion(.success(0))
                     return
                 }
-                let balance = UInt64(littleEndian: balanceData.dataWithHexString().withUnsafeBytes { $0.pointee })
-                completion(.success(Int(balance / 100000000)))
+                
+                let balance = Double(balanceData.littleEndianHexToUInt)
+                let divider = pow(Double(10), Double(tokenInfo.decimals))
+                let amount = balance / divider
+                completion(.success(amount))
             }
         }
     }
