@@ -79,6 +79,20 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
+    func createSharedSecret(publicKey: Data) -> Data?{
+        var error: NSError?
+        guard let wallet = GoNeowalletGeneratePublicKeyFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
+        return wallet.computeSharedSecret(publicKey)
+    }
+    
+    func encryptString(key: Data, text: String) -> String {
+        return GoNeowalletEncrypt(key, text)
+    }
+    
+    func decryptString(key: Data, text: String) -> String? {
+        return GoNeowalletDecrypt(key, text)
+    }
+    
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
         NeoClient(network: network).getAssets(for: self.address, params: []) { result in
             switch result {

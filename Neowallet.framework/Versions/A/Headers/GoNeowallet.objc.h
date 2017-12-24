@@ -27,11 +27,18 @@
 - (void)setWIF:(NSString*)v;
 - (NSData*)hashedSignature;
 - (void)setHashedSignature:(NSData*)v;
+- (NSData*)computeSharedSecret:(NSData*)publicKey;
 @end
+
+FOUNDATION_EXPORT NSString* GoNeowalletDecrypt(NSData* key, NSString* cryptoText);
+
+FOUNDATION_EXPORT NSString* GoNeowalletEncrypt(NSData* key, NSString* text);
 
 FOUNDATION_EXPORT GoNeowalletWallet* GoNeowalletGenerateFromWIF(NSString* wif, NSError** error);
 
 FOUNDATION_EXPORT GoNeowalletWallet* GoNeowalletGeneratePublicKeyFromPrivateKey(NSString* privateKey, NSError** error);
+
+FOUNDATION_EXPORT GoNeowalletWallet* GoNeowalletNewWallet(NSError** error);
 
 FOUNDATION_EXPORT NSData* GoNeowalletSign(NSData* data, NSString* key, NSError** error);
 
