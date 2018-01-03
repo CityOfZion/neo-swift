@@ -1,0 +1,4 @@
+framework module NeoSwift {
+    header "NeoSwift-Swift.h"
+    requires objc
+}
