@@ -171,7 +171,7 @@
 		6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "strip-frameworks.sh"; sourceTree = "<group>"; };
 		6E821F9F1FEF42730002A790 /* NEOECDH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEOECDH.swift; sourceTree = "<group>"; };
 		6EAE4ED91FFC619D000DC36F /* NeoSwift_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NeoSwift_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6EAE4EDA1FFC619E000DC36F /* NeoSwift copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "NeoSwift copy-Info.plist"; path = "/Users/apisit/O3Labs/github.com:cityofzion/neo-swift/NeoSwift copy-Info.plist"; sourceTree = "<absolute>"; };
+		6EAE4EDA1FFC619E000DC36F /* NeoSwift_macos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "NeoSwift_macos-Info.plist"; path = "/Users/apisit/O3Labs/github.com:cityofzion/neo-swift/NeoSwift_macos-Info.plist"; sourceTree = "<absolute>"; };
 		6EE8BB9B1F9B171100EF69D8 /* nodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nodes.json; sourceTree = "<group>"; };
 		6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
 		7505E3481FA76DD9007BAF89 /* ContractResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResult.swift; sourceTree = "<group>"; };
@@ -280,7 +280,7 @@
 				75CDAE0A1F47F90800B05C51 /* Products */,
 				75E8E4971F4DBD5300DBCD8E /* Frameworks */,
 				6E0A713C1FE8AA4600027332 /* Recovered References */,
-				6EAE4EDA1FFC619E000DC36F /* NeoSwift copy-Info.plist */,
+				6EAE4EDA1FFC619E000DC36F /* NeoSwift_macos-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -714,7 +714,7 @@
 					"$(PROJECT_DIR)",
 					"$(SDKROOT)",
 				);
-				INFOPLIST_FILE = "NeoSwift copy-Info.plist";
+				INFOPLIST_FILE = "NeoSwift_macos-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -749,7 +749,7 @@
 					"$(PROJECT_DIR)",
 					"$(SDKROOT)",
 				);
-				INFOPLIST_FILE = "NeoSwift copy-Info.plist";
+				INFOPLIST_FILE = "NeoSwift_macos-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
