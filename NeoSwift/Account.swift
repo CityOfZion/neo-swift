@@ -11,7 +11,8 @@ import Neowallet
 import Security
 
 public class Account {
-    public var network: Network = .test
+    //allow this to override the entire client not only the network
+    public var neoClient: NeoClient
     public var wif: String
     public var publicKey: Data
     public var privateKey: Data
@@ -34,6 +35,8 @@ public class Account {
         self.privateKey = wallet.privateKey()
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
+        //default to mainnet
+        self.neoClient = NeoClient.sharedMain
     }
     
     public init?(privateKey: String) {
@@ -44,6 +47,8 @@ public class Account {
         self.privateKey = privateKey.dataWithHexString()
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
+        //default to mainnet
+        self.neoClient = NeoClient.sharedMain
     }
     
     public init?(encryptedPrivateKey: String, passphrase: String) {
@@ -56,7 +61,8 @@ public class Account {
         self.privateKey = Data(decryptedKey)
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
-        
+        //default to mainnet
+        self.neoClient = NeoClient.sharedMain
         guard NEP2.verify(addressHash: hash, address: wallet.address()) else { return nil }
     }
     
@@ -77,6 +83,8 @@ public class Account {
         self.privateKey = pkeyData
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
+        //default to mainnet
+        self.neoClient = NeoClient.sharedMain
     }
     
     func createSharedSecret(publicKey: Data) -> Data?{
@@ -94,7 +102,7 @@ public class Account {
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
-        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
+        neoClient.getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
@@ -241,15 +249,15 @@ public class Account {
         return finalPayload
         
     }
-
+    
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient(network: network).getAssets(for: self.address, params: []) { result in
+        neoClient.getAssets(for: self.address, params: []) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
             case .success(let assets):
                 let payload = self.generateSendTransactionPayload(asset: asset, amount: amount, toAddress: toAddress, assets: assets, attributes: attributes)
-                NeoClient(network: self.network).sendRawTransaction(with: payload) { (result) in
+                self.neoClient.sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)
@@ -299,13 +307,13 @@ public class Account {
     }
     
     public func claimGas(completion: @escaping(Bool?, Error?) -> Void) {
-        NeoClient(network: network).getClaims(address: self.address) { result in
+        neoClient.getClaims(address: self.address) { result in
             switch result {
             case .failure(let error):
                 completion(nil, error)
             case .success(let claims):
                 let claimData = self.generateClaimTransactionPayload(claims: claims)
-                NeoClient(network: self.network).sendRawTransaction(with: claimData) { (result) in
+                self.neoClient.sendRawTransaction(with: claimData) { (result) in
                     switch result {
                     case .failure(let error):
                         completion(nil, error)
@@ -316,7 +324,7 @@ public class Account {
             }
         }
     }
-
+    
     public func exportEncryptedKey(with passphrase: String) -> String {
         return NEP2.encryptKey(self.privateKey.bytes, passphrase: passphrase, address: self.address)
     }
