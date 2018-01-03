@@ -398,4 +398,19 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testHash160() {
+        let hashedAddress = "AJShjraX4iMJjwVt8WYYzZyGvDMxw6Xfbe".hash160()
+        let expected = "bfc469dd56932409677278f6b7422f3e1f34481d"
+        print(hashedAddress)
+        XCTAssert(hashedAddress == expected)
+    }
+    
+    func testLittleEndianHexToUInt() {
+        let hex = "00e1f505"
+        let expected = 100000000
+        print(hex.littleEndianHexToUInt)
+        XCTAssert(hex.littleEndianHexToUInt == expected)
+    }
+ 
 }
