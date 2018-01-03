@@ -33,6 +33,40 @@
 		6E67B16F1F9B37B400C566B6 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E67B16D1F9B368100C566B6 /* Peer.swift */; };
 		6E7E088C1F6E9C02000B86A9 /* strip-frameworks.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */; };
 		6E821FA01FEF42730002A790 /* NEOECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E821F9F1FEF42730002A790 /* NEOECDH.swift */; };
+		6EAE4EB01FFC619D000DC36F /* NEP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F0E1981F8E960500AAF53E /* NEP2.swift */; };
+		6EAE4EB11FFC619D000DC36F /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0B1F6E75530075688D /* Base58.swift */; };
+		6EAE4EB21FFC619D000DC36F /* Data+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0C1F6E75530075688D /* Data+Util.swift */; };
+		6EAE4EB31FFC619D000DC36F /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
+		6EAE4EB41FFC619D000DC36F /* NEP5Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0A39B1FA5F136009E45CB /* NEP5Token.swift */; };
+		6EAE4EB51FFC619D000DC36F /* SHA256.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0D1F6E75530075688D /* SHA256.swift */; };
+		6EAE4EB61FFC619D000DC36F /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E67B16D1F9B368100C566B6 /* Peer.swift */; };
+		6EAE4EB71FFC619D000DC36F /* Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE171F47FFDA00B05C51 /* Script.swift */; };
+		6EAE4EB81FFC619D000DC36F /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF71F63B97B0077007B /* Claims.swift */; };
+		6EAE4EB91FFC619D000DC36F /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
+		6EAE4EBA1FFC619D000DC36F /* RIPEMD160.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5747541FE7CE28004EB4C4 /* RIPEMD160.swift */; };
+		6EAE4EBB1FFC619D000DC36F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
+		6EAE4EBC1FFC619D000DC36F /* ScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75670B891FA46ED100199380 /* ScriptBuilder.swift */; };
+		6EAE4EBD1FFC619D000DC36F /* OpCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75670B871FA46A7800199380 /* OpCodes.swift */; };
+		6EAE4EBE1FFC619D000DC36F /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE151F47F96000B05C51 /* Block.swift */; };
+		6EAE4EBF1FFC619D000DC36F /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
+		6EAE4EC01FFC619D000DC36F /* scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED3A1F75BF2900ED6E8E /* scrypt.swift */; };
+		6EAE4EC11FFC619D000DC36F /* Claim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7575ADF91F63B98D0077007B /* Claim.swift */; };
+		6EAE4EC21FFC619D000DC36F /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753518DD1F6E365500453245 /* TransactionHistory.swift */; };
+		6EAE4EC31FFC619D000DC36F /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
+		6EAE4EC41FFC619D000DC36F /* ValueOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1B1F48036C00B05C51 /* ValueOut.swift */; };
+		6EAE4EC51FFC619D000DC36F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7505E3481FA76DD9007BAF89 /* ContractResult.swift */; };
+		6EAE4EC61FFC619D000DC36F /* ValueIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE191F4801F500B05C51 /* ValueIn.swift */; };
+		6EAE4EC71FFC619D000DC36F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
+		6EAE4EC81FFC619D000DC36F /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631AD41F5013BC008546CF /* Account.swift */; };
+		6EAE4EC91FFC619D000DC36F /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE1D1F4803E200B05C51 /* Transaction.swift */; };
+		6EAE4ECA1FFC619D000DC36F /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADC1F516D94008546CF /* Balance.swift */; };
+		6EAE4ECB1FFC619D000DC36F /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F359ED361F75B93900ED6E8E /* PBKDF2.swift */; };
+		6EAE4ECC1FFC619D000DC36F /* AssetIdConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75631ADA1F5162F6008546CF /* AssetIdConstants.swift */; };
+		6EAE4ECD1FFC619D000DC36F /* NeoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE301F48750E00B05C51 /* NeoClient.swift */; };
+		6EAE4ECE1FFC619D000DC36F /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
+		6EAE4ED01FFC619D000DC36F /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
+		6EAE4ED31FFC619D000DC36F /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
+		6EAE4ED41FFC619D000DC36F /* strip-frameworks.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */; };
 		6EE8BB9D1F9B18D000EF69D8 /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
 		7505E3491FA76DD9007BAF89 /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7505E3481FA76DD9007BAF89 /* ContractResult.swift */; };
 		753518DE1F6E365500453245 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753518DD1F6E365500453245 /* TransactionHistory.swift */; };
@@ -108,6 +142,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		6EAE4ED51FFC619D000DC36F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75631AD11F4FB8B6008546CF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -127,6 +170,8 @@
 		6E67B16D1F9B368100C566B6 /* Peer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "strip-frameworks.sh"; sourceTree = "<group>"; };
 		6E821F9F1FEF42730002A790 /* NEOECDH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEOECDH.swift; sourceTree = "<group>"; };
+		6EAE4ED91FFC619D000DC36F /* NeoSwift_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NeoSwift_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EAE4EDA1FFC619E000DC36F /* NeoSwift copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "NeoSwift copy-Info.plist"; path = "/Users/apisit/O3Labs/github.com:cityofzion/neo-swift/NeoSwift copy-Info.plist"; sourceTree = "<absolute>"; };
 		6EE8BB9B1F9B171100EF69D8 /* nodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nodes.json; sourceTree = "<group>"; };
 		6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
 		7505E3481FA76DD9007BAF89 /* ContractResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResult.swift; sourceTree = "<group>"; };
@@ -166,6 +211,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6EAE4ECF1FFC619D000DC36F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EAE4ED01FFC619D000DC36F /* Neowallet.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75CDAE051F47F90800B05C51 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +280,7 @@
 				75CDAE0A1F47F90800B05C51 /* Products */,
 				75E8E4971F4DBD5300DBCD8E /* Frameworks */,
 				6E0A713C1FE8AA4600027332 /* Recovered References */,
+				6EAE4EDA1FFC619E000DC36F /* NeoSwift copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -235,6 +289,7 @@
 			children = (
 				75CDAE091F47F90800B05C51 /* NeoSwift.framework */,
 				75CDAE251F48680500B05C51 /* NeoSwiftTests.xctest */,
+				6EAE4ED91FFC619D000DC36F /* NeoSwift_macos.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -326,6 +381,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		6EAE4ED11FFC619D000DC36F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75CDAE061F47F90800B05C51 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,6 +398,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		6EAE4EAE1FFC619D000DC36F /* NeoSwift_macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6EAE4ED61FFC619D000DC36F /* Build configuration list for PBXNativeTarget "NeoSwift_macos" */;
+			buildPhases = (
+				6EAE4EAF1FFC619D000DC36F /* Sources */,
+				6EAE4ECF1FFC619D000DC36F /* Frameworks */,
+				6EAE4ED11FFC619D000DC36F /* Headers */,
+				6EAE4ED21FFC619D000DC36F /* Resources */,
+				6EAE4ED51FFC619D000DC36F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NeoSwift_macos;
+			productName = NeoSwift;
+			productReference = 6EAE4ED91FFC619D000DC36F /* NeoSwift_macos.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		75CDAE081F47F90800B05C51 /* NeoSwift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75CDAE111F47F90800B05C51 /* Build configuration list for PBXNativeTarget "NeoSwift" */;
@@ -411,11 +492,21 @@
 				75CDAE081F47F90800B05C51 /* NeoSwift */,
 				75CDAE241F48680500B05C51 /* NeoSwiftTests */,
 				6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */,
+				6EAE4EAE1FFC619D000DC36F /* NeoSwift_macos */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6EAE4ED21FFC619D000DC36F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EAE4ED31FFC619D000DC36F /* nodes.json in Resources */,
+				6EAE4ED41FFC619D000DC36F /* strip-frameworks.sh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75CDAE071F47F90800B05C51 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,6 +544,44 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6EAE4EAF1FFC619D000DC36F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EAE4EB01FFC619D000DC36F /* NEP2.swift in Sources */,
+				6EAE4EB11FFC619D000DC36F /* Base58.swift in Sources */,
+				6EAE4EB21FFC619D000DC36F /* Data+Util.swift in Sources */,
+				6EAE4EB31FFC619D000DC36F /* NEONetwork.swift in Sources */,
+				6EAE4EB41FFC619D000DC36F /* NEP5Token.swift in Sources */,
+				6EAE4EB51FFC619D000DC36F /* SHA256.swift in Sources */,
+				6EAE4EB61FFC619D000DC36F /* Peer.swift in Sources */,
+				6EAE4EB71FFC619D000DC36F /* Script.swift in Sources */,
+				6EAE4EB81FFC619D000DC36F /* Claims.swift in Sources */,
+				6EAE4EB91FFC619D000DC36F /* WIF.swift in Sources */,
+				6EAE4EBA1FFC619D000DC36F /* RIPEMD160.swift in Sources */,
+				6EAE4EBB1FFC619D000DC36F /* AccountState.swift in Sources */,
+				6EAE4EBC1FFC619D000DC36F /* ScriptBuilder.swift in Sources */,
+				6EAE4EBD1FFC619D000DC36F /* OpCodes.swift in Sources */,
+				6EAE4EBE1FFC619D000DC36F /* Block.swift in Sources */,
+				6EAE4EBF1FFC619D000DC36F /* AES.swift in Sources */,
+				6EAE4EC01FFC619D000DC36F /* scrypt.swift in Sources */,
+				6EAE4EC11FFC619D000DC36F /* Claim.swift in Sources */,
+				6EAE4EC21FFC619D000DC36F /* TransactionHistory.swift in Sources */,
+				6EAE4EC31FFC619D000DC36F /* TransactionAttritbute.swift in Sources */,
+				6EAE4EC41FFC619D000DC36F /* ValueOut.swift in Sources */,
+				6EAE4EC51FFC619D000DC36F /* ContractResult.swift in Sources */,
+				6EAE4EC61FFC619D000DC36F /* ValueIn.swift in Sources */,
+				6EAE4EC71FFC619D000DC36F /* Asset.swift in Sources */,
+				6EAE4EC81FFC619D000DC36F /* Account.swift in Sources */,
+				6EAE4EC91FFC619D000DC36F /* Transaction.swift in Sources */,
+				6EAE4ECA1FFC619D000DC36F /* Balance.swift in Sources */,
+				6EAE4ECB1FFC619D000DC36F /* PBKDF2.swift in Sources */,
+				6EAE4ECC1FFC619D000DC36F /* AssetIdConstants.swift in Sources */,
+				6EAE4ECD1FFC619D000DC36F /* NeoClient.swift in Sources */,
+				6EAE4ECE1FFC619D000DC36F /* Array+Util.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75CDAE041F47F90800B05C51 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,6 +680,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
 			};
 			name = Debug;
 		};
@@ -560,6 +691,77 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_BITCODE = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
+			};
+			name = Release;
+		};
+		6EAE4ED71FFC619D000DC36F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NeoSwift",
+					"$(PROJECT_DIR)",
+					"$(SDKROOT)",
+				);
+				INFOPLIST_FILE = "NeoSwift copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.13;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "x86_64 i386";
+			};
+			name = Debug;
+		};
+		6EAE4ED81FFC619D000DC36F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/NeoSwift",
+					"$(PROJECT_DIR)",
+					"$(SDKROOT)",
+				);
+				INFOPLIST_FILE = "NeoSwift copy-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks @loader_path/../Frameworks @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.13;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "x86_64 i386";
 			};
 			name = Release;
 		};
@@ -679,6 +881,7 @@
 		75CDAE121F47F90800B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -699,19 +902,21 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos11.0;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		75CDAE131F47F90800B05C51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -732,12 +937,13 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos11.0;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -789,6 +995,15 @@
 			buildConfigurations = (
 				6E7E08871F6E9AE2000B86A9 /* Debug */,
 				6E7E08881F6E9AE2000B86A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6EAE4ED61FFC619D000DC36F /* Build configuration list for PBXNativeTarget "NeoSwift_macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EAE4ED71FFC619D000DC36F /* Debug */,
+				6EAE4ED81FFC619D000DC36F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
