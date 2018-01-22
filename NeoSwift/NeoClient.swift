@@ -573,7 +573,7 @@ public class NeoClient {
         }
         
         scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
-        NeoClient(network: network).invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+        self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
             switch contractResult {
             case .failure(let error):
                 completion(.failure(error))
