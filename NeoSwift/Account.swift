@@ -364,8 +364,10 @@ public class Account {
             case .success(let assets):
                 let scriptBytes = self.buildNEP5TransferScript(scriptHash: tokenContractHash,
                                                           fromAddress: self.address, toAddress: toAddress, amount: amount)
-                let payload = self.generateInvokeTransactionPayload(assets: assets, script: scriptBytes.hexString,
+                var payload = self.generateInvokeTransactionPayload(assets: assets, script: scriptBytes.fullHexString,
                                                                     contractAddress: tokenContractHash)
+                payload = payload + tokenContractHash.dataWithHexString().bytes
+                print(payload.fullHexString)
                 self.neoClient.sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):

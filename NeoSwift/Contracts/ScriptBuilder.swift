@@ -102,7 +102,7 @@ public class ScriptBuilder {
             pushOPCode(.TAILCALL)
         } else {
             pushOPCode(.APPCALL)
-            let toAppendBytes = scriptHash.dataWithHexString().bytes
+            let toAppendBytes = scriptHash.dataWithHexString().bytes.reversed()
             rawBytes = rawBytes + toAppendBytes
         }
     }

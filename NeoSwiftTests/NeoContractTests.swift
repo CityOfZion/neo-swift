@@ -62,6 +62,16 @@ class NeoContractTests: XCTestCase {
                 "scriptHash": "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9",
                 "operation": "name",
                 "args": nil
+            ],
+            [
+                "script": "0800e1f505000000001458218b796504d6bde39ba805f92dcda64eae2d8c1458218b796504d6bde39ba805f92dcda64eae2d8c53c1087472616e7366657267cf9472821400ceb06ca780c2a937fec5bbec51b9",
+                "scriptHash": "b951ecbbc5fe37a9c280a76cb0ce0014827294cf",
+                "operation": "transfer",
+                "args":
+                    [100000000,
+                     "58218b796504d6bde39ba805f92dcda64eae2d8c",
+                     "58218b796504d6bde39ba805f92dcda64eae2d8c"
+                ]
             ]
         ]
         let neoScript = ScriptBuilder()
