@@ -187,7 +187,8 @@ public class Account {
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func packRawTransactionBytes(asset: AssetId, with inputData: Data, runningAmount: Double, toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
+    func packRawTransactionBytes(payloadPrefix: [UInt8], asset: AssetId, with inputData: Data, runningAmount: Double,
+                                 toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
         let inputDataBytes = inputData.bytes
         let needsTwoOutputTransactions = runningAmount != toSendAmount
         
@@ -202,7 +203,7 @@ public class Account {
             }
         }
         
-        var payload: [UInt8] = [0x80, 0x00, numberOfAttributes]
+        var payload: [UInt8] = payloadPrefix +  [numberOfAttributes]
         payload = payload + attributesPayload + inputDataBytes
         
         if needsTwoOutputTransactions {
@@ -242,13 +243,16 @@ public class Account {
     func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets, attributes: [TransactionAttritbute]? = nil) -> Data {
         var error: NSError?
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
-        let rawTransaction = packRawTransactionBytes(asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
+        let payloadPrefix: [UInt8] = [0x80, 0x00]
+        let rawTransaction = packRawTransactionBytes(payloadPrefix: payloadPrefix,
+                                                     asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
                                                      toSendAmount: amount, toAddress: toAddress, attributes: attributes)
         let signatureData = NeowalletSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
     }
+    
     
     public func sendAssetTransaction(asset: AssetId, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
         neoClient.getAssets(for: self.address, params: []) { result in
@@ -325,9 +329,56 @@ public class Account {
         }
     }
     
+    private func generateInvokeTransactionPayload(assets: Assets, script: String, contractAddress: String) -> Data {
+        var error: NSError?
+        
+        let inputData = getInputsNecessaryToSendAsset(asset: AssetId.gasAssetId, amount: 0.00000001, assets: assets)
+        let payloadPrefix = [0xd1, 0x00] + script.dataWithHexString().bytes
+        let rawTransaction = packRawTransactionBytes(payloadPrefix: payloadPrefix,
+                                                     asset: AssetId.gasAssetId, with: inputData.payload!,
+                                                     runningAmount: inputData.totalAmount!,
+                                                     toSendAmount: 0.00000001, toAddress: self.address, attributes: [])
+        
+        let signatureData = NeowalletSign(rawTransaction, privateKey.fullHexString, &error)
+        let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
+        return finalPayload
+    }
+    
+    private func buildNEP5TransferScript(scriptHash: String, fromAddress: String,
+                                        toAddress: String, amount: Double) -> [UInt8] {
+        let amountToSendInMemory = Int(amount * 100000000)
+        let fromAddressHash = fromAddress.hashFromAddress()
+        let toAddressHash = toAddress.hashFromAddress()
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "transfer",
+                                         args: [amountToSendInMemory, toAddressHash, fromAddressHash])
+        var script = scriptBuilder.rawBytes
+        return [UInt8(script.count)] + script
+    }
+    
+    public func sendNep5Token(tokenContractHash: String, amount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?) -> Void) {
+        neoClient.getAssets(for: self.address, params: []) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let assets):
+                let scriptBytes = self.buildNEP5TransferScript(scriptHash: tokenContractHash,
+                                                          fromAddress: self.address, toAddress: toAddress, amount: amount)
+                let payload = self.generateInvokeTransactionPayload(assets: assets, script: scriptBytes.hexString,
+                                                                    contractAddress: tokenContractHash)
+                self.neoClient.sendRawTransaction(with: payload) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        completion(nil, error)
+                    case .success(let response):
+                        completion(response, nil)
+                    }
+                }
+            }
+        }
+    }
+    
     public func exportEncryptedKey(with passphrase: String) -> String {
         return NEP2.encryptKey(self.privateKey.bytes, passphrase: passphrase, address: self.address)
     }
-    
-    
 }
