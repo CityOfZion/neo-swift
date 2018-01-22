@@ -36,7 +36,7 @@ public class ScriptBuilder {
             let rawValue = OpCode.PUSH1.rawValue + UInt8(intValue) - 1
             rawBytes.append(rawValue)
         default:
-            let intBytes = toByteArrayWithoutTrailingZeros(intValue)
+            let intBytes = toByteArray(intValue)
             pushData(intBytes.fullHexString)
         }
     }
@@ -102,8 +102,8 @@ public class ScriptBuilder {
             pushOPCode(.TAILCALL)
         } else {
             pushOPCode(.APPCALL)
-            let reversed = scriptHash.dataWithHexString().bytes.reversed()
-            rawBytes = rawBytes + reversed
+            let toAppendBytes = scriptHash.dataWithHexString().bytes
+            rawBytes = rawBytes + toAppendBytes
         }
     }
 }
