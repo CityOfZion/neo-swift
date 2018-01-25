@@ -516,7 +516,10 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                print (response)
+                if response["result"] == nil {
+                    completion(.failure(NeoClientError.invalidData))
+                    return
+                }
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
                     let contractResult = try? decoder.decode(ContractResult.self, from: data) else {
                         completion(.failure(.invalidData))
