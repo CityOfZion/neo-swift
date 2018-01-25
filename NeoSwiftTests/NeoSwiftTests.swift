@@ -277,6 +277,22 @@ class NeoSwiftTests: XCTestCase {
         waitForExpectations(timeout: 60, handler: nil)
     }
     
+    func testSendNEP5Transaction() {
+        let REAL_WIF_DELETE  = "" //INSERT A WIF HERE IF YOU WANNA TEST
+        guard let accountA = Account(wif: REAL_WIF_DELETE) else {
+            assert(false)
+            return
+        }
+        
+        let exp1 = expectation(description: "Wait for transaction one to go through")
+        
+        accountA.sendNep5Token(tokenContractHash: "0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5", amount: 1, toAddress: accountA.address) { success, error in
+            assert(success ?? false)
+            exp1.fulfill()
+        }
+        waitForExpectations(timeout: 60, handler: nil)
+    }
+    
     func testGetClaimsTransaction() {
         let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
         guard let accountA = Account(wif: wifPersonA) else {

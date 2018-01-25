@@ -62,6 +62,16 @@ class NeoContractTests: XCTestCase {
                 "scriptHash": "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9",
                 "operation": "name",
                 "args": nil
+            ],
+            [
+                "script": "0800e1f505000000001458218b796504d6bde39ba805f92dcda64eae2d8c1458218b796504d6bde39ba805f92dcda64eae2d8c53c1087472616e7366657267cf9472821400ceb06ca780c2a937fec5bbec51b9",
+                "scriptHash": "b951ecbbc5fe37a9c280a76cb0ce0014827294cf",
+                "operation": "transfer",
+                "args":
+                    [100000000,
+                     "58218b796504d6bde39ba805f92dcda64eae2d8c",
+                     "58218b796504d6bde39ba805f92dcda64eae2d8c"
+                ]
             ]
         ]
         let neoScript = ScriptBuilder()
@@ -143,6 +153,24 @@ class NeoContractTests: XCTestCase {
             case .success(let result):
                 print(result)
                 XCTAssert(result > 0.0)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetTokenBalanceUInt() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        //get info
+        let token = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9"
+        client.getTokenBalanceUInt(token, address: "AVUSCrS7HNTeY2J64DvpBsrttFArpWEqPR") { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let result):
+                print(result)
                 exp.fulfill()
                 return
             }
