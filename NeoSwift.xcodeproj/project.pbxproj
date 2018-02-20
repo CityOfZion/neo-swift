@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		35673163203BE83600DD57DC /* neoutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35673162203BE83500DD57DC /* neoutils.framework */; };
 		6E013E2E1F694B77006EE34F /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2D1F694B77006EE34F /* Asset.swift */; };
 		6E013E301F695337006EE34F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
 		6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
@@ -90,7 +91,6 @@
 		75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE271F48680500B05C51 /* NeoSwiftTests.swift */; };
 		75CDAE2A1F48680500B05C51 /* NeoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
 		75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75CDAE301F48750E00B05C51 /* NeoClient.swift */; };
-		75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75DBF7271F5D7714006C87F3 /* Neowallet.framework */; };
 		75E8E49C1F4DBFAC00DBCD8E /* WIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8E49B1F4DBFAC00DBCD8E /* WIF.swift */; };
 		75E8E4A61F4EAB5800DBCD8E /* NeoSwift.framework in Resources */ = {isa = PBXBuildFile; fileRef = 75CDAE091F47F90800B05C51 /* NeoSwift.framework */; };
 		75F0A39A1FA59CC1009E45CB /* NeoContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */; };
@@ -155,7 +155,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 10;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +163,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		35673162203BE83500DD57DC /* neoutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = neoutils.framework; sourceTree = "<group>"; };
 		6E013E2D1F694B77006EE34F /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		6E013E2F1F695337006EE34F /* AccountState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountState.swift; sourceTree = "<group>"; };
 		6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionAttritbute.swift; sourceTree = "<group>"; };
@@ -223,7 +224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75DBF7281F5D7714006C87F3 /* Neowallet.framework in Frameworks */,
+				35673163203BE83600DD57DC /* neoutils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +351,7 @@
 		75E8E4971F4DBD5300DBCD8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35673162203BE83500DD57DC /* neoutils.framework */,
 				75DBF7271F5D7714006C87F3 /* Neowallet.framework */,
 			);
 			name = Frameworks;
@@ -422,10 +424,10 @@
 			buildConfigurationList = 75CDAE111F47F90800B05C51 /* Build configuration list for PBXNativeTarget "NeoSwift" */;
 			buildPhases = (
 				75CDAE041F47F90800B05C51 /* Sources */,
+				75631AD11F4FB8B6008546CF /* CopyFiles */,
 				75CDAE051F47F90800B05C51 /* Frameworks */,
 				75CDAE061F47F90800B05C51 /* Headers */,
 				75CDAE071F47F90800B05C51 /* Resources */,
-				75631AD11F4FB8B6008546CF /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -471,6 +473,7 @@
 					75CDAE081F47F90800B05C51 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
 					};
 					75CDAE241F48680500B05C51 = {
 						CreatedOnToolsVersion = 9.0;
@@ -884,8 +887,10 @@
 				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DEVELOPMENT_TEAM = DS5S7EUZRZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -902,6 +907,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos11.0;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -919,8 +925,10 @@
 				ADDITIONAL_SDKS = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DEVELOPMENT_TEAM = DS5S7EUZRZ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -937,6 +945,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos11.0;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";

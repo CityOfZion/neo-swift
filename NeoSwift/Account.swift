@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Neowallet
+import Neoutils
 import Security
 
 public class Account {
@@ -29,7 +29,7 @@ public class Account {
     
     public init?(wif: String) {
         var error: NSError?
-        guard let wallet = NeowalletGenerateFromWIF(wif, &error) else { return nil }
+        guard let wallet = NeoutilsGenerateFromWIF(wif, &error) else { return nil }
         self.wif = wif
         self.publicKey = wallet.publicKey()
         self.privateKey = wallet.privateKey()
@@ -41,7 +41,7 @@ public class Account {
     
     public init?(privateKey: String) {
         var error: NSError?
-        guard let wallet = NeowalletGeneratePublicKeyFromPrivateKey(privateKey, &error) else { return nil }
+        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(privateKey, &error) else { return nil }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = privateKey.dataWithHexString()
@@ -54,7 +54,7 @@ public class Account {
     public init?(encryptedPrivateKey: String, passphrase: String) {
         var error: NSError?
         guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
-        guard let wallet = NeowalletGeneratePublicKeyFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
+        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
         
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
@@ -77,7 +77,7 @@ public class Account {
         }
         
         var error: NSError?
-        guard let wallet = NeowalletGeneratePublicKeyFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
+        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = pkeyData
@@ -89,16 +89,16 @@ public class Account {
     
     func createSharedSecret(publicKey: Data) -> Data?{
         var error: NSError?
-        guard let wallet = NeowalletGeneratePublicKeyFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
+        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
         return wallet.computeSharedSecret(publicKey)
     }
     
     func encryptString(key: Data, text: String) -> String {
-        return NeowalletEncrypt(key, text)
+        return NeoutilsEncrypt(key, text)
     }
     
     func decryptString(key: Data, text: String) -> String? {
-        return NeowalletDecrypt(key, text)
+        return NeoutilsDecrypt(key, text)
     }
     
     func getBalance(completion: @escaping(Assets?, Error?) -> Void) {
@@ -247,7 +247,7 @@ public class Account {
         let rawTransaction = packRawTransactionBytes(payloadPrefix: payloadPrefix,
                                                      asset: asset, with: inputData.payload!, runningAmount: inputData.totalAmount!,
                                                      toSendAmount: amount, toAddress: toAddress, attributes: attributes)
-        let signatureData = NeowalletSign(rawTransaction, privateKey.fullHexString, &error)
+        let signatureData = NeoutilsSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
         
@@ -305,7 +305,7 @@ public class Account {
     func generateClaimTransactionPayload(claims: Claims) -> Data {
         var error: NSError?
         let rawClaim = generateClaimInputData(claims: claims)
-        let signatureData = NeowalletSign(rawClaim, privateKey.fullHexString, &error)
+        let signatureData = NeoutilsSign(rawClaim, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawClaim, signatureData: signatureData!)
         return finalPayload
     }
@@ -339,7 +339,7 @@ public class Account {
                                                      runningAmount: inputData.totalAmount!,
                                                      toSendAmount: 0.00000001, toAddress: self.address, attributes: [])
         
-        let signatureData = NeowalletSign(rawTransaction, privateKey.fullHexString, &error)
+        let signatureData = NeoutilsSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
     }
