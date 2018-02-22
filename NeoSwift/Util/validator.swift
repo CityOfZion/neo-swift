@@ -10,7 +10,7 @@ import Foundation
 import Neoutils
 
 public class NEOValidator {
-    public func validateNEOAddress(_ address: String) -> Bool{
+    public static func validateNEOAddress(_ address: String) -> Bool{
         return NeoutilsValidateNEOAddress(address)
     }
 }
