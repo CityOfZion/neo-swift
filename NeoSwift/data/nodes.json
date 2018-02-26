@@ -46,8 +46,33 @@
 				"blockcount": 0,
 				"peercount": 0
 			},
+            {
+                "url": "http://seed1.bridgeprotocol.io:10332",
+                "blockcount": 0,
+                "peercount": 0
+            },
+            {
+                "url": "http://seed2.bridgeprotocol.io:10332",
+                "blockcount": 0,
+                "peercount": 0
+            },
+            {
+                "url": "http://seed3.bridgeprotocol.io:10332",
+                "blockcount": 0,
+                "peercount": 0
+            },
+            {
+                "url": "http://seed4.bridgeprotocol.io:10332",
+                "blockcount": 0,
+                "peercount": 0
+            },
+            {
+                "url": "http://seed5.bridgeprotocol.io:10332",
+                "blockcount": 0,
+                "peercount": 0
+            },
 			{
-				"url": "http://seed5.cityofzion.io:8080",
+				"url": "http://seed6.bridgeprotocol.io:10332",
 				"blockcount": 0,
 				"peercount": 0
 			},
