@@ -621,6 +621,29 @@ public class NeoClient {
         }
     }
     
+    public func mintToken(_ scriptHash: String, address: String, completion: @escaping(NeoClientResult<UInt>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "mintTokens", args: [AssetId.neoAssetId, 10])
+        self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                #if DEBUG
+                    print(response)
+                #endif
+                let balanceData = response.stack[0].hexDataValue ?? ""
+                if balanceData == "" {
+                    completion(.success(0))
+                    return
+                }
+                let balance = balanceData.littleEndianHexToUInt
+                completion(.success(balance))
+            }
+        }
+    }
+    
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {

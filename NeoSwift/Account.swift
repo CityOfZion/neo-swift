@@ -205,7 +205,6 @@ public class Account {
         
         var payload: [UInt8] = payloadPrefix +  [numberOfAttributes]
         payload = payload + attributesPayload + inputDataBytes
-        
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
@@ -338,7 +337,6 @@ public class Account {
                                                      asset: AssetId.gasAssetId, with: inputData.payload!,
                                                      runningAmount: inputData.totalAmount!,
                                                      toSendAmount: 0.00000001, toAddress: self.address, attributes: [])
-        
         let signatureData = NeowalletSign(rawTransaction, privateKey.fullHexString, &error)
         let finalPayload = concatenatePayloadData(txData: rawTransaction, signatureData: signatureData!)
         return finalPayload
@@ -352,7 +350,7 @@ public class Account {
         let scriptBuilder = ScriptBuilder()
         scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "transfer",
                                          args: [amountToSendInMemory, toAddressHash, fromAddressHash])
-        var script = scriptBuilder.rawBytes
+        let script = scriptBuilder.rawBytes
         return [UInt8(script.count)] + script
     }
     
@@ -367,7 +365,6 @@ public class Account {
                 var payload = self.generateInvokeTransactionPayload(assets: assets, script: scriptBytes.fullHexString,
                                                                     contractAddress: tokenContractHash)
                 payload = payload + tokenContractHash.dataWithHexString().bytes
-                print(payload.fullHexString)
                 self.neoClient.sendRawTransaction(with: payload) { (result) in
                     switch result {
                     case .failure(let error):
@@ -378,6 +375,28 @@ public class Account {
                 }
             }
         }
+    }
+    
+    public func invokeContractFunction(assets: Assets, contractHash: String, method: String, args: [Any], completion: @escaping(Bool?, Error?) -> Void) {
+        
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: contractHash, operation: method,
+                                         args: args)
+        let script = scriptBuilder.rawBytes
+        
+        let scriptBytes =  [UInt8(script.count)] + script
+        var payload = self.generateInvokeTransactionPayload(assets: assets, script: scriptBytes.fullHexString,
+                                                            contractAddress: contractHash)
+        payload = payload + contractHash.dataWithHexString().bytes
+        self.neoClient.sendRawTransaction(with: payload) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let response):
+                completion(response, nil)
+            }
+        }
+        
     }
     
     public func exportEncryptedKey(with passphrase: String) -> String {

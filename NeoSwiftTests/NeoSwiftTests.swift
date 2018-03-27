@@ -218,7 +218,6 @@ class NeoSwiftTests: XCTestCase {
         
         accountA.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountB.address) { success, error in
             assert(success ?? false)
-            print(success)
             exp1.fulfill()
             accountB.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountA.address) {success, error in
                 assert(success ?? false)
@@ -278,15 +277,15 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testSendNEP5Transaction() {
-        let REAL_WIF_DELETE  = "" //INSERT A WIF HERE IF YOU WANNA TEST
+        let REAL_WIF_DELETE  = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr" //INSERT A WIF HERE IF YOU WANNA TEST
         guard let accountA = Account(wif: REAL_WIF_DELETE) else {
             assert(false)
             return
         }
-        
+        let toAddress = "AXLsAj6AaCMwFAQC8kQuMVxwEXosNebY1f"
         let exp1 = expectation(description: "Wait for transaction one to go through")
-        
-        accountA.sendNep5Token(tokenContractHash: "0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5", amount: 1, toAddress: accountA.address) { success, error in
+        accountA.neoClient = NeoClient(seed: "http://localhost:30333")
+        accountA.sendNep5Token(tokenContractHash: "d460914223ae14cba0a890c6a4a9af540dcd2175", amount: 1, toAddress: toAddress) { success, error in
             assert(success ?? false)
             exp1.fulfill()
         }
@@ -419,7 +418,6 @@ class NeoSwiftTests: XCTestCase {
     func testHash160() {
         let hashedAddress = "AJShjraX4iMJjwVt8WYYzZyGvDMxw6Xfbe".hash160()
         let expected = "bfc469dd56932409677278f6b7422f3e1f34481d"
-        print(hashedAddress)
         XCTAssert(hashedAddress == expected)
     }
     
@@ -433,6 +431,6 @@ class NeoSwiftTests: XCTestCase {
     func testGetBestNodeByResponseTime() {
         let nodes = "http://seed1.neo.org:10332,http://seed2.neo.org:10332,http://seed3.neo.org:10332,http://seed4.neo.org:10332,http://seed5.neo.org:10332,http://seed1.cityofzion.io:8080,http://seed2.cityofzion.io:8080,http://seed3.cityofzion.io:8080,http://seed4.cityofzion.io:8080,http://seed5.cityofzion.io:8080,http://node1.o3.network:10332,http://node2.o3.network:10332"
         let node = NeowalletSelectBestSeedNode(nodes)
-        print(node?.url() as String?, node?.responseTime() as Int64?)
+        print(node?.url() as String?, node?.responseTime())
     }
 }

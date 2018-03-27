@@ -10,7 +10,6 @@ import Foundation
     
 public extension String {
     
-    
     func hash160() -> String? {
         //NEO Address hash160
         //skip the first byte which is 0x17, revert it then convert to full hex
@@ -28,6 +27,23 @@ public extension String {
         let bytesTwo = [UInt8](hashTwo)
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
         return finalKeyData.fullHexString
+    }
+    
+    func scriptHash() -> Data {
+        let bytes = self.base58CheckDecodedBytes!
+        let shortened = bytes[0...20] //need exactly twenty one bytes
+        let substringData = Data(bytes: shortened)
+        let hashOne = substringData.sha256
+        let hashTwo = hashOne.sha256
+        let bytesTwo = [UInt8](hashTwo)
+        let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
+        return finalKeyData
+    }
+    
+    func toHexString() -> String {
+        let data = self.data(using: .utf8)!
+        let hexString = data.map{ String(format:"%02x", $0) }.joined()
+        return hexString
     }
     
     func dataWithHexString() -> Data {
