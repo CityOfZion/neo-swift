@@ -433,4 +433,36 @@ class NeoSwiftTests: XCTestCase {
         let node = NeowalletSelectBestSeedNode(nodes)
         print(node?.url() as String?, node?.responseTime())
     }
+    
+    func testInvokeContractFunction() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let seed = "http://localhost:30333"
+        let client = NeoClient(network: .main, seedURL: seed)
+        
+        let scriptHash = "b7c1f850a025e34455e7e98c588c784385077fb1"
+        
+        let wifPersonA = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr"
+        guard let accountA = Account(wif: wifPersonA) else {
+            assert(false)
+            return
+        }
+        accountA.neoClient = client
+        let gasUnspent = Unspent(index: 0, txId: "c1df3cb638a888ae85fb67320e43b846490ec760ccca05dd01bfbf4de3ba438f", value: 713399699999/100000000)
+        
+        let neoUnspent = Unspent(index: 0, txId: "e8b8bf4f98490368fc1caa86f8646e7383bb52751ffc3a1a7e296d715c4382ed", value: 10000000000000000/100000000)
+        //tohex before posting it to contract
+        let second = Int(1000)
+        
+        let assets = Assets(gas: Gas.init(balance: 715800000000, unspent: [gasUnspent]), neo: Neo.init(balance: 10000000000000000/100000000, unspent: [neoUnspent]), address: "AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", net: "private")
+        let addressScriptHash = accountA.address.hashFromAddress()
+        //args index is reversed
+        //when invokecontract, every string arg has to be in hex format
+        accountA.invokeContractFunction(assets: assets, contractHash: scriptHash, method: "mintTokensTo", args:[second, addressScriptHash]) { (success, error) in
+            assert(success ?? false)
+            exp.fulfill()
+        }
+        
+        waitForExpectations(timeout: 20, handler: nil)
+        
+    }
 }
