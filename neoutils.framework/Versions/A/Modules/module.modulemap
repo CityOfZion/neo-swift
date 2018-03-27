@@ -1,0 +1,8 @@
+framework module "Neoutils" {
+	header "ref.h"
+    header "Neoutils.objc.h"
+    header "Universe.objc.h"
+    header "Neoutils.h"
+
+    export *
+}

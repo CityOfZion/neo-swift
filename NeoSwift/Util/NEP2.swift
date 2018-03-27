@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Neowallet
+import Neoutils
 
 class NEP2 {
     public static func decryptKey(_ key: String, passphrase: String) -> (key: [UInt8], hash: [UInt8])? {

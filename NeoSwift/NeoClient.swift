@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Neowallet
+import Neoutils
 
 typealias JSONDictionary = [String : Any]
 
@@ -71,7 +71,7 @@ public class NEONetworkMonitor {
     public static func autoSelectBestNode() -> String? {
         let networks = NEONetworkMonitor().load()
         let nodes = networks?.mainNet.nodes.map({$0.URL}).joined(separator: ",")
-        guard let bestNode =  NeowalletSelectBestSeedNode(nodes) else {
+        guard let bestNode =  NeoutilsSelectBestSeedNode(nodes) else {
             return nil
         }
         return bestNode.url()
