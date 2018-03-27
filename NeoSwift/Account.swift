@@ -396,7 +396,6 @@ public class Account {
                 completion(response, nil)
             }
         }
-        
     }
     
     public func exportEncryptedKey(with passphrase: String) -> String {
