@@ -38,6 +38,7 @@ public enum NeoClientResult<T> {
 public enum Network: String {
     case test
     case main
+    case privateNet
 }
 
 public class NEONetworkMonitor {
@@ -102,10 +103,10 @@ public class NeoClient {
         case getAssetState = "getassetstate"
         case getPeers = "getpeers"
         case invokeFunction = "invokefunction"
+        case invokeContract = "invokescript"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
-        case invokeContract = "invokescript"
     }
     
     enum NEP5Method: String {
@@ -134,6 +135,8 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
+        case .privateNet:
+            fullNodeAPI = "http://127.0.0.1:5000/v2/"
         }
     }
     
@@ -146,7 +149,11 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = seedURL
+        case .privateNet:
+            fullNodeAPI = "http://127.0.0.1:5000/v2/"
+            seed = seedURL
         }
+        
     }
     
     func sendRequest(_ method: RPCMethod, params: [Any]?, completion: @escaping (NeoClientResult<JSONDictionary>) -> ()) {
