@@ -8,7 +8,7 @@
 
 import XCTest
 import NeoSwift
-import Neowallet
+import Neoutils
 
 class NeoSwiftTests: XCTestCase {
     func testGetBlockCount() {
@@ -172,23 +172,6 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
-    
-    func testGetBestNode() {
-        let exp = expectation(description: "Wait for asset response")
-        
-        NeoClient.sharedTest.getBestNode() { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let value):
-                print(value)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
-    
     
     //I am exposing the following private keys for testing purposes only
     //Please only use them them to send transactions between each other on
@@ -430,7 +413,7 @@ class NeoSwiftTests: XCTestCase {
 
     func testGetBestNodeByResponseTime() {
         let nodes = "http://seed1.neo.org:10332,http://seed2.neo.org:10332,http://seed3.neo.org:10332,http://seed4.neo.org:10332,http://seed5.neo.org:10332,http://seed1.cityofzion.io:8080,http://seed2.cityofzion.io:8080,http://seed3.cityofzion.io:8080,http://seed4.cityofzion.io:8080,http://seed5.cityofzion.io:8080,http://node1.o3.network:10332,http://node2.o3.network:10332"
-        let node = NeowalletSelectBestSeedNode(nodes)
+        let node = NeoutilsSelectBestSeedNode(nodes)
         print(node?.url() as String?, node?.responseTime())
     }
     

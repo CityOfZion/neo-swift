@@ -119,7 +119,6 @@ public class NeoClient {
         case getBalance = "address/balance/"
         case getClaims = "address/claims/"
         case getTransactionHistory = "address/history/"
-        case getBestNode = "network/best_node"
     }
     
     public init(seed: String) {
@@ -647,20 +646,4 @@ public class NeoClient {
         }
     }
     
-    public func getBestNode(completion: @escaping (NeoClientResult<String>) -> ()) {
-        let url = fullNodeAPI + apiURL.getBestNode.rawValue
-        sendFullNodeRequest(url, params: nil) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                guard let node = response["node"] as? String else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                let result = NeoClientResult.success(node)
-                completion(result)
-            }
-        }
-    }
 }
