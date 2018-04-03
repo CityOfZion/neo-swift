@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NeoScan: NSObject {
+public class NeoScan: NSObject {
     
     public let baseEndpoint = "https://neoscan.io/api/main_net"
     
@@ -54,7 +54,7 @@ class NeoScan: NSObject {
         task.resume()
     }
     
-    func getClaimableGAS(address: String, completion: @escaping(NeoScanResult<Claimable>) -> ()) {
+    public func getClaimableGAS(address: String, completion: @escaping(NeoScanResult<Claimable>) -> ()) {
         let url =  baseEndpoint + APIEndpoints.getClaimable.rawValue + address
         sendFullNodeRequest(url, params: nil) { result in
             switch result {
@@ -73,7 +73,7 @@ class NeoScan: NSObject {
         }
     }
     
-    func getBalance(address: String, completion: @escaping(NeoScanResult<NeoScanGetBalance>) -> ()) {
+    public func getBalance(address: String, completion: @escaping(NeoScanResult<NeoScanGetBalance>) -> ()) {
         let url =  baseEndpoint + APIEndpoints.getBalance.rawValue + address
         sendFullNodeRequest(url, params: nil) { result in
             switch result {

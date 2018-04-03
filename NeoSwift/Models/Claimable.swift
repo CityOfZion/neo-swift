@@ -10,7 +10,7 @@ import Foundation
 
 // This struct is for neo-scan get_claimable API
 // https://neoscan.io/api/main_net/v1/get_claimable/AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb
-struct Claimable: Codable {
+public struct Claimable: Codable {
     let unclaimed: Double
     let claimable: [ClaimableElement]
     let address: String

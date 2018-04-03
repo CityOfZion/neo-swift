@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct NeoScanGetBalance: Codable {
+public struct NeoScanGetBalance: Codable {
     let balance: [Balance]
     let address: String
     
