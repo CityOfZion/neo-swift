@@ -9,8 +9,8 @@
 import Foundation
 
 public struct NeoScanGetBalance: Codable {
-    let balance: [Balance]
-    let address: String
+    public let balance: [Balance]
+    public let address: String
     
     enum CodingKeys: String, CodingKey {
         case balance = "balance"
@@ -18,10 +18,10 @@ public struct NeoScanGetBalance: Codable {
     }
 }
 
-struct Balance: Codable {
-    let unspent: [NeoScanUnspent]
-    let asset: String
-    let amount: Double
+public struct Balance: Codable {
+    public let unspent: [NeoScanUnspent]
+    public let asset: String
+    public let amount: Double
     
     enum CodingKeys: String, CodingKey {
         case unspent = "unspent"
@@ -30,10 +30,10 @@ struct Balance: Codable {
     }
 }
 
-struct NeoScanUnspent: Codable {
-    let value: Double
-    let txid: String
-    let n: Int
+public struct NeoScanUnspent: Codable {
+    public let value: Double
+    public let txid: String
+    public let n: Int
 
     enum CodingKeys: String, CodingKey {
         case value = "value"

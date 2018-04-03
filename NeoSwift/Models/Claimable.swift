@@ -11,9 +11,9 @@ import Foundation
 // This struct is for neo-scan get_claimable API
 // https://neoscan.io/api/main_net/v1/get_claimable/AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb
 public struct Claimable: Codable {
-    let unclaimed: Double
-    let claimable: [ClaimableElement]
-    let address: String
+    public let unclaimed: Double
+    public let claimable: [ClaimableElement]
+    public let address: String
     
     enum CodingKeys: String, CodingKey {
         case unclaimed = "unclaimed"
@@ -22,13 +22,13 @@ public struct Claimable: Codable {
     }
 }
 
-struct ClaimableElement: Codable {
-    let value: Int
-    let unclaimed: Double
-    let txid: String
-    let startHeight: Int
-    let n: Int
-    let endHeight: Int
+public struct ClaimableElement: Codable {
+    public let value: Int
+    public let unclaimed: Double
+    public let txid: String
+    public let startHeight: Int
+    public let n: Int
+    public let endHeight: Int
     
     enum CodingKeys: String, CodingKey {
         case value = "value"
