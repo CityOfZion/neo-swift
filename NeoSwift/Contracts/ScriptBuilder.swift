@@ -9,7 +9,7 @@
 import Foundation
 
 public class ScriptBuilder {
-   private(set) public var rawBytes = [UInt8]()
+    private(set) public var rawBytes = [UInt8]()
     var rawHexString: String {
         return rawBytes.fullHexString
     }
@@ -91,11 +91,12 @@ public class ScriptBuilder {
     
     public func pushContractInvoke(scriptHash: String, operation: String? = nil, args: Any? = nil, useTailCall: Bool = false) {
         pushData(args)
+        
         if let operation = operation {
             let hex = operation.unicodeScalars.filter { $0.isASCII }.map { String(format: "%X", $0.value) }.joined()
             pushData(hex)
         }
-        if scriptHash.characters.count != 40 {
+        if scriptHash.count != 40 {
             fatalError("Attempting to invoke invalid contract")
         }
         if useTailCall {

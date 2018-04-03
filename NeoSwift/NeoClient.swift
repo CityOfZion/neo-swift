@@ -38,6 +38,7 @@ public enum NeoClientResult<T> {
 public enum Network: String {
     case test
     case main
+    case privateNet
 }
 
 public class NEONetworkMonitor {
@@ -102,10 +103,10 @@ public class NeoClient {
         case getAssetState = "getassetstate"
         case getPeers = "getpeers"
         case invokeFunction = "invokefunction"
+        case invokeContract = "invokescript"
         //The following routes can't be invoked by calling an RPC server
         //We must use the wrapper for the nodes made by COZ
         case getBalance = "getbalance"
-        case invokeContract = "invokescript"
     }
     
     enum NEP5Method: String {
@@ -118,7 +119,6 @@ public class NeoClient {
         case getBalance = "address/balance/"
         case getClaims = "address/claims/"
         case getTransactionHistory = "address/history/"
-        case getBestNode = "network/best_node"
     }
     
     public init(seed: String) {
@@ -134,6 +134,8 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
+        case .privateNet:
+            fullNodeAPI = "http://127.0.0.1:5000/v2/"
         }
     }
     
@@ -146,7 +148,11 @@ public class NeoClient {
         case .main:
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = seedURL
+        case .privateNet:
+            fullNodeAPI = "http://127.0.0.1:5000/v2/"
+            seed = seedURL
         }
+        
     }
     
     func sendRequest(_ method: RPCMethod, params: [Any]?, completion: @escaping (NeoClientResult<JSONDictionary>) -> ()) {
@@ -620,7 +626,7 @@ public class NeoClient {
             }
         }
     }
-    
+
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {
@@ -640,20 +646,4 @@ public class NeoClient {
         }
     }
     
-    public func getBestNode(completion: @escaping (NeoClientResult<String>) -> ()) {
-        let url = fullNodeAPI + apiURL.getBestNode.rawValue
-        sendFullNodeRequest(url, params: nil) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                guard let node = response["node"] as? String else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                let result = NeoClientResult.success(node)
-                completion(result)
-            }
-        }
-    }
 }
