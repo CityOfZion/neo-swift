@@ -41,4 +41,3 @@ public struct NeoScanUnspent: Codable {
         case n = "n"
     }
 }
-

@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		350E2719207B5CE4006AB519 /* NeoScanTransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */; };
+		350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */; };
 		35494585203D4D4500332E53 /* NEP9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35494584203D4D4500332E53 /* NEP9.swift */; };
 		35494587203D500E00332E53 /* validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35494586203D500E00332E53 /* validator.swift */; };
 		35494589203D50C900332E53 /* ShamirSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35494588203D50C900332E53 /* ShamirSecret.swift */; };
@@ -174,6 +176,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeoScanTransactionHistory.swift; sourceTree = "<group>"; };
 		35494584203D4D4500332E53 /* NEP9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP9.swift; sourceTree = "<group>"; };
 		35494586203D500E00332E53 /* validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = validator.swift; sourceTree = "<group>"; };
 		35494588203D50C900332E53 /* ShamirSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShamirSecret.swift; sourceTree = "<group>"; };
@@ -336,6 +339,7 @@
 		75CDAE141F47F92400B05C51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */,
 				75CDAE151F47F96000B05C51 /* Block.swift */,
 				75CDAE171F47FFDA00B05C51 /* Script.swift */,
 				75CDAE191F4801F500B05C51 /* ValueIn.swift */,
@@ -648,6 +652,7 @@
 				F359ED371F75B93900ED6E8E /* PBKDF2.swift in Sources */,
 				6EADA9962071E7B80090C700 /* NeoScan.swift in Sources */,
 				75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */,
+				350E2719207B5CE4006AB519 /* NeoScanTransactionHistory.swift in Sources */,
 				75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */,
 				F3FBEE4C1F7AC81A00CF06A1 /* Array+Util.swift in Sources */,
 				35494589203D50C900332E53 /* ShamirSecret.swift in Sources */,
@@ -659,6 +664,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */,
 				6E67B16B1F9B237700C566B6 /* NEONetwork.swift in Sources */,
 				F35E74E01F8FDE8300DF0927 /* Claims.swift in Sources */,
 				6E821FA01FEF42730002A790 /* NEOECDH.swift in Sources */,

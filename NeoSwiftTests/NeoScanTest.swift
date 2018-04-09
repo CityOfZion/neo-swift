@@ -40,7 +40,18 @@ class NeoScanTest: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
-    
-    
-    
+    func testGetHistory() {
+        let exp = expectation(description: "Wait for transaction History response")
+        let address = "AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb"
+        NeoScan().getTransactionHistory(address: address, page: 1) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let history):
+                print(history)
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
 }
