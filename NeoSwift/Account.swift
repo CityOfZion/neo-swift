@@ -41,7 +41,7 @@ public class Account {
     
     public init?(privateKey: String) {
         var error: NSError?
-        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(privateKey, &error) else { return nil }
+        guard let wallet = NeoutilsGenerateFromPrivateKey(privateKey, &error) else { return nil }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = privateKey.dataWithHexString()
@@ -54,7 +54,7 @@ public class Account {
     public init?(encryptedPrivateKey: String, passphrase: String) {
         var error: NSError?
         guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
-        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
+        guard let wallet = NeoutilsGenerateFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
         
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
@@ -77,7 +77,7 @@ public class Account {
         }
         
         var error: NSError?
-        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
+        guard let wallet = NeoutilsGenerateFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = pkeyData
@@ -89,7 +89,7 @@ public class Account {
     
     func createSharedSecret(publicKey: Data) -> Data?{
         var error: NSError?
-        guard let wallet = NeoutilsGeneratePublicKeyFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
+        guard let wallet = NeoutilsGenerateFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
         return wallet.computeSharedSecret(publicKey)
     }
     
