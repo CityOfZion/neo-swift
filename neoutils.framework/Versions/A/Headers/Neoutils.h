@@ -8,6 +8,6 @@
 #define __Neoutils_FRAMEWORK_H__
 
 #include "Neoutils.objc.h"
-#include "Universe.objc.h"
+#include "universe.objc.h"
 
 #endif
