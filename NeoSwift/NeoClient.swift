@@ -135,7 +135,8 @@ public class NeoClient {
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = "http://seed1.neo.org:10332"
         case .privateNet:
-            fullNodeAPI = "http://127.0.0.1:5000/v2/"
+            fullNodeAPI = "http://127.0.0.1:5000/"
+            seed = "http://localhost:30333"
         }
     }
     
@@ -149,7 +150,7 @@ public class NeoClient {
             fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
             seed = seedURL
         case .privateNet:
-            fullNodeAPI = "http://127.0.0.1:5000/v2/"
+            fullNodeAPI = "http://127.0.0.1:5000/"
             seed = seedURL
         }
         
@@ -571,10 +572,10 @@ public class NeoClient {
             //Token info not in cache then fetch it.
             self.getTokenInfo(with: scriptHash, completion: { result in
                 switch result {
-                 case .failure(let error):
+                case .failure(let error):
                     completion(.failure(error))
                 case .success:
-                   self.getTokenBalance(scriptHash, address: address, completion: completion)
+                    self.getTokenBalance(scriptHash, address: address, completion: completion)
                     return
                 }
             })
@@ -588,7 +589,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 #if DEBUG
-                    print(response)
+                print(response)
                 #endif
                 let balanceData = response.stack[0].hexDataValue ?? ""
                 if balanceData == "" {
@@ -603,10 +604,10 @@ public class NeoClient {
             }
         }
     }
-
+    
     public func getTokenBalanceUInt(_ scriptHash: String, address: String, completion: @escaping(NeoClientResult<UInt>) -> ()) {
         let scriptBuilder = ScriptBuilder()
-
+        
         scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
         self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
             switch contractResult {
@@ -614,7 +615,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 #if DEBUG
-                    print(response)
+                print(response)
                 #endif
                 let balanceData = response.stack[0].hexDataValue ?? ""
                 if balanceData == "" {
@@ -626,7 +627,7 @@ public class NeoClient {
             }
         }
     }
-
+    
     public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
         sendRequest(.getAssetState, params: [asset]) { result in
             switch result {
@@ -646,4 +647,29 @@ public class NeoClient {
         }
     }
     
+    
+    public func getTokenSaleStatus(for address: String, scriptHash: String, completion: @escaping(NeoClientResult<Bool>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "tokensale_status", args: [address.hashFromAddress()])
+        self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                #if DEBUG
+                print(response)
+                #endif
+                let whitelisted = response.stack[0].hexDataValue
+                if whitelisted == "" {
+                    completion(.success(false))
+                    return
+                }
+                if whitelisted == "01" {
+                    completion(.success(true))
+                    return
+                }
+                completion(.success(false))
+            }
+        }
+    }
 }

@@ -410,7 +410,7 @@ class NeoSwiftTests: XCTestCase {
         print(hex.littleEndianHexToUInt)
         XCTAssert(hex.littleEndianHexToUInt == expected)
     }
-
+    
     func testGetBestNodeByResponseTime() {
         let nodes = "http://seed1.neo.org:10332,http://seed2.neo.org:10332,http://seed3.neo.org:10332,http://seed4.neo.org:10332,http://seed5.neo.org:10332,http://seed1.cityofzion.io:8080,http://seed2.cityofzion.io:8080,http://seed3.cityofzion.io:8080,http://seed4.cityofzion.io:8080,http://seed5.cityofzion.io:8080,http://node1.o3.network:10332,http://node2.o3.network:10332"
         let node = NeoutilsSelectBestSeedNode(nodes)
@@ -447,5 +447,54 @@ class NeoSwiftTests: XCTestCase {
         
         waitForExpectations(timeout: 20, handler: nil)
         
+    }
+    
+    func testGetWhiteListedStatus() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        
+        let wifPrivateNet = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr"
+        guard let privateNetWallet = Account(wif: wifPrivateNet) else {
+            assert(false)
+            return
+        }
+        privateNetWallet.neoClient = NeoClient(network: .privateNet, seedURL: "http://localhost:30333")
+        
+        let scripthash = "b2eb148d3783f60e678e35f2c496de1a2a7ead93"
+        privateNetWallet.allowToParticipateInTokenSale(scriptHash: scripthash) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let whitelisted):
+                print(whitelisted)
+                exp.fulfill()
+                return
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testParticipateTokenSale() {
+        let exp = expectation(description: "Wait for testParticipateTokenSale response")
+        
+        let wifPrivateNet = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr"
+        guard let privateNetWallet = Account(wif: wifPrivateNet) else {
+            assert(false)
+            return
+        }
+        let scripthash = "b2eb148d3783f60e678e35f2c496de1a2a7ead93"
+        let assetID = AssetId.neoAssetId.rawValue
+        let amount = Float64(10)
+        let remark = "o3x"
+        let networkFee = Float64(0)
+        privateNetWallet.neoClient = NeoClient(network: .privateNet, seedURL: "http://localhost:30333")
+        privateNetWallet.participateTokenSales(scriptHash: scripthash, assetID: assetID, amount: amount, remark: remark, networkFee: networkFee) { success, error in
+            assert(success ?? false)
+            if error != nil {
+                print(error)
+                return
+            }
+            assert(success ?? false)
+        }
+        waitForExpectations(timeout: 20, handler: nil)
     }
 }
