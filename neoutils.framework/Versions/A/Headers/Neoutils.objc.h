@@ -16,6 +16,7 @@
 @class NeoutilsNEP5;
 @class NeoutilsNativeAsset;
 @class NeoutilsNodeList;
+@class NeoutilsRawTransaction;
 @class NeoutilsSeedNodeResponse;
 @class NeoutilsSharedSecret;
 @class NeoutilsSimplifiedNEP9;
@@ -134,6 +135,18 @@
 
 @end
 
+@interface NeoutilsRawTransaction : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) id _ref;
+
+- (instancetype)initWithRef:(id)ref;
+- (instancetype)init;
+- (NSString*)txid;
+- (void)setTXID:(NSString*)v;
+- (NSData*)data;
+- (void)setData:(NSData*)v;
+@end
+
 @interface NeoutilsSeedNodeResponse : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) id _ref;
@@ -209,6 +222,8 @@
 - (NSData*)computeSharedSecret:(NSData*)publicKey;
 @end
 
+FOUNDATION_EXPORT NSString* const NeoutilsVERSION;
+
 FOUNDATION_EXPORT NSString* NeoutilsBytesToHex(NSData* b);
 
 // skipped function ConvertByteArrayToBigInt with unsupported parameter or return types
@@ -226,9 +241,11 @@ FOUNDATION_EXPORT NeoutilsSharedSecret* NeoutilsGenerateShamirSharedSecret(NSStr
 
 FOUNDATION_EXPORT NSData* NeoutilsHash160(NSData* data);
 
+FOUNDATION_EXPORT NSData* NeoutilsHash256(NSData* b);
+
 FOUNDATION_EXPORT NSData* NeoutilsHexTobytes(NSString* hexstring);
 
-FOUNDATION_EXPORT NSData* NeoutilsMintTokensRawTransactionMobile(NSString* utxoEndpoint, NSString* scriptHash, NSString* wif, NSString* sendingAssetID, double amount, NSString* remark, double networkFeeAmountInGAS, NSError** error);
+FOUNDATION_EXPORT NeoutilsRawTransaction* NeoutilsMintTokensRawTransactionMobile(NSString* utxoEndpoint, NSString* scriptHash, NSString* wif, NSString* sendingAssetID, double amount, NSString* remark, double networkFeeAmountInGAS, NSError** error);
 
 FOUNDATION_EXPORT NSString* NeoutilsNEOAddressToScriptHash(NSString* neoAddress);
 
