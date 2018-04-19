@@ -487,8 +487,9 @@ class NeoSwiftTests: XCTestCase {
         let remark = "o3x"
         let networkFee = Float64(0)
         privateNetWallet.neoClient = NeoClient(network: .privateNet, seedURL: "http://localhost:30333")
-        privateNetWallet.participateTokenSales(scriptHash: scripthash, assetID: assetID, amount: amount, remark: remark, networkFee: networkFee) { success, error in
+        privateNetWallet.participateTokenSales(scriptHash: scripthash, assetID: assetID, amount: amount, remark: remark, networkFee: networkFee) { success, txID, error in
             assert(success ?? false)
+            print(txID)
             if error != nil {
                 print(error)
                 return
