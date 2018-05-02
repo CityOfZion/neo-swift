@@ -650,7 +650,7 @@ public class NeoClient {
     
     public func getTokenSaleStatus(for address: String, scriptHash: String, completion: @escaping(NeoClientResult<Bool>) -> ()) {
         let scriptBuilder = ScriptBuilder()
-        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "tokensale_status", args: [address.hashFromAddress()])
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "kycStatus", args: [address.hashFromAddress()])
         self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
             switch contractResult {
             case .failure(let error):
