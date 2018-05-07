@@ -498,4 +498,10 @@ class NeoSwiftTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testBaseURL() {
+        let url = URL(string: "http://testnet-api.wallet.cityofzion.io/v2/")
+        let utxoBaseEndpoint = url?.deletingLastPathComponent().absoluteString
+        print(utxoBaseEndpoint)
+    }
 }
