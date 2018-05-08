@@ -199,6 +199,7 @@ public class NeoClient {
     func sendFullNodeRequest(_ url: String, params: [Any]?, completion :@escaping (NeoClientResult<JSONDictionary>) -> ()) {
         let request = NSMutableURLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
+        request.timeoutInterval = 60
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
@@ -406,7 +407,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response["result"], options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: response["data"], options: .prettyPrinted),
                     let assets = try? decoder.decode(Assets.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
