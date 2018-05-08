@@ -407,7 +407,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response["data"], options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: response["result"], options: .prettyPrinted),
                     let assets = try? decoder.decode(Assets.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
