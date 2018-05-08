@@ -398,7 +398,7 @@ public class NeoClient {
     }
     
     public func getAssets(for address: String, params: [Any]?, completion: @escaping(NeoClientResult<Assets>) -> ()) {
-        let url = fullNodeAPI + address + "/" + apiURL.getUTXO.rawValue + "/"
+        let url = fullNodeAPI + address + "/" + apiURL.getUTXO.rawValue
         sendFullNodeRequest(url, params: params) { result in
             
             switch result {
@@ -406,7 +406,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: response["result"], options: .prettyPrinted),
                     let assets = try? decoder.decode(Assets.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
