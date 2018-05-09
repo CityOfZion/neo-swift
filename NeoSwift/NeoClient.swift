@@ -419,17 +419,17 @@ public class NeoClient {
         }
     }
     
-    public func getClaims(address: String, completion: @escaping(NeoClientResult<Claims>) -> ()) {
-        let url = fullNodeAPI + apiURL.getClaims.rawValue + address
+    public func getClaims(address: String, completion: @escaping(NeoClientResult<Claimable>) -> ()) {
+        let url = fullNodeAPI + address + "/" + apiURL.getClaims.rawValue
         sendFullNodeRequest(url, params: nil) { result in
-            
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
-                    let claims = try? decoder.decode(Claims.self, from: data) else {
+                
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as? JSONDictionary)!["data"], options: .prettyPrinted),
+                    let claims = try? decoder.decode(Claimable.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
                 }

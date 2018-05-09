@@ -279,7 +279,7 @@ public class Account {
      * https://github.com/CityOfZion/neon-wallet-db
      */
     
-    func generateClaimInputData(claims: Claims) -> Data {
+    func generateClaimInputData(claims: Claimable) -> Data {
         var payload: [UInt8] = [0x02] // Claim Transaction Type
         payload = payload + [0x00]    // Version
         //let claimsCount = UInt8(claims.claims.count)
@@ -287,21 +287,22 @@ public class Account {
         payload = payload + [claimsCount]
         
         for claim in claims.claims {
-            payload = payload + claim.txId.dataWithHexString().bytes.reversed()
+            payload = payload + claim.txid.dataWithHexString().bytes.reversed()
             payload = payload + toByteArray(claim.index)
         }
         
+        let amountInt = ((Decimal(claims.gas) * pow(10, 8)) as NSDecimalNumber).intValue
         payload = payload + [0x00] // Attributes
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
         payload = payload + AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
-        payload = payload + toByteArray(claims.totalClaim)
+        payload = payload + toByteArray(amountInt)
         payload = payload + hashedSignature.bytes
         
         return Data(bytes: payload)
     }
     
-    func generateClaimTransactionPayload(claims: Claims) -> Data {
+    func generateClaimTransactionPayload(claims: Claimable) -> Data {
         var error: NSError?
         let rawClaim = generateClaimInputData(claims: claims)
         let signatureData = NeoutilsSign(rawClaim, privateKey.fullHexString, &error)

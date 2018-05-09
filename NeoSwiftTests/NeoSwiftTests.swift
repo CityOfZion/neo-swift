@@ -160,7 +160,7 @@ class NeoSwiftTests: XCTestCase {
     func testGetAssets() {
         let exp = expectation(description: "Wait for asset response")
         
-        NeoClient.sharedMain.getAssets(for: "APosJ7bD5zm34DbEdxxAfgGCKH5oUKWS3u", params: []) { result in
+        NeoClient.sharedMain.getAssets(for: "Some address", params: []) { result in
             switch result {
             case .failure:
                 assert(false)
@@ -285,6 +285,22 @@ class NeoSwiftTests: XCTestCase {
         accountA.claimGas { result, error in
             assert(result!)
             exp.fulfill()
+        }
+        waitForExpectations(timeout: 60, handler: nil)
+    }
+    
+    func testGetClaims() {
+        let address = "Some Address"
+        let exp = expectation(description: "Wait for for claim to complete")
+        NeoClient.sharedMain.getClaims(address: address) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let claims):
+                print(claims)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 60, handler: nil)
     }
