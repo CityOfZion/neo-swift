@@ -33,7 +33,7 @@ public struct Claimable: Codable {
     
     public struct Claim: Codable {
         public var asset: String
-        public var index: Int
+        public var index: UInt16
         public var txid: String
         public var value: Double
         public var createdAtBlock: Int
@@ -46,7 +46,7 @@ public struct Claimable: Codable {
             case createdAtBlock
         }
         
-        public init(asset: String, index: Int, txid: String, value: Double, createdAtBlock: Int) {
+        public init(asset: String, index: UInt16, txid: String, value: Double, createdAtBlock: Int) {
             self.asset = asset
             self.index = index
             self.txid = txid
@@ -57,8 +57,9 @@ public struct Claimable: Codable {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let asset: String = try container.decode(String.self, forKey: .asset)
-            let index: Int = try container.decode(Int.self, forKey: .index)
-            let txid: String = try container.decode(String.self, forKey: .txid)
+            let index: UInt16 = try container.decode(UInt16.self, forKey: .index)
+            var txid: String = try container.decode(String.self, forKey: .txid)
+            txid = String(txid.dropFirst(2))
             let valueString: String = try container.decode(String.self, forKey: .value)
             let value = Double(valueString)!
             let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
