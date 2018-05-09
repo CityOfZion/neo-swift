@@ -75,9 +75,11 @@ public struct Assets: Codable {
             }
             let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
             let valueString: String = try container.decode(String.self, forKey: .value)
-            let valueDecimal = Decimal(string: valueString)
-            let value = Double(truncating: (valueDecimal as NSNumber?)!)
-            self.init(asset: asset, index: index, txid: txid, value: value, createdAtBlock: createdAtBlock)
+            let format = NumberFormatter()
+            format.minimumFractionDigits = 0
+            format.maximumFractionDigits = 8
+            let value = format.number(from: valueString)?.doubleValue
+            self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
         }
     }
 }

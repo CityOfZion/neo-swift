@@ -61,9 +61,12 @@ public struct Claimable: Codable {
             var txid: String = try container.decode(String.self, forKey: .txid)
             txid = String(txid.dropFirst(2))
             let valueString: String = try container.decode(String.self, forKey: .value)
-            let value = Double(valueString)!
+            let format = NumberFormatter()
+            format.minimumFractionDigits = 0
+            format.maximumFractionDigits = 8
+            let value = format.number(from: valueString)?.doubleValue
             let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
-            self.init(asset: asset, index: index, txid: txid, value: value, createdAtBlock: createdAtBlock)
+            self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
             
         }
     
