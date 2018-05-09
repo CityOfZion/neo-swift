@@ -81,7 +81,7 @@ public class NEONetworkMonitor {
 
 public class NeoClient {
     public var network: Network = .test
-    public var seed = "http://seed1.neo.org:10332"
+    public var seed = "http://seed3.o3node.org:10332"
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
     public static let sharedTest = NeoClient(network: .test)
     public static let sharedMain = NeoClient(network: .main)

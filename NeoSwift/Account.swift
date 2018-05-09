@@ -296,7 +296,7 @@ public class Account {
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
         payload = payload + AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
-        payload = payload + toByteArray(UInt64(0))
+        payload = payload + toByteArray(amountInt)
         payload = payload + hashedSignature.bytes
         print(payload.fullHexString)
         
