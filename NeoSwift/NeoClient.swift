@@ -81,7 +81,7 @@ public class NEONetworkMonitor {
 
 public class NeoClient {
     public var network: Network = .test
-    public var seed = "http://seed1.neo.org:10332"
+    public var seed = "http://seed3.o3node.org:10332"
     public var fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
     public static let sharedTest = NeoClient(network: .test)
     public static let sharedMain = NeoClient(network: .main)
@@ -116,8 +116,8 @@ public class NeoClient {
     }
     
     enum apiURL: String {
-        case getBalance = "address/balance/"
-        case getClaims = "address/claims/"
+        case getUTXO = "utxo"
+        case getClaims = "claimablegas"
         case getTransactionHistory = "address/history/"
     }
     
@@ -132,7 +132,7 @@ public class NeoClient {
             fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
             seed = "http://test4.cityofzion.io:8880"
         case .main:
-            fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
+            fullNodeAPI = "https://platform.o3.network/api/v1/neo/"
             seed = "http://seed1.neo.org:10332"
         case .privateNet:
             fullNodeAPI = "http://127.0.0.1:5000/"
@@ -147,7 +147,7 @@ public class NeoClient {
             fullNodeAPI = "http://testnet-api.wallet.cityofzion.io/v2/"
             seed = seedURL
         case .main:
-            fullNodeAPI = "http://api.wallet.cityofzion.io/v2/"
+            fullNodeAPI = "https://platform.o3.network/api/v1/neo/"
             seed = seedURL
         case .privateNet:
             fullNodeAPI = "http://127.0.0.1:5000/"
@@ -199,6 +199,7 @@ public class NeoClient {
     func sendFullNodeRequest(_ url: String, params: [Any]?, completion :@escaping (NeoClientResult<JSONDictionary>) -> ()) {
         let request = NSMutableURLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
+        request.timeoutInterval = 60
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
@@ -398,7 +399,7 @@ public class NeoClient {
     }
     
     public func getAssets(for address: String, params: [Any]?, completion: @escaping(NeoClientResult<Assets>) -> ()) {
-        let url = fullNodeAPI + apiURL.getBalance.rawValue + address
+        let url = fullNodeAPI + address + "/" + apiURL.getUTXO.rawValue
         sendFullNodeRequest(url, params: params) { result in
             
             switch result {
@@ -406,7 +407,7 @@ public class NeoClient {
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
+                guard let data = try? JSONSerialization.data(withJSONObject: response["result"], options: .prettyPrinted),
                     let assets = try? decoder.decode(Assets.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
@@ -418,17 +419,17 @@ public class NeoClient {
         }
     }
     
-    public func getClaims(address: String, completion: @escaping(NeoClientResult<Claims>) -> ()) {
-        let url = fullNodeAPI + apiURL.getClaims.rawValue + address
+    public func getClaims(address: String, completion: @escaping(NeoClientResult<Claimable>) -> ()) {
+        let url = fullNodeAPI + address + "/" + apiURL.getClaims.rawValue
         sendFullNodeRequest(url, params: nil) { result in
-            
             switch result {
             case .failure(let error):
                 completion(.failure(error))
             case .success(let response):
                 let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: response, options: .prettyPrinted),
-                    let claims = try? decoder.decode(Claims.self, from: data) else {
+                
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as? JSONDictionary)!["data"], options: .prettyPrinted),
+                    let claims = try? decoder.decode(Claimable.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
                 }

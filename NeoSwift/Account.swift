@@ -153,18 +153,18 @@ public class Account {
      * NEED TO DOUBLE CHECK THE BYTE COUNT HERE
      */
     public func getInputsNecessaryToSendAsset(asset: AssetId, amount: Double, assets: Assets) -> (totalAmount: Double?, payload: Data?, error: Error?) {
-        var sortedUnspents = [Unspent]()
-        var neededForTransaction = [Unspent]()
+        var sortedUnspents = [UTXO]()
+        var neededForTransaction = [UTXO]()
         if asset == .neoAssetId {
-            if assets.neo.balance < amount {
+            sortedUnspents = assets.getSortedNEOUTXOs()
+            if sortedUnspents.reduce(0, {$0 + $1.value}) < amount {
                 return (nil, nil, NSError())
             }
-            sortedUnspents = assets.neo.unspent.sorted {$0.value < $1.value }
         } else {
-            if assets.gas.balance < amount {
+            sortedUnspents = assets.getSortedGASUTXOs()
+            if sortedUnspents.reduce(0, {$0 + $1.value}) < amount {
                 return (nil, nil, NSError())
             }
-            sortedUnspents = assets.gas.unspent.sorted { $0.value < $1.value }
         }
         var runningAmount = 0.0
         var index = 0
@@ -179,7 +179,7 @@ public class Account {
         var inputData = [UInt8]()
         inputData.append(count)
         for x in 0..<neededForTransaction.count {
-            let data = neededForTransaction[x].txId.dataWithHexString()
+            let data = neededForTransaction[x].txid.dataWithHexString()
             let reversedBytes = data.bytes.reversed()
             inputData = inputData + reversedBytes + toByteArray(UInt16(neededForTransaction[x].index))
         }
@@ -279,7 +279,7 @@ public class Account {
      * https://github.com/CityOfZion/neon-wallet-db
      */
     
-    func generateClaimInputData(claims: Claims) -> Data {
+    func generateClaimInputData(claims: Claimable) -> Data {
         var payload: [UInt8] = [0x02] // Claim Transaction Type
         payload = payload + [0x00]    // Version
         //let claimsCount = UInt8(claims.claims.count)
@@ -287,21 +287,23 @@ public class Account {
         payload = payload + [claimsCount]
         
         for claim in claims.claims {
-            payload = payload + claim.txId.dataWithHexString().bytes.reversed()
+            payload = payload + claim.txid.dataWithHexString().bytes.reversed()
             payload = payload + toByteArray(claim.index)
         }
         
+        let amountInt = ((Decimal(claims.gas) * pow(10, 8)) as NSDecimalNumber).intValue
         payload = payload + [0x00] // Attributes
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
         payload = payload + AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
-        payload = payload + toByteArray(claims.totalClaim)
+        payload = payload + toByteArray(amountInt)
         payload = payload + hashedSignature.bytes
+        print(payload.fullHexString)
         
         return Data(bytes: payload)
     }
     
-    func generateClaimTransactionPayload(claims: Claims) -> Data {
+    func generateClaimTransactionPayload(claims: Claimable) -> Data {
         var error: NSError?
         let rawClaim = generateClaimInputData(claims: claims)
         let signatureData = NeoutilsSign(rawClaim, privateKey.fullHexString, &error)

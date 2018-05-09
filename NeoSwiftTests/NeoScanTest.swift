@@ -9,21 +9,6 @@
 import XCTest
 
 class NeoScanTest: XCTestCase {
-
-    func testGetClaimableGas() {
-        let exp = expectation(description: "Wait for get_claimable response")
-        let address = "AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb"
-        NeoScan().getClaimableGAS(address: address) { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let claimable):
-                print(claimable.claimable)
-                exp.fulfill()
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
     
     func testGetBalance() {
         let exp = expectation(description: "Wait for get_claimable response")

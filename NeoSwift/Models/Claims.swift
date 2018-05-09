@@ -8,38 +8,68 @@
 
 import Foundation
 
-public struct Claims: Codable {
-    public var address: String
+typealias Claim = Claimable.Claim
+public struct Claimable: Codable {
+    public var gas: Double
     public var claims: [Claim]
-    public var net: String
-    public var totalClaim: UInt64
-    public var totalUnspentClaim: Int
-    
     
     enum CodingKeys: String, CodingKey {
-        case address = "address"
+        case gas = "gas"
         case claims = "claims"
-        case net = "net"
-        case totalClaim = "total_claim"
-        case totalUnspentClaim = "total_unspent_claim"
     }
     
-    public init(address: String, claims: [Claim], net: String, totalClaim: UInt64, totalUnspentClaim: Int) {
-        self.address = address
+    public init(gas: Double, claims: [Claim]) {
+        self.gas = gas
         self.claims = claims
-        self.net = net
-        self.totalClaim = totalClaim
-        self.totalUnspentClaim = totalUnspentClaim
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let address: String = try container.decode(String.self, forKey: .address)
+        let gasValueString: String = try container.decode(String.self, forKey: .gas)
+        let gasValue = Double(gasValueString)!
         let claims: [Claim] = try container.decode([Claim].self, forKey: .claims)
-        let net: String = try container.decode(String.self, forKey: .net)
-        let totalClaim = try container.decode(UInt64.self, forKey: .totalClaim)
-        let totalUnspentClaim = try container.decode(Int.self, forKey: .totalUnspentClaim)
-        self.init(address: address, claims: claims, net: net, totalClaim: totalClaim, totalUnspentClaim: totalUnspentClaim)
+        self.init(gas: gasValue, claims: claims)
+    }
+    
+    public struct Claim: Codable {
+        public var asset: String
+        public var index: UInt16
+        public var txid: String
+        public var value: Double
+        public var createdAtBlock: Int
+    
+        enum CodingKeys: String, CodingKey {
+            case asset
+            case index
+            case txid
+            case value
+            case createdAtBlock
+        }
+        
+        public init(asset: String, index: UInt16, txid: String, value: Double, createdAtBlock: Int) {
+            self.asset = asset
+            self.index = index
+            self.txid = txid
+            self.value = value
+            self.createdAtBlock = createdAtBlock
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let asset: String = try container.decode(String.self, forKey: .asset)
+            let index: UInt16 = try container.decode(UInt16.self, forKey: .index)
+            var txid: String = try container.decode(String.self, forKey: .txid)
+            txid = String(txid.dropFirst(2))
+            let valueString: String = try container.decode(String.self, forKey: .value)
+            let format = NumberFormatter()
+            format.minimumFractionDigits = 0
+            format.maximumFractionDigits = 8
+            let value = format.number(from: valueString)?.doubleValue
+            let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
+            self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
+            
+        }
+    
     }
 }
 
