@@ -160,7 +160,7 @@ class NeoSwiftTests: XCTestCase {
     func testGetAssets() {
         let exp = expectation(description: "Wait for asset response")
         
-        NeoClient.sharedTest.getAssets(for: "AY4QCsLjUmfkMa775R9Exs85QMpAu6hyPZ", params: []) { result in
+        NeoClient.sharedMain.getAssets(for: "Some address", params: []) { result in
             switch result {
             case .failure:
                 assert(false)
@@ -285,6 +285,22 @@ class NeoSwiftTests: XCTestCase {
         accountA.claimGas { result, error in
             assert(result!)
             exp.fulfill()
+        }
+        waitForExpectations(timeout: 60, handler: nil)
+    }
+    
+    func testGetClaims() {
+        let address = "Some Address"
+        let exp = expectation(description: "Wait for for claim to complete")
+        NeoClient.sharedMain.getClaims(address: address) { result in
+            switch result {
+            case .failure:
+                assert(false)
+            case .success(let claims):
+                print(claims)
+                exp.fulfill()
+                return
+            }
         }
         waitForExpectations(timeout: 60, handler: nil)
     }
@@ -418,7 +434,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testInvokeContractFunction() {
-        let exp = expectation(description: "Wait for NEP 5 response")
+      /*  let exp = expectation(description: "Wait for NEP 5 response")
         let seed = "http://localhost:30333"
         let client = NeoClient(network: .main, seedURL: seed)
         
@@ -443,7 +459,7 @@ class NeoSwiftTests: XCTestCase {
         accountA.invokeContractFunction(assets: assets, contractHash: scriptHash, method: "mintTokensTo", args:[second, addressScriptHash]) { (success, error) in
             assert(success ?? false)
             exp.fulfill()
-        }
+        }*/
         
         waitForExpectations(timeout: 20, handler: nil)
         
