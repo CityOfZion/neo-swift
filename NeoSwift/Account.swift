@@ -290,6 +290,7 @@ public class Account {
             payload = payload + claim.txid.dataWithHexString().bytes.reversed()
             payload = payload + toByteArray(claim.index)
         }
+
         let amountDouble = NSNumber(value: claims.gas).doubleValue * pow(10, 8)
         let amountInt = NSNumber(value: amountDouble).intValue
         payload = payload + [0x00] // Attributes
