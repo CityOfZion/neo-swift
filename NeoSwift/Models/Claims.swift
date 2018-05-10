@@ -26,7 +26,11 @@ public struct Claimable: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let gasValueString: String = try container.decode(String.self, forKey: .gas)
-        let gasValue = Double(gasValueString)!
+        let format = NumberFormatter()
+        format.minimumFractionDigits = 0
+        format.maximumFractionDigits = 8
+        let value = format.number(from: gasValueString)?.doubleValue
+        let gasValue = value!
         let claims: [Claim] = try container.decode([Claim].self, forKey: .claims)
         self.init(gas: gasValue, claims: claims)
     }
