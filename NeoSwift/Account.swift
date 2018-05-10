@@ -290,17 +290,17 @@ public class Account {
             payload = payload + claim.txid.dataWithHexString().bytes.reversed()
             payload = payload + toByteArray(claim.index)
         }
-
-        let amountDecimal = Decimal(claims.gas) * pow(10, 8)
-        let amountInt = NSDecimalNumber(decimal: amountDecimal).intValue
+        let amountDouble = NSNumber(value: claims.gas).doubleValue * pow(10, 8)
+        let amountInt = NSNumber(value: amountDouble).intValue
         payload = payload + [0x00] // Attributes
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
         payload = payload + AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
         payload = payload + toByteArray(amountInt)
         payload = payload + hashedSignature.bytes
+        #if DEBUG
         print(payload.fullHexString)
-        
+        #endif
         return Data(bytes: payload)
     }
     
