@@ -492,17 +492,17 @@ class NeoSwiftTests: XCTestCase {
     func testParticipateTokenSale() {
         let exp = expectation(description: "Wait for testParticipateTokenSale response")
         
-        let wifPrivateNet = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr"
+        let wifPrivateNet = "L2W3eBvPYMUaxDZGEb395HZf26tLPZgU5qN351HpyVSAG1DWgDtx"
         guard let privateNetWallet = Account(wif: wifPrivateNet) else {
             assert(false)
             return
         }
-        let scripthash = "b2eb148d3783f60e678e35f2c496de1a2a7ead93"
+        let scripthash = "7c1de0a1fba67cbddbfea27aed370ff2ff35e8b2"
         let assetID = AssetId.neoAssetId.rawValue
-        let amount = Float64(10)
+        let amount = Float64(1)
         let remark = "o3x"
         let networkFee = Float64(0)
-        privateNetWallet.neoClient = NeoClient(network: .privateNet, seedURL: "http://localhost:30333")
+        privateNetWallet.neoClient = NeoClient(network: .test, seedURL: "http://seed3.neo.org:20332")
         privateNetWallet.participateTokenSales(scriptHash: scripthash, assetID: assetID, amount: amount, remark: remark, networkFee: networkFee) { success, txID, error in
             assert(success ?? false)
             print(txID)

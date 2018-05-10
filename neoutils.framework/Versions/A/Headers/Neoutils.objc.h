@@ -245,7 +245,7 @@ FOUNDATION_EXPORT NSData* NeoutilsHash256(NSData* b);
 
 FOUNDATION_EXPORT NSData* NeoutilsHexTobytes(NSString* hexstring);
 
-FOUNDATION_EXPORT NeoutilsRawTransaction* NeoutilsMintTokensRawTransactionMobile(NSString* utxoEndpoint, NSString* scriptHash, NSString* wif, NSString* sendingAssetID, double amount, NSString* remark, double networkFeeAmountInGAS, NSError** error);
+FOUNDATION_EXPORT NeoutilsRawTransaction* NeoutilsMintTokensRawTransactionMobile(NSString* network, NSString* scriptHash, NSString* wif, NSString* sendingAssetID, double amount, NSString* remark, double networkFeeAmountInGAS, NSError** error);
 
 FOUNDATION_EXPORT NSString* NeoutilsNEOAddressToScriptHash(NSString* neoAddress);
 
