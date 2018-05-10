@@ -412,12 +412,13 @@ public class Account {
     }
     
     public func participateTokenSales(scriptHash: String, assetID: String, amount: Float64, remark: String, networkFee: Float64,  completion: @escaping(Bool?, String, Error?) -> Void){
-        let url = URL(string: self.neoClient.fullNodeAPI)
-        //becase of the fullNodeAPI is the one with /v2/ so we have to remoev the last path component
-        let utxoEndpoint = url?.deletingLastPathComponent().absoluteString
+        var network = "main"
+        if self.neoClient.network == .test {
+            network = "test"
+        }
         var error: NSError?
         
-        let payload = NeoutilsMintTokensRawTransactionMobile(utxoEndpoint, scriptHash, self.wif, assetID, amount, remark, networkFee, &error)
+        let payload = NeoutilsMintTokensRawTransactionMobile(network, scriptHash, self.wif, assetID, amount, remark, networkFee, &error)
         if payload == nil {
             completion(false,"", error)
             return
