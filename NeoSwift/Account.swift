@@ -290,8 +290,9 @@ public class Account {
             payload = payload + claim.txid.dataWithHexString().bytes.reversed()
             payload = payload + toByteArray(claim.index)
         }
-        
-        let amountInt = ((Decimal(claims.gas) * pow(10, 8)) as NSDecimalNumber).intValue
+
+        let amountDecimal = Decimal(claims.gas) * pow(10, 8)
+        let amountInt = NSDecimalNumber(decimal: amountDecimal).intValue
         payload = payload + [0x00] // Attributes
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
