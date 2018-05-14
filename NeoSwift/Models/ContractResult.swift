@@ -11,12 +11,14 @@ import Foundation
 public struct StackEntry: Decodable {
     public enum VMOutputType: String {
         case byteArray = "ByteArray",
-        int = "Integer"
+        int = "Integer",
+        array = "Array"
         
     }
     public var type: VMOutputType
     public var intValue: Int?
     public var hexDataValue: String?
+    public var arrayValue: [StackEntry]?
     
     enum CodingKeys: String, CodingKey {
         case type = "type"
@@ -25,6 +27,12 @@ public struct StackEntry: Decodable {
     
     public init(type: VMOutputType, value: Any) {
         self.type = type
+        if type == .array {
+            if let arrayValue = value as? [StackEntry]  {
+                self.arrayValue = arrayValue
+                return
+            }
+        }
         guard let stringValue = value as? String else {
             fatalError("Unknown output from the VM")
         }
@@ -39,8 +47,14 @@ public struct StackEntry: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let typeString: String = try container.decode(String.self, forKey: .type)
-        let value: Any = try container.decode(String.self, forKey: .value)
-        self.init(type: VMOutputType(rawValue: typeString)!, value: value)
+        if typeString == "Array" {
+            let values: [StackEntry] = try container.decode([StackEntry].self, forKey: .value)
+            self.init(type: VMOutputType(rawValue: typeString)!, value: values)
+        }
+        else {
+            let value: Any = try container.decode(String.self, forKey: .value)
+            self.init(type: VMOutputType(rawValue: typeString)!, value: value)
+        }
     }
 }
 
