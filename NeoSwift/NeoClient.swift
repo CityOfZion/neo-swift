@@ -165,6 +165,7 @@ public class NeoClient {
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json-rpc", forHTTPHeaderField: "Content-Type")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         
         let requestDictionary: [String: Any?] = [
             "jsonrpc" : "2.0",
@@ -200,6 +201,7 @@ public class NeoClient {
         let request = NSMutableURLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
         request.timeoutInterval = 60
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, _, err) in
             if err != nil {
@@ -207,7 +209,7 @@ public class NeoClient {
                 return
             }
             
-            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! JSONDictionary else {
+            guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) as? JSONDictionary else {
                 completion(.failure(.invalidData))
                 return
             }
