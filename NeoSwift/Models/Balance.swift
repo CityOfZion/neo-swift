@@ -46,7 +46,7 @@ public struct Assets: Codable {
         public var asset: String
         public var index: Int
         public var txid: String
-        public var value: Double
+        public var value: Decimal
         public var createdAtBlock: Int
         
         enum CodingKeys: String, CodingKey {
@@ -57,7 +57,7 @@ public struct Assets: Codable {
             case createdAtBlock
         }
         
-        public init(asset: String, index: Int, txid: String, value: Double, createdAtBlock: Int) {
+        public init(asset: String, index: Int, txid: String, value: Decimal, createdAtBlock: Int) {
             self.asset = asset
             self.index = index
             self.txid = txid
@@ -78,7 +78,7 @@ public struct Assets: Codable {
             let format = NumberFormatter()
             format.minimumFractionDigits = 0
             format.maximumFractionDigits = 8
-            let value = format.number(from: valueString)?.doubleValue
+            let value = format.number(from: valueString)?.decimalValue
             self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
         }
     }

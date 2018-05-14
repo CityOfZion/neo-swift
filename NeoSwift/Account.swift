@@ -152,25 +152,25 @@ public class Account {
      *
      * NEED TO DOUBLE CHECK THE BYTE COUNT HERE
      */
-    public func getInputsNecessaryToSendAsset(asset: AssetId, amount: Double, assets: Assets) -> (totalAmount: Double?, payload: Data?, error: Error?) {
+    public func getInputsNecessaryToSendAsset(asset: AssetId, amount: Double, assets: Assets) -> (totalAmount: Decimal?, payload: Data?, error: Error?) {
         var sortedUnspents = [UTXO]()
         var neededForTransaction = [UTXO]()
         if asset == .neoAssetId {
             sortedUnspents = assets.getSortedNEOUTXOs()
-            if sortedUnspents.reduce(0, {$0 + $1.value}) < amount {
+            if sortedUnspents.reduce(0, {$0 + $1.value}) < Decimal(amount) {
                 return (nil, nil, NSError())
             }
         } else {
             sortedUnspents = assets.getSortedGASUTXOs()
-            if sortedUnspents.reduce(0, {$0 + $1.value}) < amount {
+            if sortedUnspents.reduce(0, {$0 + $1.value}) < Decimal(amount) {
                 return (nil, nil, NSError())
             }
         }
-        var runningAmount = 0.0
+        var runningAmount: Decimal = 0.0
         var index = 0
         var count: UInt8 = 0
         //Assume we always have anough balance to do this, prevent the check for bal
-        while runningAmount < amount {
+        while runningAmount < Decimal(amount) {
             neededForTransaction.append(sortedUnspents[index])
             runningAmount = runningAmount + sortedUnspents[index].value
             index = index + 1
@@ -187,10 +187,10 @@ public class Account {
         return (runningAmount, Data(bytes: inputData), nil)
     }
     
-    func packRawTransactionBytes(payloadPrefix: [UInt8], asset: AssetId, with inputData: Data, runningAmount: Double,
+    func packRawTransactionBytes(payloadPrefix: [UInt8], asset: AssetId, with inputData: Data, runningAmount: Decimal,
                                  toSendAmount: Double, toAddress: String, attributes: [TransactionAttritbute]? = nil) -> Data {
         let inputDataBytes = inputData.bytes
-        let needsTwoOutputTransactions = runningAmount != toSendAmount
+        let needsTwoOutputTransactions = runningAmount != Decimal(toSendAmount)
         
         var numberOfAttributes: UInt8 = 0x00
         var attributesPayload: [UInt8] = []
@@ -208,7 +208,8 @@ public class Account {
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSendInMemory = UInt64(toSendAmount * 100000000)
+            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
+            let amountToSendInMemory = NSDecimalNumber(decimal: amountToSend).intValue
             payload = payload + toByteArray(amountToSendInMemory)
             
             //reciever addressHash
@@ -216,14 +217,17 @@ public class Account {
             
             //Transaction To Sender
             payload = payload + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToGetBackInMemory = UInt64(runningAmount * 100000000) - UInt64(toSendAmount * 100000000)
+            let amountToGetBack = runningAmount * pow(10, 8) - Decimal(toSendAmount) * pow(10, 8)
+            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToGetBack).intValue
             payload = payload + toByteArray(amountToGetBackInMemory)
             payload = payload + hashedSignature.bytes
             
         } else {
             payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSendInMemory = UInt64(toSendAmount * 100000000)
-            payload = payload + toByteArray(amountToSendInMemory)
+            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
+            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToSend).intValue
+
+            payload = payload + toByteArray(amountToGetBackInMemory)
             payload = payload + toAddress.hashFromAddress().dataWithHexString()
         }
         return Data(bytes: payload)
@@ -291,8 +295,8 @@ public class Account {
             payload = payload + toByteArray(claim.index)
         }
 
-        let amountDouble = NSNumber(value: claims.gas).doubleValue * pow(10, 8)
-        let amountInt = NSNumber(value: amountDouble).intValue
+        let amountDecimal = claims.gas * pow(10, 8)
+        let amountInt = NSDecimalNumber(decimal: amountDecimal).intValue
         payload = payload + [0x00] // Attributes
         payload = payload + [0x00] // Inputs
         payload = payload + [0x01] // Output Count
@@ -320,6 +324,7 @@ public class Account {
                 completion(nil, error)
             case .success(let claims):
                 let claimData = self.generateClaimTransactionPayload(claims: claims)
+                print(claimData.fullHexString)
                 self.neoClient.sendRawTransaction(with: claimData) { (result) in
                     switch result {
                     case .failure(let error):
