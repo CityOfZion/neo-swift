@@ -276,7 +276,7 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testGetClaimsTransaction() {
-        let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL"
+        let wifPersonA = "Kzua6Pw2xY7HFceKLzaUXefqhRWNTS3ZtDz6FNUJANEfSqemPLSo"
         guard let accountA = Account(wif: wifPersonA) else {
             assert(false)
             return
