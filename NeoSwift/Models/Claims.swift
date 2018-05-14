@@ -10,7 +10,7 @@ import Foundation
 
 typealias Claim = Claimable.Claim
 public struct Claimable: Codable {
-    public var gas: Double
+    public var gas: Decimal
     public var claims: [Claim]
     
     enum CodingKeys: String, CodingKey {
@@ -18,7 +18,7 @@ public struct Claimable: Codable {
         case claims = "claims"
     }
     
-    public init(gas: Double, claims: [Claim]) {
+    public init(gas: Decimal, claims: [Claim]) {
         self.gas = gas
         self.claims = claims
     }
@@ -29,7 +29,7 @@ public struct Claimable: Codable {
         let format = NumberFormatter()
         format.minimumFractionDigits = 0
         format.maximumFractionDigits = 8
-        let value = format.number(from: gasValueString)?.doubleValue
+        let value = format.number(from: gasValueString)?.decimalValue
         let gasValue = value!
         let claims: [Claim] = try container.decode([Claim].self, forKey: .claims)
         self.init(gas: gasValue, claims: claims)
@@ -39,7 +39,7 @@ public struct Claimable: Codable {
         public var asset: String
         public var index: UInt16
         public var txid: String
-        public var value: Double
+        public var value: Decimal
         public var createdAtBlock: Int
     
         enum CodingKeys: String, CodingKey {
@@ -50,7 +50,7 @@ public struct Claimable: Codable {
             case createdAtBlock
         }
         
-        public init(asset: String, index: UInt16, txid: String, value: Double, createdAtBlock: Int) {
+        public init(asset: String, index: UInt16, txid: String, value: Decimal, createdAtBlock: Int) {
             self.asset = asset
             self.index = index
             self.txid = txid
@@ -68,7 +68,7 @@ public struct Claimable: Codable {
             let format = NumberFormatter()
             format.minimumFractionDigits = 0
             format.maximumFractionDigits = 8
-            let value = format.number(from: valueString)?.doubleValue
+            let value = format.number(from: valueString)?.decimalValue
             let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
             self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
             
