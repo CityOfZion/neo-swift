@@ -208,8 +208,9 @@ public class Account {
         if needsTwoOutputTransactions {
             //Transaction To Reciever
             payload = payload + [0x02] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
-            let amountToSendInMemory = NSDecimalNumber(decimal: amountToSend).intValue
+            let amountToSend = toSendAmount * pow(10, 8)
+            let amountToSendRounded = round(amountToSend)
+            let amountToSendInMemory = UInt64(amountToSendRounded)
             payload = payload + toByteArray(amountToSendInMemory)
             
             //reciever addressHash
@@ -217,17 +218,20 @@ public class Account {
             
             //Transaction To Sender
             payload = payload + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToGetBack = runningAmount * pow(10, 8) - Decimal(toSendAmount) * pow(10, 8)
-            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToGetBack).intValue
+            let runningAmountRounded = round(NSDecimalNumber(decimal: runningAmount * pow(10, 8)).doubleValue)
+            let amountToGetBack = runningAmountRounded - amountToSendRounded
+            
+            let amountToGetBackInMemory = UInt64(amountToGetBack)
             payload = payload + toByteArray(amountToGetBackInMemory)
             payload = payload + hashedSignature.bytes
             
         } else {
             payload = payload + [0x01] + asset.rawValue.dataWithHexString().bytes.reversed()
-            let amountToSend = Decimal(toSendAmount) * pow(10, 8)
-            let amountToGetBackInMemory = NSDecimalNumber(decimal: amountToSend).intValue
+            let amountToSend = toSendAmount * pow(10, 8)
+            let amountToSendRounded = round(amountToSend)
+            let amountToSendInMemory = UInt64(amountToSendRounded)
 
-            payload = payload + toByteArray(amountToGetBackInMemory)
+            payload = payload + toByteArray(amountToSendInMemory)
             payload = payload + toAddress.hashFromAddress().dataWithHexString()
         }
         return Data(bytes: payload)
@@ -245,6 +249,7 @@ public class Account {
     
     func generateSendTransactionPayload(asset: AssetId, amount: Double, toAddress: String, assets: Assets, attributes: [TransactionAttritbute]? = nil) -> Data {
         var error: NSError?
+        
         let inputData = getInputsNecessaryToSendAsset(asset: asset, amount: amount, assets: assets)
         let payloadPrefix: [UInt8] = [0x80, 0x00]
         let rawTransaction = packRawTransactionBytes(payloadPrefix: payloadPrefix,
