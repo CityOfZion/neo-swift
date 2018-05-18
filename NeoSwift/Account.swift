@@ -391,6 +391,20 @@ public class Account {
         }
     }
     
+    public func invokeContractFunction(contractHash: String, method: String, args: [Any], completion: @escaping(ContractResult?, Error?) -> Void) {
+        
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: contractHash, operation: method, args: args)
+        self.neoClient.invokeContract(with: scriptBuilder.rawHexString) { result in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let response):
+                completion(response, nil)
+            }
+        }
+    }
+    
     public func invokeContractFunction(assets: Assets, contractHash: String, method: String, args: [Any], completion: @escaping(Bool?, Error?) -> Void) {
         
         let scriptBuilder = ScriptBuilder()
