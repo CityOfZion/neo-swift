@@ -142,8 +142,8 @@ class NeoSwiftTests: XCTestCase {
     func testTransactionOutput() {
         let exp = expectation(description: "Wait for block hash response")
         
-        let hash = "2288ba9bd93da4ac4c414048f019300c8adadc6df5e4bfeb6fc79da7f955e638"
-        let index: Int64 = 0
+        let hash = "469fe36c464442aa3eecc377f2093ad8594d0e764aad5e4aab5120ed4f3683fc"
+        let index: Int64 = 1
         NeoClient.sharedTest.getTransactionOutput(with: hash, and: index) { result in
             switch result {
             case .failure:
@@ -202,6 +202,7 @@ class NeoSwiftTests: XCTestCase {
         accountA.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountB.address) { success, error in
             assert(success ?? false)
             exp1.fulfill()
+            sleep(10)
             accountB.sendAssetTransaction(asset: .neoAssetId, amount: 1, toAddress: accountA.address) {success, error in
                 assert(success ?? false)
                 exp2.fulfill()
@@ -377,14 +378,14 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testOverwriteSeedNode(){
-        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
-        assert(client.seed == "http://seed2.neo.org:10332")
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[9].URL)!)
+        XCTAssertEqual(client.seed, "http://seed5.cityofzion.io:8080")
     }
     
     func testGetPeers() {
         let exp = expectation(description: "Wait for GetPeers Response")
         
-        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        let client = NeoClient(network: .main, seedURL: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[9].URL)!)
         client.getPeers { result in
             switch result {
             case .failure:

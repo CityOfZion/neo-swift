@@ -11,6 +11,8 @@
   Swift SDK for the <b>NEO</b> blockchain.
 </p>
 
+[![Build Status](https://travis-ci.org/CityOfZion/neo-swift.svg?branch=master)](https://travis-ci.org/CityOfZion/neo-swift)
+
 ## What is neo-swift
 
 - A swift client for interacting with a node on the [NEO](http://neo.org/) blockchain.

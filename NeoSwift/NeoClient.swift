@@ -364,7 +364,7 @@ public class NeoClient {
     }
     
     //NEED TO GUARD ON THE VALUE OUTS
-    public func getTransactionOutput(with hash: String, and index: Int64, completion: @escaping (NeoClientResult<ValueOut>) -> ()) {
+    public func getTransactionOutput(with hash: String, and index: Int64, completion: @escaping (NeoClientResult<[ValueOut]>) -> ()) {
         sendRequest(.getTransaction, params: [hash, index]) { result in
             switch result {
             case .failure(let error):
@@ -372,12 +372,12 @@ public class NeoClient {
             case .success(let response):
                 let decoder = JSONDecoder()
                 guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let block = try? decoder.decode(ValueOut.self, from: data) else {
+                    let block = try? decoder.decode(Transaction.self, from: data) else {
                         completion(.failure(.invalidData))
                         return
                 }
                 
-                let result = NeoClientResult.success(block)
+                let result = NeoClientResult.success(block.valueOuts)
                 completion(result)
             }
         }
