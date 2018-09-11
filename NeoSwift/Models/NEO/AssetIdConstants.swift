@@ -23,4 +23,3 @@ func toByteArrayWithoutTrailingZeros<T>(_ value: T) -> [UInt8] {
     arr.removeTrailingZeros()
     return arr
 }
-

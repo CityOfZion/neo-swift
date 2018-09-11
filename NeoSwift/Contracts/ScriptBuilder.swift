@@ -44,20 +44,20 @@ public class ScriptBuilder {
     private func pushHexString(_ stringValue: String) {
         let stringBytes = stringValue.dataWithHexString().bytes
         if stringBytes.count < OpCode.PUSHBYTES75.rawValue {
-            rawBytes = rawBytes + toByteArrayWithoutTrailingZeros(stringBytes.count)
-            rawBytes = rawBytes + stringBytes
+            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            rawBytes += stringBytes
         } else if stringBytes.count < 0x100 {
             pushOPCode(.PUSHDATA1)
-            rawBytes = rawBytes + toByteArrayWithoutTrailingZeros(stringBytes.count)
-            rawBytes = rawBytes + stringBytes
+            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            rawBytes += stringBytes
         } else if stringBytes.count < 0x10000 {
             pushOPCode(.PUSHDATA2)
-            rawBytes = rawBytes + toByteArrayWithoutTrailingZeros(stringBytes.count)
-            rawBytes = rawBytes + stringBytes
+            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            rawBytes += stringBytes
         } else {
             pushOPCode(.PUSHDATA4)
-            rawBytes = rawBytes + toByteArrayWithoutTrailingZeros(stringBytes.count)
-            rawBytes = rawBytes + stringBytes
+            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            rawBytes += stringBytes
         }
     }
     
@@ -104,7 +104,7 @@ public class ScriptBuilder {
         } else {
             pushOPCode(.APPCALL)
             let toAppendBytes = scriptHash.dataWithHexString().bytes.reversed()
-            rawBytes = rawBytes + toAppendBytes
+            rawBytes += toAppendBytes
         }
     }
 }

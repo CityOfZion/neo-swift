@@ -14,8 +14,8 @@ public struct Claimable: Codable {
     public var claims: [Claim]
     
     enum CodingKeys: String, CodingKey {
-        case gas = "gas"
-        case claims = "claims"
+        case gas
+        case claims
     }
     
     public init(gas: Decimal, claims: [Claim]) {
@@ -27,10 +27,11 @@ public struct Claimable: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let gasValueString: String = try container.decode(String.self, forKey: .gas)
         let format = NumberFormatter()
+        format.locale = Locale(identifier: "en_US")
         format.minimumFractionDigits = 0
         format.maximumFractionDigits = 8
         let value = format.number(from: gasValueString)?.decimalValue
-        let gasValue = value!
+        let gasValue = value ?? 0.0
         let claims: [Claim] = try container.decode([Claim].self, forKey: .claims)
         self.init(gas: gasValue, claims: claims)
     }
@@ -41,7 +42,7 @@ public struct Claimable: Codable {
         public var txid: String
         public var value: Decimal
         public var createdAtBlock: Int
-    
+        
         enum CodingKeys: String, CodingKey {
             case asset
             case index
@@ -66,14 +67,14 @@ public struct Claimable: Codable {
             txid = String(txid.dropFirst(2))
             let valueString: String = try container.decode(String.self, forKey: .value)
             let format = NumberFormatter()
+            format.locale = Locale(identifier: "en_US")
             format.minimumFractionDigits = 0
             format.maximumFractionDigits = 8
             let value = format.number(from: valueString)?.decimalValue
             let createdAtBlock: Int = try container.decode(Int.self, forKey: .createdAtBlock)
-            self.init(asset: asset, index: index, txid: txid, value: value!, createdAtBlock: createdAtBlock)
+            self.init(asset: asset, index: index, txid: txid, value: value ?? 0.0, createdAtBlock: createdAtBlock)
             
         }
-    
+        
     }
 }
-

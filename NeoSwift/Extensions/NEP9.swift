@@ -11,7 +11,7 @@ import Neoutils
 
 public class NEP9 {
     public typealias NEP9 = NeoutilsSimplifiedNEP9
-    public func parse(uri: String) -> NEP9? {
+    public static func parse(_ uri: String) -> NEP9? {
         var error: NSError?
         guard let uri = NeoutilsParseNEP9URI(uri, &error) else { return nil }
         return uri

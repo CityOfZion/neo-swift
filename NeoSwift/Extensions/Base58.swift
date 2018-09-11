@@ -67,20 +67,20 @@ struct Base58 {
     // Decode
     static func bytesFromBase58(_ base58: String) -> [UInt8] {
         // remove leading and trailing whitespaces
-        var string = base58.trimmingCharacters(in: CharacterSet.whitespaces)
+        let string = base58.trimmingCharacters(in: CharacterSet.whitespaces)
         
         guard !string.isEmpty else { return [] }
         
         var zerosCount = 0
         var length = 0
-        for c in string.characters {
+        for c in string {
             if c != "1" { break }
             zerosCount += 1
         }
         
         let size = string.lengthOfBytes(using: String.Encoding.utf8) * 733 / 1000 + 1 - zerosCount
         var base58: [UInt8] = Array(repeating: 0, count: size)
-        for c in string.characters where c != " " {
+        for c in string where c != " " {
             // search for base58 character
             guard let base58Index = base58Alphabet.index(of: c) else { return [] }
             
@@ -113,8 +113,6 @@ struct Base58 {
         return result
     }
 }
-
-
 
 extension Array where Element == UInt8 {
     public var base58EncodedString: String {
@@ -161,7 +159,7 @@ extension String {
     }
     
     public var littleEndianHexToUInt: UInt {
-        return UInt(self.dataWithHexString().bytes.reversed().fullHexString,radix: 16)!
+        return UInt(self.dataWithHexString().bytes.reversed().fullHexString, radix: 16)!
     }
     
 }

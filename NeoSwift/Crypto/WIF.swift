@@ -7,7 +7,7 @@
 //
 
 import Foundation
-    
+
 public extension String {
     
     func hash160() -> String? {
@@ -24,7 +24,7 @@ public extension String {
         let substringData = Data(bytes: shortened)
         let hashOne = substringData.sha256
         let hashTwo = hashOne.sha256
-        let bytesTwo = [UInt8](hashTwo)
+        _ = [UInt8](hashTwo)
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
         return finalKeyData.fullHexString
     }
@@ -35,21 +35,21 @@ public extension String {
         let substringData = Data(bytes: shortened)
         let hashOne = substringData.sha256
         let hashTwo = hashOne.sha256
-        let bytesTwo = [UInt8](hashTwo)
+        _ = [UInt8](hashTwo)
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
         return finalKeyData
     }
     
     func toHexString() -> String {
         let data = self.data(using: .utf8)!
-        let hexString = data.map{ String(format:"%02x", $0) }.joined()
+        let hexString = data.map { String(format: "%02x", $0) }.joined()
         return hexString
     }
     
     func dataWithHexString() -> Data {
         var hex = self
         var data = Data()
-        while(hex.characters.count > 0) {
+        while hex.count > 0 {
             let c: String = hex.substring(to: hex.index(hex.startIndex, offsetBy: 2))
             hex = hex.substring(from: hex.index(hex.startIndex, offsetBy: 2))
             var ch: UInt32 = 0

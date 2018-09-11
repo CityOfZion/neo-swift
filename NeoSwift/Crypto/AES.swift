@@ -28,7 +28,7 @@ struct AES {
         assert(keySize.rawValue / 8 <= key.count)
         
         let options = kCCOptionECBMode | (pkcs7Padding ? kCCOptionPKCS7Padding : 0)
-
+        
         let resultSize = bytes.count + 16
         
         var result: [UInt8] = Array(repeatElement(0, count: resultSize))
@@ -81,5 +81,3 @@ struct AES {
         
     }
 }
-
-

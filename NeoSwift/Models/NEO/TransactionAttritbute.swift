@@ -13,7 +13,7 @@ public class TransactionAttritbute {
     }
     
     //http://docs.neo.org/en-us/node/network-protocol.html
-    enum Usage : UInt8 {
+    enum Usage: UInt8 {
         case contractHash = 0x00
         case ECDH02 = 0x02
         case ECDH03 = 0x03
@@ -58,11 +58,33 @@ public class TransactionAttritbute {
     
     public let data: [UInt8]?
     
-    public init(description: String)  {
+    public init(description: String) {
         let byteArray: [UInt8] = Array(description.utf8)
         let length = UInt8(byteArray.count)
-        var attribute:[UInt8] = [Usage.Description.rawValue, length]
-        attribute = attribute + byteArray
+        var attribute: [UInt8] = [Usage.Description.rawValue, length]
+        attribute += byteArray
+        self.data = attribute
+    }
+    
+    public init(descriptionHex: String) {
+        let byteArray: [UInt8] = descriptionHex.dataWithHexString().bytes
+        let length = UInt8(byteArray.count)
+        var attribute: [UInt8] = [Usage.Description.rawValue, length]
+        attribute += byteArray
+        self.data = attribute
+    }
+    
+    public init(remark: String) {
+        let byteArray: [UInt8] = Array(remark.utf8)
+        let length = UInt8(byteArray.count)
+        var attribute: [UInt8] = [Usage.Remark.rawValue, length]
+        attribute += byteArray
+        self.data = attribute
+    }
+    
+    public init(script: String) {
+        var attribute: [UInt8] = [Usage.Script.rawValue]
+        attribute += script.dataWithHexString().bytes
         self.data = attribute
     }
 }

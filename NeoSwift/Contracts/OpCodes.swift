@@ -76,7 +76,6 @@ enum OpCode: UInt8 {
     XOR = 0x86, // Boolean exclusive or between each bit in the inputs.
     EQUAL = 0x87, // Returns 1 if the inputs are exactly equal, 0 otherwise.
     
-    
     // Arithmetic
     // Note: Arithmetic inputs are limited to signed 32-bit integers, but may overflow their output.
     INC = 0x8B, // 1 is added to the input.

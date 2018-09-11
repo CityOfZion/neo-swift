@@ -1,10 +1,12 @@
 //
 //  Asset.swift
-//  NeoSwift
+//  O3
 //
-//  Created by Apisit Toompakdee on 9/13/17.
-//  Copyright © 2017 drei. All rights reserved.
+//  Created by Apisit Toompakdee on 8/7/18.
+//  Copyright © 2018 O3 Labs Inc. All rights reserved.
 //
+
+import UIKit
 
 public struct AssetName: Codable {
     
@@ -30,7 +32,7 @@ public struct AssetName: Codable {
 }
 
 public struct AssetState: Codable {
-
+    
     public var version: Int
     public var id: String
     public var type: String
@@ -89,24 +91,42 @@ public struct AssetState: Codable {
 }
 
 public struct Asset: Codable {
-    public var id: String
-    public var value: String
     
-    enum CodingKeys : String, CodingKey {
-        case id = "asset"
-        case value = "value"
+    let name: String
+    let symbol: String
+    let logoURL: String
+    let url: String?
+    let logoURLDark: String?
+    let logoSVG: String?
+    let webURL: String?
+    let tokenHash: String?
+    let decimal: Int? = 0
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case symbol = "symbol"
+        case decimal = "decimal"
+        case tokenHash = "tokenHash"
+        case logoURL = "logoURL"
+        case logoURLDark = "logoURLDark"
+        case logoSVG = "logoSVG"
+        case webURL = "webURL"
+        case url = "url" //this is a url to go to token detail screen
+    }
+}
+
+class JSONNull: Codable {
+    public init() {}
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if !container.decodeNil() {
+            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
+        }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let id: String = try container.decode(String.self, forKey: .id)
-        let value: String = try container.decode(String.self, forKey: .value)
-        self.init(id: id, value: value)
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encodeNil()
     }
-    
-    public init(id: String, value: String) {
-        self.id = id
-        self.value = value
-    }
-    
 }
