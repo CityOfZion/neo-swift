@@ -235,4 +235,93 @@ public class NeoClient {
             }
         }
     }
+    
+    public func getTokenInfo(with scriptHash: String, completion: @escaping(NeoClientResult<NEP5Token>) -> ()) {
+        let cacheKey: NSString = scriptHash as NSString
+        if let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token {
+            completion(.success(tokenInfo))
+            return
+        }
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "name")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "symbol")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "decimals")
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "totalSupply")
+        invokeContract(with: scriptBuilder.rawHexString) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let contractResult):
+                guard let token = NEP5Token(from: contractResult.stack) else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                self.tokenInfoCache.setObject(token as AnyObject, forKey: cacheKey)
+                completion(.success(token))
+            }
+        }
+    }
+    
+    public func invokeContract(with script: String, completion: @escaping(NeoClientResult<ContractResult>) -> ()) {
+        sendJSONRPCRequest(.invokeContract, params: [script]) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                let decoder = JSONDecoder()
+                if response["result"] == nil {
+                    completion(.failure(NeoClientError.invalidData))
+                    return
+                }
+                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
+                    let contractResult = try? decoder.decode(ContractResult.self, from: data) else {
+                        completion(.failure(.invalidData))
+                        return
+                }
+                
+                let result = NeoClientResult.success(contractResult)
+                completion(result)
+            }
+        }
+    }
+    
+    public func getTokenBalance(_ scriptHash: String, address: String, completion: @escaping(NeoClientResult<Double>) -> ()) {
+        let scriptBuilder = ScriptBuilder()
+        let cacheKey: NSString = scriptHash as NSString
+        guard let tokenInfo = tokenInfoCache.object(forKey: cacheKey) as? NEP5Token else {
+            //Token info not in cache then fetch it.
+            self.getTokenInfo(with: scriptHash, completion: { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success:
+                    self.getTokenBalance(scriptHash, address: address, completion: completion)
+                    return
+                }
+            })
+            return
+        }
+        
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: "balanceOf", args: [address.hashFromAddress()])
+        self.invokeContract(with: scriptBuilder.rawHexString) { contractResult in
+            switch contractResult {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let response):
+                #if DEBUG
+                print(response)
+                #endif
+                let balanceData = response.stack[0].hexDataValue ?? ""
+                if balanceData == "" {
+                    completion(.success(0))
+                    return
+                }
+                
+                let balance = Double(balanceData.littleEndianHexToUInt)
+                let divider = pow(Double(10), Double(tokenInfo.decimals))
+                let amount = balance / divider
+                completion(.success(amount))
+            }
+        }
+    }
 }

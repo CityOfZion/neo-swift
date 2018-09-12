@@ -50,8 +50,8 @@ public extension String {
         var hex = self
         var data = Data()
         while hex.count > 0 {
-            let c: String = hex.substring(to: hex.index(hex.startIndex, offsetBy: 2))
-            hex = hex.substring(from: hex.index(hex.startIndex, offsetBy: 2))
+            let c: String = String(hex[..<hex.index(hex.startIndex, offsetBy: 2)])
+            hex = String(hex[hex.index(hex.startIndex, offsetBy: 2)...])
             var ch: UInt32 = 0
             Scanner(string: c).scanHexInt32(&ch)
             var char = UInt8(ch)

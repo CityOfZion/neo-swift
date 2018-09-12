@@ -13,6 +13,7 @@
 @class NeoutilsBlockCountResponse;
 @class NeoutilsFetchSeedRequest;
 @class NeoutilsMultiSig;
+@class NeoutilsNEP2;
 @class NeoutilsNEP5;
 @class NeoutilsNativeAsset;
 @class NeoutilsNodeList;
@@ -34,8 +35,6 @@
 @protocol NeoutilsMultiSigInterface <NSObject>
 // skipped method MultiSigInterface.CreateMultiSigRedeemScript with unsupported parameter or return types
 
-// skipped method MultiSigInterface.CreateMultiSignedAddress with unsupported parameter or return types
-
 @end
 
 @protocol NeoutilsNEP5Interface <NSObject>
@@ -46,6 +45,8 @@
 @end
 
 @protocol NeoutilsNativeAssetInterface <NSObject>
+// skipped method NativeAssetInterface.GenerateRawTx with unsupported parameter or return types
+
 // skipped method NativeAssetInterface.SendNativeAssetRawTransaction with unsupported parameter or return types
 
 @end
@@ -93,8 +94,18 @@
 - (instancetype)init;
 // skipped method MultiSig.CreateMultiSigRedeemScript with unsupported parameter or return types
 
-// skipped method MultiSig.CreateMultiSignedAddress with unsupported parameter or return types
+@end
 
+@interface NeoutilsNEP2 : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) id _ref;
+
+- (instancetype)initWithRef:(id)ref;
+- (instancetype)init;
+- (NSString*)encryptedKey;
+- (void)setEncryptedKey:(NSString*)v;
+- (NSString*)address;
+- (void)setAddress:(NSString*)v;
 @end
 
 @interface NeoutilsNEP5 : NSObject <goSeqRefInterface, NeoutilsNEP5Interface> {
@@ -103,9 +114,9 @@
 
 - (instancetype)initWithRef:(id)ref;
 - (instancetype)init;
-// skipped field NEP5.ScriptHash with unsupported type: *types.Named
+// skipped field NEP5.ScriptHash with unsupported type: github.com/o3labs/neo-utils/neoutils/smartcontract.ScriptHash
 
-// skipped field NEP5.NetworkFeeAmount with unsupported type: *types.Named
+// skipped field NEP5.NetworkFeeAmount with unsupported type: github.com/o3labs/neo-utils/neoutils/smartcontract.NetworkFeeAmount
 
 // skipped method NEP5.MintTokensRawTransaction with unsupported parameter or return types
 
@@ -119,7 +130,9 @@
 
 - (instancetype)initWithRef:(id)ref;
 - (instancetype)init;
-// skipped field NativeAsset.NetworkFeeAmount with unsupported type: *types.Named
+// skipped field NativeAsset.NetworkFeeAmount with unsupported type: github.com/o3labs/neo-utils/neoutils/smartcontract.NetworkFeeAmount
+
+// skipped method NativeAsset.GenerateRawTx with unsupported parameter or return types
 
 // skipped method NativeAsset.SendNativeAssetRawTransaction with unsupported parameter or return types
 
@@ -131,7 +144,7 @@
 
 - (instancetype)initWithRef:(id)ref;
 - (instancetype)init;
-// skipped field NodeList.URL with unsupported type: *types.Slice
+// skipped field NodeList.URL with unsupported type: []string
 
 @end
 
@@ -161,6 +174,9 @@
 - (void)setResponseTime:(int64_t)v;
 @end
 
+/**
+ * Shared Secret with 2 parts.
+ */
 @interface NeoutilsSharedSecret : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) id _ref;
@@ -181,8 +197,8 @@
 - (instancetype)init;
 - (NSString*)to;
 - (void)setTo:(NSString*)v;
-- (NSString*)assetID;
-- (void)setAssetID:(NSString*)v;
+- (NSString*)asset;
+- (void)setAsset:(NSString*)v;
 - (double)amount;
 - (void)setAmount:(double)v;
 @end
@@ -193,9 +209,9 @@
 
 - (instancetype)initWithRef:(id)ref;
 - (instancetype)init;
-// skipped field SmartContract.ScriptHash with unsupported type: *types.Named
+// skipped field SmartContract.ScriptHash with unsupported type: github.com/o3labs/neo-utils/neoutils/smartcontract.ScriptHash
 
-// skipped field SmartContract.NetworkFeeAmount with unsupported type: *types.Named
+// skipped field SmartContract.NetworkFeeAmount with unsupported type: github.com/o3labs/neo-utils/neoutils/smartcontract.NetworkFeeAmount
 
 // skipped method SmartContract.GenerateInvokeFunctionRawTransaction with unsupported parameter or return types
 
@@ -208,6 +224,9 @@
 @property(strong, readonly) id _ref;
 
 - (instancetype)initWithRef:(id)ref;
+/**
+ * Create a new wallet.
+ */
 - (instancetype)init;
 - (NSData*)publicKey;
 - (void)setPublicKey:(NSData*)v;
@@ -219,48 +238,98 @@
 - (void)setWIF:(NSString*)v;
 - (NSData*)hashedSignature;
 - (void)setHashedSignature:(NSData*)v;
+/**
+ * Compute shared secret using ECDH
+ */
 - (NSData*)computeSharedSecret:(NSData*)publicKey;
 @end
 
 FOUNDATION_EXPORT NSString* const NeoutilsVERSION;
 
+/**
+ * Simple bytes to Hex
+ */
 FOUNDATION_EXPORT NSString* NeoutilsBytesToHex(NSData* b);
+
+FOUNDATION_EXPORT NSString* NeoutilsClaimONG(NSString* endpoint, long gasPrice, long gasLimit, NSString* wif, NSError** error);
 
 // skipped function ConvertByteArrayToBigInt with unsupported parameter or return types
 
 
+/**
+ * Decrypt AES encrypted string in base64 format to decrypted string
+ */
 FOUNDATION_EXPORT NSString* NeoutilsDecrypt(NSData* key, NSString* encryptedText);
 
+/**
+ * Encrypt string to base64 format using AES
+ */
 FOUNDATION_EXPORT NSString* NeoutilsEncrypt(NSData* key, NSString* text);
 
+/**
+ * Generate a wallet from a private key
+ */
 FOUNDATION_EXPORT NeoutilsWallet* NeoutilsGenerateFromPrivateKey(NSString* privateKey, NSError** error);
 
+/**
+ * Generate a wallet from a WIF
+ */
 FOUNDATION_EXPORT NeoutilsWallet* NeoutilsGenerateFromWIF(NSString* wif, NSError** error);
 
+FOUNDATION_EXPORT NSString* NeoutilsGenerateNEP6FromEncryptedKey(NSString* walletName, NSString* addressLabel, NSString* address, NSString* encryptedKey);
+
+/**
+ * Generate Shamir shared secret to SharedSecret struct.
+ */
 FOUNDATION_EXPORT NeoutilsSharedSecret* NeoutilsGenerateShamirSharedSecret(NSString* secret, NSError** error);
 
 FOUNDATION_EXPORT NSData* NeoutilsHash160(NSData* data);
 
 FOUNDATION_EXPORT NSData* NeoutilsHash256(NSData* b);
 
+/**
+ * Simple hex string to bytes
+ */
 FOUNDATION_EXPORT NSData* NeoutilsHexTobytes(NSString* hexstring);
 
 FOUNDATION_EXPORT NeoutilsRawTransaction* NeoutilsMintTokensRawTransactionMobile(NSString* network, NSString* scriptHash, NSString* wif, NSString* sendingAssetID, double amount, NSString* remark, double networkFeeAmountInGAS, NSError** error);
 
-FOUNDATION_EXPORT NSString* NeoutilsNEOAddressToScriptHash(NSString* neoAddress);
+// skipped function NEOAddressToScriptHashWithEndian with unsupported parameter or return types
 
+
+FOUNDATION_EXPORT NSString* NeoutilsNEP2Decrypt(NSString* key, NSString* passphrase, NSError** error);
+
+FOUNDATION_EXPORT NeoutilsNEP2* NeoutilsNEP2Encrypt(NSString* wif, NSString* passphrase, NSError** error);
+
+/**
+ * Create a new wallet.
+ */
 FOUNDATION_EXPORT NeoutilsWallet* NeoutilsNewWallet(NSError** error);
+
+FOUNDATION_EXPORT NSString* NeoutilsOntologyTransfer(NSString* endpoint, long gasPrice, long gasLimit, NSString* wif, NSString* asset, NSString* to, double amount, NSError** error);
 
 FOUNDATION_EXPORT NeoutilsSimplifiedNEP9* NeoutilsParseNEP9URI(NSString* uri, NSError** error);
 
+FOUNDATION_EXPORT NSString* NeoutilsPublicKeyToNEOAddress(NSData* publicKeyBytes);
+
+/**
+ * Recover the secret from shared secrets.
+ */
 FOUNDATION_EXPORT NSString* NeoutilsRecoverFromSharedSecret(NSData* first, NSData* second, NSError** error);
 
 FOUNDATION_EXPORT NSData* NeoutilsReverseBytes(NSData* b);
 
+/**
+ * Convert script hash to NEO address
+This method takes Big Endian Script hash
+ */
 FOUNDATION_EXPORT NSString* NeoutilsScriptHashToNEOAddress(NSString* scriptHash);
 
 FOUNDATION_EXPORT NeoutilsSeedNodeResponse* NeoutilsSelectBestSeedNode(NSString* commaSeparatedURLs);
 
+/**
+ * Sign data using ECDSA with a private key
+ */
 FOUNDATION_EXPORT NSData* NeoutilsSign(NSData* data, NSString* key, NSError** error);
 
 // skipped function UseNEP5WithNetworkFee with unsupported parameter or return types
@@ -274,7 +343,17 @@ FOUNDATION_EXPORT id<NeoutilsSmartContractInterface> NeoutilsUseSmartContract(NS
 // skipped function UseSmartContractWithNetworkFee with unsupported parameter or return types
 
 
+FOUNDATION_EXPORT NSString* NeoutilsVMCodeToNEOAddress(NSData* vmCode);
+
+/**
+ * Validate NEO address
+ */
 FOUNDATION_EXPORT BOOL NeoutilsValidateNEOAddress(NSString* address);
+
+/**
+ * Verify signed hash using public key
+ */
+FOUNDATION_EXPORT BOOL NeoutilsVerify(NSData* publicKey, NSData* signature, NSData* hash);
 
 @class NeoutilsMultiSigInterface;
 
@@ -290,8 +369,6 @@ FOUNDATION_EXPORT BOOL NeoutilsValidateNEOAddress(NSString* address);
 
 - (instancetype)initWithRef:(id)ref;
 // skipped method MultiSigInterface.CreateMultiSigRedeemScript with unsupported parameter or return types
-
-// skipped method MultiSigInterface.CreateMultiSignedAddress with unsupported parameter or return types
 
 @end
 
@@ -311,6 +388,8 @@ FOUNDATION_EXPORT BOOL NeoutilsValidateNEOAddress(NSString* address);
 @property(strong, readonly) id _ref;
 
 - (instancetype)initWithRef:(id)ref;
+// skipped method NativeAssetInterface.GenerateRawTx with unsupported parameter or return types
+
 // skipped method NativeAssetInterface.SendNativeAssetRawTransaction with unsupported parameter or return types
 
 @end

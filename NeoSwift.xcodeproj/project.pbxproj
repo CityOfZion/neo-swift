@@ -6,20 +6,6 @@
 	objectVersion = 48;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 6E7E08861F6E9AE2000B86A9 /* Build configuration list for PBXAggregateTarget "NeoSwiftAggregate" */;
-			buildPhases = (
-				6E7E08891F6E9B26000B86A9 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = NeoSwiftAggregate;
-			productName = NeoSwiftAggregate;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		350E2719207B5CE4006AB519 /* NeoScanTransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */; };
 		350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E2718207B5CE3006AB519 /* NeoScanTransactionHistory.swift */; };
@@ -76,6 +62,11 @@
 		F3B816941F7437CC0023A54E /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
 		F3FBEE4C1F7AC81A00CF06A1 /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
 		F3FBEE4D1F7AC81A00CF06A1 /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
+		FAD5ED1921497046006B924F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5ED1821497046006B924F /* ContractResult.swift */; };
+		FAD5ED342149748D006B924F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5ED1821497046006B924F /* ContractResult.swift */; };
+		FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD83B2F21482C1300AF11DF /* NEP5Token.swift */; };
+		FAD5ED36214974C0006B924F /* NEP9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35494584203D4D4500332E53 /* NEP9.swift */; };
+		FAD5ED37214974C3006B924F /* validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35494586203D500E00332E53 /* validator.swift */; };
 		FAD83B3021482C1300AF11DF /* NEP5Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD83B2F21482C1300AF11DF /* NEP5Token.swift */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +128,7 @@
 		F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoCryptoTests.swift; sourceTree = "<group>"; };
 		F3B8168F1F7432B60023A54E /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Util.swift"; sourceTree = "<group>"; };
+		FAD5ED1821497046006B924F /* ContractResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResult.swift; sourceTree = "<group>"; };
 		FAD83B2F21482C1300AF11DF /* NEP5Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP5Token.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -242,13 +234,13 @@
 		75CDAE261F48680500B05C51 /* NeoSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				75CDAE271F48680500B05C51 /* NeoSwiftTests.swift */,
-				7575ADF51F602C590077007B /* NeoWalletTests.swift */,
-				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
 				75CDAE291F48680500B05C51 /* Info.plist */,
 				75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */,
+				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
 				6E821F9F1FEF42730002A790 /* NEOECDH.swift */,
 				6EADA9982071EBDF0090C700 /* NeoScanTest.swift */,
+				75CDAE271F48680500B05C51 /* NeoSwiftTests.swift */,
+				7575ADF51F602C590077007B /* NeoWalletTests.swift */,
 			);
 			path = NeoSwiftTests;
 			sourceTree = "<group>";
@@ -304,9 +296,10 @@
 		FAD83B2D21482B8B00AF11DF /* NEO */ = {
 			isa = PBXGroup;
 			children = (
-				6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */,
 				75631ADA1F5162F6008546CF /* AssetIdConstants.swift */,
+				FAD5ED1821497046006B924F /* ContractResult.swift */,
 				6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */,
+				6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */,
 			);
 			path = NEO;
 			sourceTree = "<group>";
@@ -387,14 +380,10 @@
 		75CDAE001F47F90800B05C51 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0900;
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "O3 Labs Inc.";
 				TargetAttributes = {
-					6E7E08851F6E9AE2000B86A9 = {
-						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
-					};
 					75CDAE081F47F90800B05C51 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
@@ -419,7 +408,6 @@
 			targets = (
 				75CDAE081F47F90800B05C51 /* NeoSwift */,
 				75CDAE241F48680500B05C51 /* NeoSwiftTests */,
-				6E7E08851F6E9AE2000B86A9 /* NeoSwiftAggregate */,
 			);
 		};
 /* End PBXProject section */
@@ -444,22 +432,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		6E7E08891F6E9B26000B86A9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target \"${PROJECT_NAME}\" ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n\n# Step 6. Convenience step to open the project's directory in Finder\nopen \"${PROJECT_DIR}\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		75CDAE041F47F90800B05C51 /* Sources */ = {
@@ -486,6 +458,7 @@
 				75631ADD1F516D94008546CF /* Balance.swift in Sources */,
 				6EADA9962071E7B80090C700 /* NeoScan.swift in Sources */,
 				75631ADB1F5162F6008546CF /* AssetIdConstants.swift in Sources */,
+				FAD5ED1921497046006B924F /* ContractResult.swift in Sources */,
 				350E2719207B5CE4006AB519 /* NeoScanTransactionHistory.swift in Sources */,
 				75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */,
 				F3FBEE4C1F7AC81A00CF06A1 /* Array+Util.swift in Sources */,
@@ -496,6 +469,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD5ED37214974C3006B924F /* validator.swift in Sources */,
+				FAD5ED36214974C0006B924F /* NEP9.swift in Sources */,
+				FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */,
+				FAD5ED342149748D006B924F /* ContractResult.swift in Sources */,
 				350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */,
 				6E67B16B1F9B237700C566B6 /* NEONetwork.swift in Sources */,
 				F35E74E01F8FDE8300DF0927 /* Claims.swift in Sources */,
@@ -536,28 +513,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		6E7E08871F6E9AE2000B86A9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				ENABLE_BITCODE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
-			};
-			name = Debug;
-		};
-		6E7E08881F6E9AE2000B86A9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				ENABLE_BITCODE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64 i386";
-			};
-			name = Release;
-		};
 		75CDAE0F1F47F90800B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -572,6 +527,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -579,6 +535,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -632,6 +589,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -639,6 +597,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -698,7 +657,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = iphoneos11.0;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
@@ -736,7 +695,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = iphoneos11.0;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
@@ -749,7 +708,7 @@
 		75CDAE2E1F48680500B05C51 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -759,6 +718,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -769,7 +729,7 @@
 		75CDAE2F1F48680500B05C51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = 5C4B7MW8PU;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -779,6 +739,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = drei.NeoSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/CommonCrypto";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -789,15 +750,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6E7E08861F6E9AE2000B86A9 /* Build configuration list for PBXAggregateTarget "NeoSwiftAggregate" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6E7E08871F6E9AE2000B86A9 /* Debug */,
-				6E7E08881F6E9AE2000B86A9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		75CDAE031F47F90800B05C51 /* Build configuration list for PBXProject "NeoSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
