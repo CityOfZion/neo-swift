@@ -16,7 +16,6 @@
 		6E013E301F695337006EE34F /* AccountState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E013E2F1F695337006EE34F /* AccountState.swift */; };
 		6E0F80C71F67F8E90068CEF8 /* TransactionAttritbute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */; };
 		6E67B16A1F9B22D800C566B6 /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
-		6E67B16B1F9B237700C566B6 /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
 		6E67B16C1F9B24B200C566B6 /* nodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9B1F9B171100EF69D8 /* nodes.json */; };
 		6E7E088C1F6E9C02000B86A9 /* strip-frameworks.sh in Resources */ = {isa = PBXBuildFile; fileRef = 6E7E088B1F6E9BEC000B86A9 /* strip-frameworks.sh */; };
 		6E821FA01FEF42730002A790 /* NEOECDH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E821F9F1FEF42730002A790 /* NEOECDH.swift */; };
@@ -24,7 +23,6 @@
 		6EADA9992071EBDF0090C700 /* NeoScanTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EADA9982071EBDF0090C700 /* NeoScanTest.swift */; };
 		6EADA99A2071EC200090C700 /* NeoScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EADA9952071E7B80090C700 /* NeoScan.swift */; };
 		6EADA99C2071ED530090C700 /* neoutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35673162203BE83500DD57DC /* neoutils.framework */; };
-		6EE8BB9D1F9B18D000EF69D8 /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */; };
 		753518DE1F6E365500453245 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753518DD1F6E365500453245 /* TransactionHistory.swift */; };
 		754533991FA788370005BE53 /* ScriptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75670B891FA46ED100199380 /* ScriptBuilder.swift */; };
 		7545339A1FA78AB90005BE53 /* OpCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75670B871FA46A7800199380 /* OpCodes.swift */; };
@@ -62,7 +60,10 @@
 		F3B816941F7437CC0023A54E /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
 		F3FBEE4C1F7AC81A00CF06A1 /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
 		F3FBEE4D1F7AC81A00CF06A1 /* Array+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */; };
+		FA3860E821499945001139CA /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3860E721499945001139CA /* NEONetwork.swift */; };
 		FA70E9EA21497CD600D3016D /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA70E9E921497CD600D3016D /* IntExtension.swift */; };
+		FA876D10214AFF6C008AADCB /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA70E9E921497CD600D3016D /* IntExtension.swift */; };
+		FA876D11214AFF6F008AADCB /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3860E721499945001139CA /* NEONetwork.swift */; };
 		FAD5ED1921497046006B924F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5ED1821497046006B924F /* ContractResult.swift */; };
 		FAD5ED342149748D006B924F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5ED1821497046006B924F /* ContractResult.swift */; };
 		FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD83B2F21482C1300AF11DF /* NEP5Token.swift */; };
@@ -106,7 +107,6 @@
 		6EADA9952071E7B80090C700 /* NeoScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoScan.swift; sourceTree = "<group>"; };
 		6EADA9982071EBDF0090C700 /* NeoScanTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoScanTest.swift; sourceTree = "<group>"; };
 		6EE8BB9B1F9B171100EF69D8 /* nodes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = nodes.json; sourceTree = "<group>"; };
-		6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
 		753518DD1F6E365500453245 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		75631AD41F5013BC008546CF /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		75631ADA1F5162F6008546CF /* AssetIdConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetIdConstants.swift; sourceTree = "<group>"; };
@@ -129,6 +129,7 @@
 		F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoCryptoTests.swift; sourceTree = "<group>"; };
 		F3B8168F1F7432B60023A54E /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
 		F3FBEE4B1F7AC81A00CF06A1 /* Array+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Util.swift"; sourceTree = "<group>"; };
+		FA3860E721499945001139CA /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
 		FA70E9E921497CD600D3016D /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		FAD5ED1821497046006B924F /* ContractResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResult.swift; sourceTree = "<group>"; };
 		FAD83B2F21482C1300AF11DF /* NEP5Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP5Token.swift; sourceTree = "<group>"; };
@@ -301,7 +302,7 @@
 			children = (
 				75631ADA1F5162F6008546CF /* AssetIdConstants.swift */,
 				FAD5ED1821497046006B924F /* ContractResult.swift */,
-				6EE8BB9C1F9B18D000EF69D8 /* NEONetwork.swift */,
+				FA3860E721499945001139CA /* NEONetwork.swift */,
 				6E0F80C61F67F8E90068CEF8 /* TransactionAttritbute.swift */,
 			);
 			path = NEO;
@@ -445,7 +446,6 @@
 				F31C7F0E1F6E759D0075688D /* Base58.swift in Sources */,
 				F31C7F0F1F6E759D0075688D /* Data+Util.swift in Sources */,
 				FA70E9EA21497CD600D3016D /* IntExtension.swift in Sources */,
-				6EE8BB9D1F9B18D000EF69D8 /* NEONetwork.swift in Sources */,
 				F31C7F101F6E759D0075688D /* SHA256.swift in Sources */,
 				FAD83B3021482C1300AF11DF /* NEP5Token.swift in Sources */,
 				7575ADF81F63B97B0077007B /* Claims.swift in Sources */,
@@ -465,6 +465,7 @@
 				FAD5ED1921497046006B924F /* ContractResult.swift in Sources */,
 				350E2719207B5CE4006AB519 /* NeoScanTransactionHistory.swift in Sources */,
 				75CDAE311F48750E00B05C51 /* NeoClient.swift in Sources */,
+				FA3860E821499945001139CA /* NEONetwork.swift in Sources */,
 				F3FBEE4C1F7AC81A00CF06A1 /* Array+Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,12 +474,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA876D11214AFF6F008AADCB /* NEONetwork.swift in Sources */,
+				FA876D10214AFF6C008AADCB /* IntExtension.swift in Sources */,
 				FAD5ED37214974C3006B924F /* validator.swift in Sources */,
 				FAD5ED36214974C0006B924F /* NEP9.swift in Sources */,
 				FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */,
 				FAD5ED342149748D006B924F /* ContractResult.swift in Sources */,
 				350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */,
-				6E67B16B1F9B237700C566B6 /* NEONetwork.swift in Sources */,
 				F35E74E01F8FDE8300DF0927 /* Claims.swift in Sources */,
 				6E821FA01FEF42730002A790 /* NEOECDH.swift in Sources */,
 				F389E2891F8771950023BDC5 /* NeoClient.swift in Sources */,

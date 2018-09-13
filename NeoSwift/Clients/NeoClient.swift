@@ -86,9 +86,6 @@ public class NeoClient {
     
     enum RPCMethod: String {
         case getBlockCount = "getblockcount"
-        case getConnectionCount = "getconnectioncount"
-        case getAccountState = "getaccountstate"
-        case getAssetState = "getassetstate"
         case sendTransaction = "sendrawtransaction"
         case invokeContract = "invokescript"
         case getMemPool = "getrawmempool"
@@ -176,61 +173,6 @@ public class NeoClient {
                     return
                 }
                 let result = NeoClientResult.success(mempool.count)
-                completion(result)
-            }
-        }
-    }
-    
-    public func getBlockCount(completion: @escaping (NeoClientResult<Int64>) -> ()) {
-        sendJSONRPCRequest(.getBlockCount, params: []) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                guard let count = response["result"] as? Int64 else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                
-                let result = NeoClientResult.success(count)
-                completion(result)
-            }
-        }
-    }
-    
-    public func getAccountState(for address: String, completion: @escaping(NeoClientResult<AccountState>) -> ()) {
-        sendJSONRPCRequest(.getAccountState, params: [address]) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let accountState = try? decoder.decode(AccountState.self, from: data) else {
-                        completion(.failure(.invalidData))
-                        return
-                }
-                
-                let result = NeoClientResult.success(accountState)
-                completion(result)
-            }
-        }
-    }
-    
-    public func getAssetState(for asset: String, completion: @escaping(NeoClientResult<AssetState>) -> ()) {
-        sendJSONRPCRequest(.getAssetState, params: [asset]) { result in
-            switch result {
-            case .failure(let error):
-                completion(.failure(error))
-            case .success(let response):
-                let decoder = JSONDecoder()
-                guard let data = try? JSONSerialization.data(withJSONObject: (response["result"] as! JSONDictionary), options: .prettyPrinted),
-                    let assetState = try? decoder.decode(AssetState.self, from: data) else {
-                        completion(.failure(.invalidData))
-                        return
-                }
-                
-                let result = NeoClientResult.success(assetState)
                 completion(result)
             }
         }

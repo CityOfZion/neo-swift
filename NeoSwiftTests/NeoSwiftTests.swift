@@ -14,22 +14,6 @@ class NeoSwiftTests: XCTestCase {
     let testSeed = "http://test4.cityofzion.io:8880"
     let mainSeed = "http://seed1.neo.org:10332"
     
-    func testGetBlockCount() {
-        let exp = expectation(description: "Wait for block count response")
-        
-        NeoClient(seed: testSeed).getBlockCount() { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let count):
-                print(count)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
-    
     func testSendNEP5Transaction() {
         let REAL_WIF_DELETE  = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr" //INSERT A WIF HERE IF YOU WANNA TEST
         guard let accountA = Account(wif: REAL_WIF_DELETE) else {
@@ -43,40 +27,6 @@ class NeoSwiftTests: XCTestCase {
             exp1.fulfill()
         }
         waitForExpectations(timeout: 60, handler: nil)
-    }
-    
-    func testGetAccountState() {
-        let exp = expectation(description: "Wait for GetAccountState response")
-        let address = "AUkVH4k8gPowAEpvQVAmNEkriX96CrKzk9"
-        
-        NeoClient(seed: testSeed).getAccountState(for: address) { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let accountState):
-                print(accountState)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
-    
-    func testGetAssetState() {
-        let exp = expectation(description: "Wait for GetAssetState response")
-        let asset = "0xc56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b"
-        
-        NeoClient(seed: testSeed).getAssetState(for: asset) { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let assetState):
-                print(assetState)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
     }
     
     func testNetworkMonitor() {

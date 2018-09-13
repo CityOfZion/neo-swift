@@ -32,12 +32,6 @@ public class NEONode: Codable {
         self.blockCount = blockCount
         self.peerCount = peerCount
     }
-    
-    public func refresh(completion: @escaping (NeoClientResult<Int64>) -> ()) {
-        NeoClient(seed: self.URL).getBlockCount { result in
-            completion(result)
-        }
-    }
 }
 
 public class NEONodes: Codable {

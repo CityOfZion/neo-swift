@@ -2,7 +2,7 @@
     
     "main": {
         "nodes": [{
-                  "url": "http://seed2.neo.org:10332",
+                  "url": "http://seed2.aphelion-neo.com:10332",
                   "blockcount": 0,
                   "peercount": 0
                   },
@@ -27,7 +27,7 @@
                   "peercount": 0
                   },
                   {
-                  "url": "http://seed2.aphelion-neo.com:10332",
+                  "url": "http://seed2.neo.org:10332",
                   "blockcount": 0,
                   "peercount": 0
                   },
