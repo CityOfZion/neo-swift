@@ -1,0 +1,132 @@
+{
+    
+    "main": {
+        "nodes": [{
+                  "url": "http://seed2.aphelion-neo.com:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "https://seed1.neo.org:10331",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed3.neo.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed4.neo.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed5.neo.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed2.neo.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed2.aphelion-neo.com:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "https://seed3.switcheo.network:10331",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "https://seed2.switcheo.network:10331",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://node2.ams2.bridgeprotocol.io:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed1.o3node.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed2.o3node.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed3.o3node.org:10332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  }
+                  ]
+    },
+    "test": {
+        "nodes": [{
+                  "url": "http://seed2.neo.org:20332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed1.neo.org:20332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed3.neo.org:20332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed4.neo.org:20332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://seed5.neo.org:20332",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://test1.cityofzion.io:8080",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://test2.cityofzion.io:8080",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://test3.cityofzion.io:8080",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://test4.cityofzion.io:8080",
+                  "blockcount": 0,
+                  "peercount": 0
+                  },
+                  {
+                  "url": "http://test5.cityofzion.io:8080",
+                  "blockcount": 0,
+                  "peercount": 0
+                  }
+                  ]
+    },
+    "private": {
+        "nodes": [{
+                  "url": "https://privatenet.o3.network:30333",
+                  "blockcount": 0,
+                  "peercount": 0
+                  }]
+    }
+    
+}
