@@ -36,27 +36,30 @@ public class ScriptBuilder {
             let rawValue = OpCode.PUSH1.rawValue + UInt8(intValue) - 1
             rawBytes.append(rawValue)
         default:
-            let intBytes = toByteArray(intValue)
-            pushData(intBytes.fullHexString)
+            let intBytes = toByteArrayWithoutTrailingZeros(intValue)
+            pushHexString(intBytes.fullHexString)
         }
     }
     
     private func pushHexString(_ stringValue: String) {
         let stringBytes = stringValue.dataWithHexString().bytes
-        if stringBytes.count < OpCode.PUSHBYTES75.rawValue {
-            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+        let size = stringBytes.count
+        if stringBytes.count <= OpCode.PUSHBYTES75.rawValue {
+            rawBytes = rawBytes + size.toHexString().dataWithHexString().bytes
             rawBytes += stringBytes
         } else if stringBytes.count < 0x100 {
             pushOPCode(.PUSHDATA1)
-            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            rawBytes = rawBytes + size.toHexString().dataWithHexString().bytes
             rawBytes += stringBytes
         } else if stringBytes.count < 0x10000 {
             pushOPCode(.PUSHDATA2)
-            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            let sizeUInt16: UInt16 = UInt16(size)
+            rawBytes = rawBytes + sizeUInt16.data.bytes
             rawBytes += stringBytes
         } else {
             pushOPCode(.PUSHDATA4)
-            rawBytes += toByteArrayWithoutTrailingZeros(stringBytes.count)
+            let sizeInt32: Int32 = Int32(size)
+            rawBytes = rawBytes + sizeInt32.data.bytes
             rawBytes += stringBytes
         }
     }
@@ -84,6 +87,8 @@ public class ScriptBuilder {
             pushArray(arrayValue)
         } else if data == nil {
             pushBool(false)
+        } else if let opcodeValue = data as? OpCode {
+            pushOPCode(opcodeValue)
         } else {
             fatalError("Unsupported Data Type Pushed on stack")
         }

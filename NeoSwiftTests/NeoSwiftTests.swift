@@ -14,20 +14,6 @@ class NeoSwiftTests: XCTestCase {
     let testSeed = "http://test4.cityofzion.io:8880"
     let mainSeed = "http://seed1.neo.org:10332"
     
-    func testSendNEP5Transaction() {
-        let REAL_WIF_DELETE  = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr" //INSERT A WIF HERE IF YOU WANNA TEST
-        guard let accountA = Account(wif: REAL_WIF_DELETE) else {
-            assert(false)
-            return
-        }
-        let toAddress = "AXLsAj6AaCMwFAQC8kQuMVxwEXosNebY1f"
-        let exp1 = expectation(description: "Wait for transaction one to go through")
-        accountA.sendNep5Token(seedURL: "http://localhost:30333", tokenContractHash: "d460914223ae14cba0a890c6a4a9af540dcd2175", decimals: 8, amount: 1, toAddress: toAddress) { success, error, txID in
-            assert(success ?? false)
-            exp1.fulfill()
-        }
-        waitForExpectations(timeout: 60, handler: nil)
-    }
     
     func testNetworkMonitor() {
         let network = NEONetworkMonitor.sharedInstance.network
