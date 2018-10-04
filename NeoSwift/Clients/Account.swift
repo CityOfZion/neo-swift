@@ -59,9 +59,10 @@ public class Account {
     }
     
     public init?() {
-        var pkeyData = Data(count: 32)
+        let byteCount: Int = 32
+        var pkeyData = Data(count: byteCount)
         let result = pkeyData.withUnsafeMutableBytes {
-            SecRandomCopyBytes(kSecRandomDefault, pkeyData.count, $0)
+            SecRandomCopyBytes(kSecRandomDefault, byteCount, $0)
         }
         
         if result != errSecSuccess {

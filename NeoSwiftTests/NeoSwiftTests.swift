@@ -46,9 +46,9 @@ class NeoSwiftTests: XCTestCase {
     }
     
     func testToByteArray() {
-        var formatter = NumberFormatter()
-        var amount = formatter.number(from: "0.00011550")?.decimalValue
-        var intValue = amount! * Decimal(pow(10, 8))
+        let formatter = NumberFormatter()
+        let amount = formatter.number(from: "0.00011550")?.decimalValue
+        let intValue = amount! * Decimal(pow(10, 8))
         print(intValue)
         let d = NSDecimalNumber(decimal: intValue).intValue
         let b = toByteArray(d)
