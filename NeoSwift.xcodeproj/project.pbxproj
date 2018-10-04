@@ -403,7 +403,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "O3 Labs Inc.";
 				TargetAttributes = {
 					75CDAE081F47F90800B05C51 = {
