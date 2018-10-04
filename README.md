@@ -14,7 +14,7 @@
 ## What is neo-swift
 
 - A swift client for interacting with a node on the [NEO](http://neo.org/) blockchain.
-- Written in Swift4 and using Xcode9 Beta
+- Written in Swift4 and using Xcode10 Beta
 - Primarily meant to be the SDK for iOS and macOS wallet software.
 - Underlying cryptographic methods compiled into frameworks via go-mobile.
 - [iOS framework](https://github.com/apisit/neo-wallet-address-go)
@@ -29,28 +29,21 @@
 ### Supported Methods
 ```
     enum RPCMethod: String {
-        case getBestBlockHash = "getbestblockhash"
-        case getBlock = "getblock"
         case getBlockCount = "getblockcount"
-        case getBlockHash = "getblockhash"
-        case getConnectionCount = "getconnectioncount"
-        case getTransaction = "getrawtransaction"
-        case getTransactionOutput = "gettxout"
-        case getUnconfirmedTransactions = "getrawmempool"
         case sendTransaction = "sendrawtransaction"
-        //The following routes can't be invoked by calling an RPC server
-        //We must use the wrapper for the nodes made by COZ
-        case getBalance = "getbalance"
+        case invokeContract = "invokescript"
+        case getMemPool = "getrawmempool"
     }
 ```
 
 ## Things in the pipleine
+- Carthage, Cocoapods, and SPM support
 - NEP2 Support
+- Use cases
+- Documentation
 - Other transaction types
 - Better management of dependencies
-- Carthage, Cocoapods, and SPM support
 - Improved Node/Network Selection
-- Improved Documentation
 
 ## Quick Start
 
@@ -92,7 +85,7 @@ This step is required to work around an App Store submission bug when archiving 
 ## Help
 
 - Open a new [issue](https://github.com/CityOfZion/neo-swift/issues/new) for any problems.
-- Send a message to **@andreit1** on the [NEO Slack](https://join.slack.com/t/neoblockchainteam/shared_invite/MjE3ODMxNDUzMDE1LTE1MDA4OTY3NDQtNTMwM2MyMTc2NA).
+- Send a message to **@Koba** on the [NEO Discord](https://discordapp.com/invite/b8QNXwD).
 - If there's a feature you'd like to see included feel free to drop me a line or submit a pull request
 
 ## License
