@@ -14,7 +14,7 @@
 ## What is neo-swift
 
 - A swift client for interacting with a node on the [NEO](http://neo.org/) blockchain.
-- Written in Swift4 and using Xcode10 Beta
+- Written in Swift4 and using Xcode10
 - Primarily meant to be the SDK for iOS and macOS wallet software.
 - Underlying cryptographic methods compiled into frameworks via go-mobile.
 - [iOS framework](https://github.com/apisit/neo-wallet-address-go)
@@ -37,13 +37,32 @@
 ```
 
 ## Things in the pipleine
-- Carthage, Cocoapods, and SPM support
+- Cocoapods, and SPM support
 - NEP2 Support
 - Use cases
 - Documentation
 - Other transaction types
 - Better management of dependencies
 - Improved Node/Network Selection
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](https://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate NeoSwift into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "CityOfZion/neo-swift" => 1.0
+```
+
+Run `carthage update` to build the framework and drag the built `neo-swift.framework` into your Xcode project.
 
 ## Quick Start
 
