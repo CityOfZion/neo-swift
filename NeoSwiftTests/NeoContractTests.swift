@@ -10,21 +10,6 @@ import XCTest
 import NeoSwift
 
 class NeoContractTests: XCTestCase {
-    func testIntegers() {
-        let testCases: [Int: String] = [-1: "4f",
-                                        0: "00",
-                                        13: "5d",
-                                        500: "02f401",
-                                        65536: "03000001"]
-        let neoScript = ScriptBuilder()
-        for key in testCases.keys {
-            neoScript.resetScript()
-            neoScript.pushData(key)
-            //print (neoScript.rawBytes)
-            print (neoScript.rawBytes.fullHexString)
-            assert(neoScript.rawBytes.fullHexString == testCases[key])
-        }
-    }
     
     func testContract() {
         let testCases: [[String: Any?]] =
@@ -105,42 +90,6 @@ class NeoContractTests: XCTestCase {
             }
         }
             waitForExpectations(timeout: 20, handler: nil)
-    }
-    
-    func testNEP5Info() {
-        let exp = expectation(description: "Wait for NEP 5 response")
-        let client = NeoClient(seed: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
-        //get info RPX
-        client.getTokenInfo(with: "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9") { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let result):
-                print(result)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
-    
-    func testNEP5Balance() {
-        let exp = expectation(description: "Wait for NEP 5 response")
-        let client = NeoClient(seed: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
-        //get info
-        let token = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9"
-        client.getTokenBalance(token, address: "AVUSCrS7HNTeY2J64DvpBsrttFArpWEqPR") { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let result):
-                print(result)
-                XCTAssert(result > 0.0)
-                exp.fulfill()
-                return
-            }
-        }
-        waitForExpectations(timeout: 20, handler: nil)
     }
 }
 
