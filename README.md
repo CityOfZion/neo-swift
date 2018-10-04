@@ -92,3 +92,4 @@ This step is required to work around an App Store submission bug when archiving 
 
 - Open-source [MIT](https://github.com/CityOfZion/neo-swift/blob/master/LICENSE).
 - Main authors are [@saltyskip](https://github.com/saltyskip) and [@apisit](https://github.com/apisit).
+- Collaboration of [O3Labs](https://github.com/O3Labs/OzoneWalletIOS)
