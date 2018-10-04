@@ -5,6 +5,8 @@
   >
 </p>
 
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 <h1 align="center">neo-swift</h1>
 
 <p align="center">
