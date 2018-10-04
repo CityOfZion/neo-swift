@@ -14,7 +14,7 @@ struct PBKDF2 {
         var result: [UInt8] = [UInt8](repeating: 0, count: keyLength)
         let data = Data(password)
         data.withUnsafeBytes { (passwordPtr: UnsafePointer<Int8>) in
-            CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
+            _ = CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2),
                                               passwordPtr,
                                               password.count,
                                               salt,
