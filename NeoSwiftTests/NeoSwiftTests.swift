@@ -36,13 +36,17 @@ class NeoSwiftTests: XCTestCase {
     func testGetBestNodeByResponseTime() {
         let nodes = "http://seed1.neo.org:10332,http://seed2.neo.org:10332,http://seed3.neo.org:10332,http://seed4.neo.org:10332,http://seed5.neo.org:10332,http://seed1.cityofzion.io:8080,http://seed2.cityofzion.io:8080,http://seed3.cityofzion.io:8080,http://seed4.cityofzion.io:8080,http://seed5.cityofzion.io:8080,http://node1.o3.network:10332,http://node2.o3.network:10332"
         let node = NeoutilsSelectBestSeedNode(nodes)
-        print(node?.url() as String?, node?.responseTime())
+        if let url = node?.url(), let respTime = node?.responseTime() {
+            print(url, respTime)
+        }
     }
     
     func testBaseURL() {
         let url = URL(string: "http://testnet-api.wallet.cityofzion.io/v2/")
         let utxoBaseEndpoint = url?.deletingLastPathComponent().absoluteString
-        print(utxoBaseEndpoint)
+        if let utxo = utxoBaseEndpoint {
+            print(utxo)
+        }
     }
     
     func testToByteArray() {

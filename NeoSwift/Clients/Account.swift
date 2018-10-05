@@ -404,6 +404,15 @@ public class Account {
         return [UInt8(script.count)] + script
     }
     
+    private func buildInvocationScript(method: String, scriptHash: String, fromAddress: String) -> [UInt8] {
+        let fromAddressHash = fromAddress.hashFromAddress()
+        let scriptBuilder = ScriptBuilder()
+        scriptBuilder.pushContractInvoke(scriptHash: scriptHash, operation: method,
+                                         args: [fromAddressHash])
+        let script = scriptBuilder.rawBytes
+        return [UInt8(script.count)] + script
+    }
+    
     public func sendNep5Token(seedURL: String, tokenContractHash: String, decimals: Int, amount: Double, toAddress: String,
                               attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?, String?) -> Void) {
         
@@ -430,6 +439,33 @@ public class Account {
                 completion(nil, error, txID)
             case .success(let response):
                 completion(response, nil, txID)
+            }
+        }
+    }
+    
+    public func invokeContractFunction(seedURL: String, method: String, tokenContractHash: String, completion: @escaping(Bool?, Error?) -> Void) {
+        var customAttributes: [TransactionAttritbute] = []
+        customAttributes.append(TransactionAttritbute(script: self.address.hashFromAddress()))
+        let remark = String(format: "O3X%@", Date().timeIntervalSince1970.description)
+        customAttributes.append(TransactionAttritbute(remark: remark))
+        customAttributes.append(TransactionAttritbute(descriptionHex: tokenContractHash))
+        
+        let scriptBytes = self.buildInvocationScript(method: method,
+                                                     scriptHash: tokenContractHash,
+                                                     fromAddress: self.address)
+        
+        var payload = self.generateInvokeTransactionPayload(assets: nil, script: scriptBytes.fullHexString,
+                                                            contractAddress: tokenContractHash, attributes: customAttributes )
+        payload.1 += tokenContractHash.dataWithHexString().bytes
+        #if DEBUG
+        print(payload.1.fullHexString)
+        #endif
+        NeoClient(seed: seedURL).sendRawTransaction(with: payload.1) { (result) in
+            switch result {
+            case .failure(let error):
+                completion(nil, error)
+            case .success(let response):
+                completion(response, nil)
             }
         }
     }
