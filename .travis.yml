@@ -2,6 +2,6 @@ language: swift
 osx_image: xcode10
 xcode_project: NeoSwift.xcodeproj
 xcode_scheme: NeoSwift
-xcode_destination: platform=iOS Simulator,OS=11.0
+xcode_destination: platform=iOS Simulator,OS=12.0, name:iPhone XS Max 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
