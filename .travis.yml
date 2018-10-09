@@ -1,6 +1,6 @@
 language: swift
 osx_image: xcode10
 script:
-- xcodebuild clean test -project NeoSwift.xcodeproj -scheme NeoSwift -destination "platform=iOS Simulator,name=iPhone XS Max,OS=12.0" 
+- xcodebuild clean -project NeoSwift.xcodeproj -scheme NeoSwift -destination "platform=iOS Simulator,name=iPhone XS Max,OS=12.0" build test
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -J 'NeoSwift'
