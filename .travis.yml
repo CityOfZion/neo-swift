@@ -1,6 +1,6 @@
 language: swift
 osx_image: xcode10
 script:
-  - xcodebuild -scheme NeoSwift -workspace NeoSwift.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' build test
+  - xcodebuild -scheme NeoSwift -workspace NeoSwift.xcodeproj -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XS Max,OS=12.0' build test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
