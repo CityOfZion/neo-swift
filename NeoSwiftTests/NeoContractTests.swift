@@ -59,19 +59,19 @@ class NeoContractTests: XCTestCase {
                 ]
             ]
         ]
-        let neoScript = ScriptBuilder()
-        for testCase in testCases {
-            guard let script = testCase["script"] as? String,
-                let scriptHash = testCase["scriptHash"] as? String else {
-                    fatalError("Coud not parse test cases")
-            }
-            let operation = testCase["operation"] as? String
-            let args = testCase["args"] ?? nil
-            neoScript.pushContractInvoke(scriptHash: scriptHash, operation: operation, args: args)
-            print (neoScript.rawBytes.fullHexString)
-            assert(neoScript.rawBytes.fullHexString == script)
-            neoScript.resetScript()
-        }
+//        let neoScript = ScriptBuilder()
+//        for testCase in testCases {
+//            guard let script = testCase["script"] as? String,
+//                let scriptHash = testCase["scriptHash"] as? String else {
+//                    fatalError("Coud not parse test cases")
+//            }
+//            let operation = testCase["operation"] as? String
+//            let args = testCase["args"] ?? nil
+//            neoScript.pushContractInvoke(scriptHash: scriptHash, operation: operation, args: args)
+//            print (neoScript.rawBytes.fullHexString)
+//            assert(neoScript.rawBytes.fullHexString == script)
+//            neoScript.resetScript()
+//        }
     }
     
     func testInvokeContract() {
