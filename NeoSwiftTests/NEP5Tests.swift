@@ -48,7 +48,9 @@ class NEP5Tests: XCTestCase {
             case .failure:
                 assert(false)
             case .success(let result):
+                #if DEBUG
                 print(result)
+                #endif
                 exp.fulfill()
                 return
             }
@@ -66,7 +68,9 @@ class NEP5Tests: XCTestCase {
             case .failure:
                 assert(false)
             case .success(let result):
+                #if DEBUG
                 print(result)
+                #endif
                 XCTAssert(result > 0.0)
                 exp.fulfill()
                 return

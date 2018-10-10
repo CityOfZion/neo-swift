@@ -41,9 +41,11 @@ class NEOECDH: XCTestCase {
         let bobAndAliceSharedSecret = bob?.createSharedSecret(publicKey: alice!.publicKey)
 
         let encryptedMessage = alice?.encryptString(key: aliceAndBobSharedSecret!, text: message)
-        print("encrypted message:", encryptedMessage!)
         let descryptedMessage = bob?.decryptString(key: bobAndAliceSharedSecret!, text: encryptedMessage!)
+        #if DEBUG
+        print("encrypted message:", encryptedMessage!)
         print("decrypted message:", descryptedMessage!)
+        #endif
         XCTAssert(descryptedMessage == message)
     }
     
@@ -53,11 +55,12 @@ class NEOECDH: XCTestCase {
         
         //Alice is sending bob a message using a shared secret generate from Bob's public key and Alice's private key
         let encryptedMessage = alice?.encryptString(key: aliceAndBobSharedSecret!, text: message)
-        print("encrypted message:", encryptedMessage!)
-        
         //M is trying to descrypt a message using a share secret between M and Alice
         let descryptedMessage = m?.decryptString(key: mAndAliceSharedSecret!, text: encryptedMessage!)
+        #if DEBUG
+        print("encrypted message:", encryptedMessage!)
         print("decrypted message:", descryptedMessage ?? "")
+        #endif
         //M should not be able to read a mesage Alice sent to Bob
         XCTAssert(descryptedMessage != message)
         

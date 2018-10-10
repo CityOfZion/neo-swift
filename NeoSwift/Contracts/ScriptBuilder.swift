@@ -72,6 +72,45 @@ public class ScriptBuilder {
         pushOPCode(.PACK)
     }
     
+    private func pushParam(_ data: ContractParam) {
+        switch data.type {
+        case .String:
+            if let stringValue = data.value as? String {
+                pushHexString(stringValue)
+            }
+            break
+        case .Boolean:
+            if let boolValue = data.value as? Bool {
+                pushBool(boolValue)
+            }
+            break
+        case .Integer:
+            if let intValue = data.value as? Int {
+                pushInt(intValue)
+            }
+            break
+        case .ByteArray:
+            if let stringValue = data.value as? String {
+                pushHexString(stringValue)
+            }
+            break
+        case .Array:
+            if let arrayValue = data.value as? [Any?] {
+                pushArray(arrayValue)
+            }
+            break
+        case .Hash160:
+            if let stringValue = data.value as? String {
+                pushHexString(stringValue)
+            }
+            break
+        default:
+            break
+        }
+        
+        fatalError("Unsupported Data Type Pushed on stack")
+    }
+    
     public func resetScript() {
         rawBytes.removeAll()
     }
@@ -89,6 +128,8 @@ public class ScriptBuilder {
             pushBool(false)
         } else if let opcodeValue = data as? OpCode {
             pushOPCode(opcodeValue)
+        } else if let mapValue = data as? [String:Any], let contractParam = ContractParam.likeContractParam(mapValue) {
+            pushParam(contractParam)
         } else {
             fatalError("Unsupported Data Type Pushed on stack")
         }

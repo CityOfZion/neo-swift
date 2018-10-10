@@ -18,7 +18,9 @@ class NeoScanTest: XCTestCase {
             case .failure:
                 assert(false)
             case .success(let history):
+                #if DEBUG
                 print(history)
+                #endif
                 exp.fulfill()
             }
         }
