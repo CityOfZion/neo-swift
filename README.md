@@ -5,7 +5,7 @@
   >
 </p>
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/CityOfZion/neo-swift/blob/master/LICENSE) [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/CityOfZion/neo-swift/blob/master/LICENSE) [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)[![Build Status](https://travis-ci.org/CityOfZion/neo-swift.svg?branch=master)](https://travis-ci.org/CityOfZion/neo-swift)[![codecov](https://codecov.io/gh/CityOfZion/neo-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/CityOfZion/neo-swift)
 
 <h1 align="center">neo-swift</h1>
 
