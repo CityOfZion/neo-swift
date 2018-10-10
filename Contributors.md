@@ -5,3 +5,5 @@
 * Jaume Viñas @jaumevn
 
 * Luís Silva @lm2s
+
+* Ricardo Kobayashi @koba
