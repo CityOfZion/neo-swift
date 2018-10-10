@@ -1,14 +1,60 @@
 //
-//  WIF.swift
+//  StringExtension.swift
 //  NeoSwift
 //
-//  Created by Andrei Terentiev on 8/23/17.
-//  Copyright © 2017 drei. All rights reserved.
+//  Created by Ricardo Kobayashi on 10/10/18.
+//  Copyright © 2018 O3 Labs Inc. All rights reserved.
 //
 
 import Foundation
+import CommonCrypto
 
-public extension String {
+extension String {
+    public var base58EncodedString: String {
+        return [UInt8](utf8).base58EncodedString
+    }
+    
+    public var base58DecodedData: Data? {
+        let bytes = Base58.bytesFromBase58(self)
+        return Data(bytes)
+    }
+    
+    public var base58CheckDecodedData: Data? {
+        guard let bytes = self.base58CheckDecodedBytes else { return nil }
+        return Data(bytes)
+    }
+    
+    public var base58CheckDecodedBytes: [UInt8]? {
+        var bytes = Base58.bytesFromBase58(self)
+        guard 4 <= bytes.count else { return nil }
+        
+        let checksum = [UInt8](bytes[bytes.count-4..<bytes.count])
+        bytes = [UInt8](bytes[0..<bytes.count-4])
+        
+        let calculatedChecksum = [UInt8](bytes.sha256.sha256[0...3])
+        if checksum != calculatedChecksum { return nil }
+        
+        return bytes
+    }
+    
+    public var littleEndianHexToUInt: UInt {
+        return UInt(self.dataWithHexString().bytes.reversed().fullHexString, radix: 16)!
+    }
+    
+    public var sha256: Data? {
+        return self.data(using: String.Encoding.utf8)?.sha256
+    }
+    
+    func reverseHex() -> String? {
+        var out = "";
+        //        var i = self.count - 2
+        //        var currentHex = self
+        //        while i >= 0 {
+        //            out = out.appending(self.suffix(2))
+        //            i = i - 2
+        //        }
+        return out;
+    }
     
     func hash160() -> String? {
         //NEO Address hash160

@@ -43,6 +43,10 @@ public class ScriptBuilder {
     
     private func pushHexString(_ stringValue: String) {
         let stringBytes = stringValue.dataWithHexString().bytes
+        pushBytes(stringBytes)
+    }
+    
+    private func pushBytes(_ stringBytes: [UInt8]) {
         let size = stringBytes.count
         if stringBytes.count <= OpCode.PUSHBYTES75.rawValue {
             rawBytes = rawBytes + size.toHexString().dataWithHexString().bytes
@@ -101,14 +105,13 @@ public class ScriptBuilder {
             break
         case .Hash160:
             if let stringValue = data.value as? String {
-                pushHexString(stringValue)
+                pushBytes(stringValue.dataWithHexString().bytes.reversed())
             }
             break
         default:
+            fatalError("Unsupported Data Type Pushed on stack")
             break
         }
-        
-        fatalError("Unsupported Data Type Pushed on stack")
     }
     
     public func resetScript() {
@@ -128,8 +131,8 @@ public class ScriptBuilder {
             pushBool(false)
         } else if let opcodeValue = data as? OpCode {
             pushOPCode(opcodeValue)
-        } else if let mapValue = data as? [String:Any], let contractParam = ContractParam.likeContractParam(mapValue) {
-            pushParam(contractParam)
+//        } else if let mapValue = data as? [String:Any], let contractParam = ContractParam.likeContractParam(mapValue) {
+//            pushParam(contractParam)
         } else {
             fatalError("Unsupported Data Type Pushed on stack")
         }
