@@ -84,12 +84,14 @@ class NeoContractTests: XCTestCase {
             case .failure:
                 assert(false)
             case .success(let result):
+                #if DEBUG
                 print(result)
+                #endif
                 exp.fulfill()
                 return
             }
         }
-            waitForExpectations(timeout: 20, handler: nil)
+        waitForExpectations(timeout: 20, handler: nil)
     }
 }
 

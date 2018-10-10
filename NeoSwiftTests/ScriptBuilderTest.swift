@@ -20,7 +20,9 @@ class ScriptBuilderTest: XCTestCase {
         for key in testCases.keys {
             neoScript.resetScript()
             neoScript.pushData(key)
+            #if DEBUG
             print (neoScript.rawBytes.fullHexString)
+            #endif
             assert(neoScript.rawBytes.fullHexString == testCases[key])
         }
     }
@@ -41,7 +43,9 @@ class ScriptBuilderTest: XCTestCase {
         for key in testCases.keys {
             neoScript.resetScript()
             neoScript.pushData(key)
+            #if DEBUG
             print (neoScript.rawBytes.fullHexString)
+            #endif
             assert(neoScript.rawBytes.fullHexString == testCases[key])
         }
     }
@@ -54,7 +58,9 @@ class ScriptBuilderTest: XCTestCase {
         for key in testCases.keys {
             neoScript.resetScript()
             neoScript.pushData(key)
+            #if DEBUG
             print (neoScript.rawBytes.fullHexString)
+            #endif
             assert(neoScript.rawBytes.fullHexString == testCases[key])
         }
     }
@@ -62,7 +68,9 @@ class ScriptBuilderTest: XCTestCase {
     func testSingleOpCode() {
         let neoScript = ScriptBuilder()
         neoScript.pushData(OpCode.PUSH1)
+        #if DEBUG
         print (neoScript.rawBytes.fullHexString)
+        #endif
         assert(neoScript.rawBytes.fullHexString == "51")
         
         

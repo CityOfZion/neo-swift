@@ -29,7 +29,9 @@ class NeoSwiftTests: XCTestCase {
     func testLittleEndianHexToUInt() {
         let hex = "00e1f505"
         let expected = 100000000
+        #if DEBUG
         print(hex.littleEndianHexToUInt)
+        #endif
         XCTAssert(hex.littleEndianHexToUInt == expected)
     }
     
@@ -37,7 +39,9 @@ class NeoSwiftTests: XCTestCase {
         let nodes = "http://seed1.neo.org:10332,http://seed2.neo.org:10332,http://seed3.neo.org:10332,http://seed4.neo.org:10332,http://seed5.neo.org:10332,http://seed1.cityofzion.io:8080,http://seed2.cityofzion.io:8080,http://seed3.cityofzion.io:8080,http://seed4.cityofzion.io:8080,http://seed5.cityofzion.io:8080,http://node1.o3.network:10332,http://node2.o3.network:10332"
         let node = NeoutilsSelectBestSeedNode(nodes)
         if let url = node?.url(), let respTime = node?.responseTime() {
+            #if DEBUG
             print(url, respTime)
+            #endif
         }
     }
     
@@ -45,7 +49,9 @@ class NeoSwiftTests: XCTestCase {
         let url = URL(string: "http://testnet-api.wallet.cityofzion.io/v2/")
         let utxoBaseEndpoint = url?.deletingLastPathComponent().absoluteString
         if let utxo = utxoBaseEndpoint {
+            #if DEBUG
             print(utxo)
+            #endif
         }
     }
     
@@ -53,9 +59,13 @@ class NeoSwiftTests: XCTestCase {
         let formatter = NumberFormatter()
         let amount = formatter.number(from: "0.00011550")?.decimalValue
         let intValue = amount! * Decimal(pow(10, 8))
+        #if DEBUG
         print(intValue)
+        #endif
         let d = NSDecimalNumber(decimal: intValue).intValue
         let b = toByteArray(d)
+        #if DEBUG
         print(b.fullHexString)
+        #endif
     }
 }
