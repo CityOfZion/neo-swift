@@ -113,7 +113,7 @@ class ScriptBuilderTest: XCTestCase {
 //                    "type": "Hash160",
 //                    "value": "cef0c0fdcfe7838eff6ff104f9cdec2922297537"
 //                ]
-            ]
+//            ]
         ]
         let neoScript = ScriptBuilder()
         for testCase in testCases {
