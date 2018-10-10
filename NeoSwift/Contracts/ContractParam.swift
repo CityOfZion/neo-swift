@@ -21,7 +21,7 @@ class ContractParam: NSObject {
             return nil
         }
         
-        guard let valueNotNull = mapNotNull["type"] else {
+        guard let valueNotNull = mapNotNull["value"] else {
             return nil
         }
         

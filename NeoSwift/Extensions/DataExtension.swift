@@ -1,9 +1,9 @@
 //
-//  Data+Util.swift
+//  DataExtension.swift
 //  NeoSwift
 //
-//  Created by Luís Silva on 13/09/17.
-//  Copyright © 2017 drei. All rights reserved.
+//  Created by Ricardo Kobayashi on 10/10/18.
+//  Copyright © 2018 O3 Labs Inc. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,6 @@ import Foundation
 extension Data {
     
     // MARK: Hex String
-    
     public var hexString: String {
         return self.map { return String(format: "%x", $0) }.joined()
     }
@@ -32,5 +31,10 @@ extension Data {
     
     public var bytes: [UInt8] {
         return [UInt8](self)
+    }
+    
+    public var sha256: Data {
+        let bytes = [UInt8](self)
+        return Data(bytes.sha256)
     }
 }
