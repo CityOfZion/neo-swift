@@ -78,4 +78,22 @@ class NEP5Tests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
+    
+    func testDecodingNEP5Token() {
+        let json = """
+        {
+         "name": "TestName",
+         "symbol": "TestSymbol",
+         "decimals": 8,
+         "totalSupply": 100
+        }
+        """.data(using: .utf8)!
+        
+        let token = try! JSONDecoder().decode(NEP5Token.self, from: json)
+        
+        XCTAssertEqual(token.name, "TestName")
+        XCTAssertEqual(token.symbol, "TestSymbol")
+        XCTAssertEqual(token.decimals, 8)
+        XCTAssertEqual(token.totalSupply, 100)
+    }
 }
