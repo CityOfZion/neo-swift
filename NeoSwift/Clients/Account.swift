@@ -429,27 +429,4 @@ public class Account {
             }
         }
     }
-    
-    public func participateTokenSales(network: Network, seedURL: String, scriptHash: String, assetID: String, amount: Float64, remark: String, networkFee: Float64, completion: @escaping(Bool?, String, Error?) -> Void) {
-        
-        var networkString = "main"
-        if network == .test {
-            networkString = "test"
-        }
-        var error: NSError?
-        
-        let payload = NeoutilsMintTokensRawTransactionMobile(networkString, scriptHash, self.wif, assetID, amount, remark, networkFee, &error)
-        if payload == nil {
-            completion(false, "", error)
-            return
-        }
-        NeoClient(seed: seedURL).sendRawTransaction(with: payload!.data()) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(nil, "", error)
-            case .success(let response):
-                completion(response, payload!.txid(), nil)
-            }
-        }
-    }
 }

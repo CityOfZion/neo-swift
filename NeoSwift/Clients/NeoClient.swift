@@ -81,7 +81,6 @@ public class NeoClient {
     
     public var seed = "http://seed3.o3node.org:10332"
     
-    private init() {}
     private let tokenInfoCache = NSCache<NSString, AnyObject>()
     
     enum RPCMethod: String {

@@ -58,14 +58,6 @@ public class TransactionAttritbute {
     
     public let data: [UInt8]?
     
-    public init(description: String) {
-        let byteArray: [UInt8] = Array(description.utf8)
-        let length = UInt8(byteArray.count)
-        var attribute: [UInt8] = [Usage.Description.rawValue, length]
-        attribute += byteArray
-        self.data = attribute
-    }
-    
     public init(descriptionHex: String) {
         let byteArray: [UInt8] = descriptionHex.dataWithHexString().bytes
         let length = UInt8(byteArray.count)

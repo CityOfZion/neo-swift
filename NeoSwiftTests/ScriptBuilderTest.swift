@@ -65,7 +65,7 @@ class ScriptBuilderTest: XCTestCase {
         }
     }
     
-    func testSingleOpCode() {
+    func testSingleOpCode() {        
         let neoScript = ScriptBuilder()
         neoScript.pushData(OpCode.PUSH1)
         #if DEBUG
@@ -117,10 +117,8 @@ class ScriptBuilderTest: XCTestCase {
         ]
         let neoScript = ScriptBuilder()
         for testCase in testCases {
-            guard let script = testCase["script"] as? String,
-                let scriptHash = testCase["scriptHash"] as? String else {
-                    fatalError("Coud not parse test cases")
-            }
+            let script = testCase["script"] as! String
+            let scriptHash = testCase["scriptHash"] as! String
             let operation = testCase["operation"] as? String
             let args = testCase["args"] ?? nil
             neoScript.pushContractInvoke(scriptHash: scriptHash, operation: operation, args: args)

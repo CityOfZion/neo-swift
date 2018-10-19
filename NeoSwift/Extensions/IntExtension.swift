@@ -19,10 +19,6 @@ public extension UInt16 {
         var int = self
         return Data(bytes: &int, count: MemoryLayout<UInt16>.size)
     }
-    func toData() -> Data {
-        var int = self
-        return Data(bytes: &int, count: MemoryLayout<UInt16>.size)
-    }
 }
 
 public extension Int32 {
