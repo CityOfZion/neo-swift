@@ -86,12 +86,6 @@ extension String {
         return finalKeyData
     }
     
-    func toHexString() -> String {
-        let data = self.data(using: .utf8)!
-        let hexString = data.map { String(format: "%02x", $0) }.joined()
-        return hexString
-    }
-    
     func dataWithHexString() -> Data {
         var hex = self
         var data = Data()

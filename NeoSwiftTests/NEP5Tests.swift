@@ -12,13 +12,10 @@ class NEP5Tests: XCTestCase {
     
     func testSendNEP5Transaction() {
         let REAL_WIF_DELETE  = "KwxrTNGVC62dZ76PeCMnSPgxJdWVNktdvP9scjdvhwLPB9Nr6yDB" 
-        guard let accountA = Account(wif: REAL_WIF_DELETE) else {
-            assert(false)
-            return
-        }
+        let accountA = Account(wif: REAL_WIF_DELETE)
         let toAddress = "AMi3NX8aU9XmcJhWfGs4wqL9LAQ8HZ7rPV"
         let exp1 = expectation(description: "Wait for transaction one to go through")
-        accountA.sendNep5Token(seedURL: "http://18.191.236.185:30333", tokenContractHash: "d460914223ae14cba0a890c6a4a9af540dcd2175", decimals: 8, amount: 1, toAddress: toAddress) { success, error, txID in
+        accountA?.sendNep5Token(seedURL: "http://18.191.236.185:30333", tokenContractHash: "d460914223ae14cba0a890c6a4a9af540dcd2175", decimals: 8, amount: 1, toAddress: toAddress) { success, error, txID in
             assert(success ?? false)
             exp1.fulfill()
         }
@@ -27,12 +24,9 @@ class NEP5Tests: XCTestCase {
     
     func testInvokeFunction() {
         let wifToTest  = "KwxrTNGVC62dZ76PeCMnSPgxJdWVNktdvP9scjdvhwLPB9Nr6yDB"
-        guard let accountA = Account(wif: wifToTest) else {
-            assert(false)
-            return
-        }
+        let accountA = Account(wif: wifToTest)
         let exp1 = expectation(description: "Wait for transaction one to go through")
-        accountA.invokeContractFunction(seedURL: "http://18.191.236.185:30333", method: "feedReef", tokenContractHash: "13c05d1ff69d3ad1cbdb89f729da9584893303a9") { (success, error) in
+        accountA?.invokeContractFunction(seedURL: "http://18.191.236.185:30333", method: "feedReef", tokenContractHash: "13c05d1ff69d3ad1cbdb89f729da9584893303a9") { (success, error) in
             assert(success ?? false)
             exp1.fulfill()
         }
@@ -77,5 +71,23 @@ class NEP5Tests: XCTestCase {
             }
         }
         waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testDecodingNEP5Token() {
+        let json = """
+        {
+         "name": "TestName",
+         "symbol": "TestSymbol",
+         "decimals": 8,
+         "totalSupply": 100
+        }
+        """.data(using: .utf8)!
+        
+        let token = try! JSONDecoder().decode(NEP5Token.self, from: json)
+        
+        XCTAssertEqual(token.name, "TestName")
+        XCTAssertEqual(token.symbol, "TestSymbol")
+        XCTAssertEqual(token.decimals, 8)
+        XCTAssertEqual(token.totalSupply, 100)
     }
 }

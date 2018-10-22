@@ -323,46 +323,6 @@ public class Account {
         return reversed.fullHexString
     }
     
-    func generateClaimInputData(claims: Claimable) -> Data {
-        var payload: [UInt8] = [0x02] // Claim Transaction Type
-        payload += [0x00]    // Version
-        //let claimsCount = UInt8(claims.claims.count)
-        let claimsCount = UInt8(claims.claims.count)
-        payload += [claimsCount]
-        
-        for claim in claims.claims {
-            payload += claim.txid.dataWithHexString().bytes.reversed()
-            payload += toByteArray(claim.index)
-        }
-        
-        let amountDecimal = claims.gas * pow(10, 8)
-        let amountInt = UInt64(round(NSDecimalNumber(decimal: amountDecimal).doubleValue))
-        
-        var attributes: [TransactionAttritbute] = []
-        let remark = String(format: "O3XCLAIM")
-        attributes.append(TransactionAttritbute(remark: remark))
-        
-        var numberOfAttributes: UInt8 = 0x00
-        var attributesPayload: [UInt8] = []
-        
-        for attribute in attributes where attribute.data != nil {
-            attributesPayload += attribute.data!
-            numberOfAttributes += 1
-        }
-        
-        payload += [numberOfAttributes]
-        payload += attributesPayload
-        payload += [0x00] // Inputs
-        payload += [0x01] // Output Count
-        payload += AssetId.gasAssetId.rawValue.dataWithHexString().bytes.reversed()
-        payload += toByteArray(amountInt)
-        payload += hashedSignature.bytes
-        #if DEBUG
-        print(payload.fullHexString)
-        #endif
-        return Data(bytes: payload)
-    }
-    
     private func generateInvokeTransactionPayload(assets: Assets? = nil, script: String, contractAddress: String, attributes: [TransactionAttritbute]?, fee: Double = 0.0) -> (String, Data) {
         var error: NSError?
         let amount = 0.00000001
@@ -466,29 +426,6 @@ public class Account {
                 completion(nil, error)
             case .success(let response):
                 completion(response, nil)
-            }
-        }
-    }
-    
-    public func participateTokenSales(network: Network, seedURL: String, scriptHash: String, assetID: String, amount: Float64, remark: String, networkFee: Float64, completion: @escaping(Bool?, String, Error?) -> Void) {
-        
-        var networkString = "main"
-        if network == .test {
-            networkString = "test"
-        }
-        var error: NSError?
-        
-        let payload = NeoutilsMintTokensRawTransactionMobile(networkString, scriptHash, self.wif, assetID, amount, remark, networkFee, &error)
-        if payload == nil {
-            completion(false, "", error)
-            return
-        }
-        NeoClient(seed: seedURL).sendRawTransaction(with: payload!.data()) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(nil, "", error)
-            case .success(let response):
-                completion(response, payload!.txid(), nil)
             }
         }
     }
