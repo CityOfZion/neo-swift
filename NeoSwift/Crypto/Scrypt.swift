@@ -13,7 +13,7 @@ var salsaCount = 0
 var blockMixCount = 0
 var roMixCount = 0
 
-class scrypt {
+@objc class scrypt: NSObject {
     
     final private var salsaBuffer: [UInt32] = [UInt32](repeating: 0, count: 16)
     final private var salsaOutput: [UInt32] = [UInt32](repeating: 0, count: 16)
@@ -111,7 +111,7 @@ class scrypt {
         return i
     }
     
-    func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
+    @objc func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
         var B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: p * 128 * r)
         
         var result: [UInt8] = []

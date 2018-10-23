@@ -9,8 +9,8 @@
 import Foundation
 import CommonCrypto
 
-struct PBKDF2 {
-    static public func deriveKey(password: [UInt8], salt: [UInt8], rounds: UInt32, keyLength: Int) -> [UInt8] {
+@objc public class PBKDF2: NSObject {
+    @objc static public func deriveKey(password: [UInt8], salt: [UInt8], rounds: UInt32, keyLength: Int) -> [UInt8] {
         var result: [UInt8] = [UInt8](repeating: 0, count: keyLength)
         let data = Data(password)
         data.withUnsafeBytes { (passwordPtr: UnsafePointer<Int8>) in

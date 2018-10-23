@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ContractParamType: UInt8 {
+@objc enum ContractParamType: UInt8 {
     case Signature = 0x00,
     Boolean = 0x01,
     Integer = 0x02,

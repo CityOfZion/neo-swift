@@ -8,23 +8,24 @@
 
 import Foundation
 
-public struct StackEntry: Decodable {
-    public enum VMOutputType: String {
-        case byteArray = "ByteArray",
-        int = "Integer",
-        array = "Array"
+private enum StackEntryCodingKeys: String, CodingKey {
+    case type = "type"
+    case value = "value"
+}
+
+@objc public class StackEntry: NSObject, Codable {
+    @objc public enum VMOutputType: Int, Codable {
+        case byteArray,
+        int,
+        array
     }
-    public var type: VMOutputType
-    public var intValue: Int?
-    public var hexDataValue: String?
-    public var arrayValue: [StackEntry]?
+
+    @objc public var type: VMOutputType
+    @objc public var intValue: Int = 0
+    @objc public var hexDataValue: String?
+    @objc public var arrayValue: [StackEntry]?
     
-    enum CodingKeys: String, CodingKey {
-        case type = "type"
-        case value = "value"
-    }
-    
-    public init(type: VMOutputType, value: Any) {
+    @objc public init(type: VMOutputType, value: Any) {
         self.type = type
         if type == .array {
             if let arrayValue = value as? [StackEntry]  {
@@ -37,30 +38,37 @@ public struct StackEntry: Decodable {
         }
         if type == .byteArray {
             self.hexDataValue = stringValue
-        } else {
+        } else if type == .int {
             let int = Int(stringValue) ?? 0
             self.intValue = int
         }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: StackEntryCodingKeys.self)
         let typeString: String = try container.decode(String.self, forKey: .type)
-        if typeString == "Array" {
-            let values: [StackEntry] = try container.decode([StackEntry].self, forKey: .value)
-            self.init(type: VMOutputType(rawValue: typeString)!, value: values)
+        if typeString.elementsEqual("Array") {
+            let values = try container.decode([StackEntry].self, forKey: StackEntryCodingKeys.value)
+            self.init(type: .byteArray, value: values)
+        }
+        else if typeString.elementsEqual("ByteArray") {
+            let value = try container.decode(String.self, forKey: StackEntryCodingKeys.value)
+            self.init(type: .byteArray, value: value as Any)
+        }
+        else if typeString.elementsEqual("Integer") {
+            let value = try container.decode(String.self, forKey: StackEntryCodingKeys.value)
+            self.init(type: .int, value: value)
         }
         else {
-            let value: Any = try container.decode(String.self, forKey: .value)
-            self.init(type: VMOutputType(rawValue: typeString)!, value: value)
+            fatalError()
         }
     }
 }
 
-public struct ContractResult: Decodable {
-    public var state: String //TODO: Make this enum of all possible sates
-    public var gasConsumed: Double
-    public var stack: [StackEntry]
+@objc public class ContractResult: NSObject, Codable {
+    @objc public var state: String //TODO: Make this enum of all possible sates
+    @objc public var gasConsumed: Double
+    @objc public var stack: [StackEntry]
     
     enum CodingKeys: String, CodingKey {
         case state = "state"
@@ -68,13 +76,13 @@ public struct ContractResult: Decodable {
         case stack = "stack"
     }
     
-    public init(state: String, gasConsumed: Double, stack: [StackEntry]) {
+    @objc public init(state: String, gasConsumed: Double, stack: [StackEntry]) {
         self.state = state
         self.gasConsumed = gasConsumed
         self.stack = stack
     }
     
-    public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let state: String = try container.decode(String.self, forKey: .state)
         let gasConsumed: String = try container.decode(String.self, forKey: .gasConsumed)

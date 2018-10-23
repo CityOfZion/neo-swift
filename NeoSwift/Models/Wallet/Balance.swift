@@ -10,8 +10,8 @@ import Foundation
 
 typealias UTXO = Assets.UTXO
 
-public struct Assets: Codable {
-    public var data: [UTXO]
+@objc public class Assets: NSObject, Codable {
+    @objc public var data: [UTXO]
     
     enum CodingKeys: String, CodingKey {
         case data
@@ -21,13 +21,13 @@ public struct Assets: Codable {
         self.data = data
     }
     
-    public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let data: [UTXO] = try container.decode([UTXO].self, forKey: .data)
         self.init(data: data)
     }
     
-    public func getSortedGASUTXOs() -> [UTXO] {
+    @objc public func getSortedGASUTXOs() -> [UTXO] {
         let filteredGASUTXOs = data.filter { (utxo) -> Bool in
             return utxo.asset.contains(AssetId.gasAssetId.rawValue)
         }
@@ -35,19 +35,19 @@ public struct Assets: Codable {
         
     }
     
-    public func getSortedNEOUTXOs() -> [UTXO] {
+    @objc public func getSortedNEOUTXOs() -> [UTXO] {
         let filteredNEOUTXOs = data.filter { (utxo) -> Bool in
             return utxo.asset.contains(AssetId.neoAssetId.rawValue)
         }
         return filteredNEOUTXOs.sorted {$0.value < $1.value }
     }
     
-    public struct UTXO: Codable {
-        public var asset: String
-        public var index: Int
-        public var txid: String
-        public var value: Decimal
-        public var createdAtBlock: Int
+    @objc public class UTXO: NSObject, Codable {
+        @objc public var asset: String
+        @objc public var index: Int
+        @objc public var txid: String
+        @objc public var value: Decimal
+        @objc public var createdAtBlock: Int
         
         enum CodingKeys: String, CodingKey {
             case asset
@@ -65,7 +65,7 @@ public struct Assets: Codable {
             self.createdAtBlock = createdAtBlock
         }
         
-        public init(from decoder: Decoder) throws {
+        public required convenience init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let asset: String = try container.decode(String.self, forKey: .asset)
             let index: Int = try container.decode(Int.self, forKey: .index)

@@ -9,7 +9,7 @@
 import Foundation
 import Neoutils
 
-class NEP2 {
+@objc public class NEP2: NSObject {
     public static func decryptKey(_ key: String, passphrase: String) -> (key: [UInt8], hash: [UInt8])? {
         guard let encryptedKeyBytes = key.base58CheckDecodedBytes else { return nil }
         if encryptedKeyBytes.count != 39 {
@@ -32,7 +32,7 @@ class NEP2 {
         return (key: decryptedKey, hash: addressHash)
     }
     
-    public static func verify(addressHash: [UInt8], address: String) -> Bool {
+    @objc public static func verify(addressHash: [UInt8], address: String) -> Bool {
         let addressHashSource = [UInt8](address.utf8)
         let calculatedHash = [UInt8](addressHashSource.sha256.sha256[0..<4])
         

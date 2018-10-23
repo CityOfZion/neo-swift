@@ -6,14 +6,16 @@
 //  Copyright © 2017 drei. All rights reserved.
 //
 
-public class TransactionAttritbute {
+import Foundation
+
+@objc public class TransactionAttritbute: NSObject {
     
     enum AttributeError: Error {
         case TooLongDescription
     }
     
     //http://docs.neo.org/en-us/node/network-protocol.html
-    enum Usage: UInt8 {
+    @objc enum Usage: UInt8 {
         case contractHash = 0x00
         case ECDH02 = 0x02
         case ECDH03 = 0x03
@@ -56,9 +58,9 @@ public class TransactionAttritbute {
         case Remark15 = 0xff
     }
     
-    public let data: [UInt8]?
+    @objc public let data: [UInt8]?
     
-    public init(descriptionHex: String) {
+    @objc public init(descriptionHex: String) {
         let byteArray: [UInt8] = descriptionHex.dataWithHexString().bytes
         let length = UInt8(byteArray.count)
         var attribute: [UInt8] = [Usage.Description.rawValue, length]
@@ -66,7 +68,7 @@ public class TransactionAttritbute {
         self.data = attribute
     }
     
-    public init(remark: String) {
+    @objc public init(remark: String) {
         let byteArray: [UInt8] = Array(remark.utf8)
         let length = UInt8(byteArray.count)
         var attribute: [UInt8] = [Usage.Remark.rawValue, length]
@@ -74,7 +76,7 @@ public class TransactionAttritbute {
         self.data = attribute
     }
     
-    public init(script: String) {
+    @objc public init(script: String) {
         var attribute: [UInt8] = [Usage.Script.rawValue]
         attribute += script.dataWithHexString().bytes
         self.data = attribute

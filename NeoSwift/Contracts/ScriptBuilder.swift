@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class ScriptBuilder {
+@objc public class ScriptBuilder: NSObject {
     private(set) public var rawBytes = [UInt8]()
     var rawHexString: String {
         return rawBytes.fullHexString
     }
     
-    public init() {
+    public override init() {
         rawBytes = []
     }
     
@@ -114,11 +114,11 @@ public class ScriptBuilder {
         }
     }
     
-    public func resetScript() {
+    @objc public func resetScript() {
         rawBytes.removeAll()
     }
     
-    public func pushData(_ data: Any?) {
+    @objc public func pushData(_ data: Any?) {
         if let boolValue = data as? Bool {
             pushBool(boolValue)
         } else if let intValue = data as? Int {
@@ -138,7 +138,7 @@ public class ScriptBuilder {
         }
     }
     
-    public func pushContractInvoke(scriptHash: String, operation: String? = nil, args: Any? = nil, useTailCall: Bool = false) {
+    @objc public func pushContractInvoke(scriptHash: String, operation: String? = nil, args: Any? = nil, useTailCall: Bool = false) {
         pushData(args)
         
         if let operation = operation {
