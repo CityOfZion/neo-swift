@@ -8,10 +8,10 @@
 
 import UIKit
 
-struct TransactionHistory: Codable {
-    let list: [TransactionHistoryItem]
-    let totalPage: Int
-    let pageIndex: Int
+@objc public class TransactionHistory: NSObject, Codable {
+    @objc let list: [TransactionHistoryItem]
+    @objc let totalPage: Int
+    @objc let pageIndex: Int
     
     enum CodingKeys: String, CodingKey {
         case list = "history"
@@ -20,15 +20,15 @@ struct TransactionHistory: Codable {
     }
 }
 
-struct TransactionHistoryItem: Codable {
-    let blockchain: String
-    let txid: String
-    let time: Int
-    let blockHeight: Int
-    let asset: Asset
-    let amount: String
-    let to: String
-    let from: String
+@objc public class TransactionHistoryItem: NSObject, Codable {
+    @objc let blockchain: String
+    @objc let txid: String
+    @objc let time: Int
+    @objc let blockHeight: Int
+    @objc let asset: Asset
+    @objc let amount: String
+    @objc let to: String
+    @objc let from: String
     
     enum CodingKeys: String, CodingKey {
         case blockchain = "blockchain"

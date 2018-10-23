@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct NEOScanTransactionHistory: Codable {
-    public var total_pages: Int
-    public var total_entries: Int
-    public var page_size: Int
-    public var page_number: Int
-    public var entries: [NeoScanTransactionEntry]
+@objc public class NEOScanTransactionHistory: NSObject, Codable {
+    @objc public var total_pages: Int
+    @objc public var total_entries: Int
+    @objc public var page_size: Int
+    @objc public var page_number: Int
+    @objc public var entries: [NeoScanTransactionEntry]
     
     enum CodingKeys: String, CodingKey {
         case total_pages
@@ -32,7 +32,7 @@ public struct NEOScanTransactionHistory: Codable {
         self.entries = entries
     }
     
-    public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let total_pages: Int = try container.decode(Int.self, forKey: .total_pages)
         let total_entries: Int = try container.decode(Int.self, forKey: .total_entries)
@@ -45,14 +45,14 @@ public struct NEOScanTransactionHistory: Codable {
     
 }
 
-public struct NeoScanTransactionEntry: Codable {
-    public var txid: String
-    public var time: Int
-    public var block_height: Int
-    public var asset: String
-    public var amount: Double
-    public var address_to: String
-    public var address_from: String
+@objc public class NeoScanTransactionEntry: NSObject, Codable {
+    @objc public var txid: String
+    @objc public var time: Int
+    @objc public var block_height: Int
+    @objc public var asset: String
+    @objc public var amount: Double
+    @objc public var address_to: String
+    @objc public var address_from: String
     
     enum CodingKeys: String, CodingKey {
         case txid
@@ -75,7 +75,7 @@ public struct NeoScanTransactionEntry: Codable {
         self.address_from = address_from
     }
     
-    public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let txid: String = try container.decode(String.self, forKey: .txid)
         let time: Int = try container.decode(Int.self, forKey: .time)

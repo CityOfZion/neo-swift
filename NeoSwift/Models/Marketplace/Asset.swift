@@ -8,14 +8,14 @@
 
 import UIKit
 
-public struct Asset: Codable {
+@objc public class Asset: NSObject, Codable {
     
-    let name: String
-    let symbol: String
-    let logoURL: String
-    let url: String?
-    let webURL: String?
-    let tokenHash: String?
+    @objc let name: String
+    @objc let symbol: String
+    @objc let logoURL: String
+    @objc let url: String?
+    @objc let webURL: String?
+    @objc let tokenHash: String?
     let decimal: Int? = 0
     
     enum CodingKeys: String, CodingKey {

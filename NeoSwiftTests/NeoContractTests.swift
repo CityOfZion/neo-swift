@@ -16,16 +16,15 @@ class NeoContractTests: XCTestCase {
         let client = NeoClient(seed: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
          //get name of RPX contract
         let script = "00046e616d6567f91d6b7085db7c5aaf09f19eeec1ca3c0db2c6ec"
-        client.invokeContract(with: script) { result in
-            switch result {
-            case .failure:
-                assert(false)
-            case .success(let result):
+        client.invokeContract(with: script) { result, error in
+            if let response = result {
                 #if DEBUG
-                print(result)
+                print(response)
                 #endif
                 exp.fulfill()
-                return
+            }
+            else {
+                assert(false)
             }
         }
         waitForExpectations(timeout: 20, handler: nil)

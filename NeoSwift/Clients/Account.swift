@@ -10,22 +10,22 @@ import Foundation
 import Neoutils
 import Security
 
-public class Account {
-    public var wif: String
-    public var publicKey: Data
-    public var privateKey: Data
-    public var address: String
-    public var hashedSignature: Data
+public class Account : NSObject {
+    @objc public var wif: String
+    @objc public var publicKey: Data
+    @objc public var privateKey: Data
+    @objc public var address: String
+    @objc public var hashedSignature: Data
     
-    lazy var publicKeyString: String = {
+    @objc lazy var publicKeyString: String = {
         return publicKey.fullHexString
     }()
     
-    lazy var privateKeyString: String = {
+    @objc lazy var privateKeyString: String = {
         return privateKey.fullHexString
     }()
     
-    public init?(wif: String) {
+    @objc public init?(wif: String) {
         var error: NSError?
         guard let wallet = NeoutilsGenerateFromWIF(wif, &error) else { return nil }
         self.wif = wif
@@ -35,7 +35,7 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
-    public init?(privateKey: String) {
+    @objc public init?(privateKey: String) {
         var error: NSError?
         guard let wallet = NeoutilsGenerateFromPrivateKey(privateKey, &error) else { return nil }
         self.wif = wallet.wif()
@@ -45,7 +45,7 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
-    public init?(encryptedPrivateKey: String, passphrase: String) {
+    @objc public init?(encryptedPrivateKey: String, passphrase: String) {
         var error: NSError?
         guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
         guard let wallet = NeoutilsGenerateFromPrivateKey(decryptedKey.fullHexString, &error) else { return nil }
@@ -58,7 +58,7 @@ public class Account {
         guard NEP2.verify(addressHash: hash, address: wallet.address()) else { return nil }
     }
     
-    public init?() {
+    public override init() {
         let byteCount: Int = 32
         var pkeyData = Data(count: byteCount)
         let result = pkeyData.withUnsafeMutableBytes {
@@ -70,7 +70,7 @@ public class Account {
         }
         
         var error: NSError?
-        guard let wallet = NeoutilsGenerateFromPrivateKey(pkeyData.fullHexString, &error) else { return nil }
+        guard let wallet = NeoutilsGenerateFromPrivateKey(pkeyData.fullHexString, &error) else { fatalError() }
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = pkeyData
@@ -78,17 +78,17 @@ public class Account {
         self.hashedSignature = wallet.hashedSignature()
     }
     
-    func createSharedSecret(publicKey: Data) -> Data? {
+    @objc func createSharedSecret(publicKey: Data) -> Data? {
         var error: NSError?
         guard let wallet = NeoutilsGenerateFromPrivateKey(self.privateKey.fullHexString, &error) else {return nil}
         return wallet.computeSharedSecret(publicKey)
     }
     
-    func encryptString(key: Data, text: String) -> String {
+    @objc func encryptString(key: Data, text: String) -> String {
         return NeoutilsEncrypt(key, text)
     }
     
-    func decryptString(key: Data, text: String) -> String? {
+    @objc func decryptString(key: Data, text: String) -> String? {
         return NeoutilsDecrypt(key, text)
     }
     
@@ -373,8 +373,8 @@ public class Account {
         return [UInt8(script.count)] + script
     }
     
-    public func sendNep5Token(seedURL: String, tokenContractHash: String, decimals: Int, amount: Double, toAddress: String,
-                              attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool?, Error?, String?) -> Void) {
+    @objc public func sendNep5Token(seedURL: String, tokenContractHash: String, decimals: Int, amount: Double, toAddress: String,
+                              attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool, NeoClientError?, String?) -> Void) {
         
         var customAttributes: [TransactionAttritbute] = []
         customAttributes.append(TransactionAttritbute(script: self.address.hashFromAddress()))
@@ -393,17 +393,12 @@ public class Account {
         print(payload.1.fullHexString)
         #endif
         let txID = payload.0
-        NeoClient(seed: seedURL).sendRawTransaction(with: payload.1) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(nil, error, txID)
-            case .success(let response):
-                completion(response, nil, txID)
-            }
+        NeoClient(seed: seedURL).sendRawTransaction(with: payload.1) { (result, error) in
+            completion(result, error, txID)
         }
     }
     
-    public func invokeContractFunction(seedURL: String, method: String, tokenContractHash: String, completion: @escaping(Bool?, Error?) -> Void) {
+    @objc public func invokeContractFunction(seedURL: String, method: String, tokenContractHash: String, completion: @escaping(Bool, NeoClientError?) -> Void) {
         var customAttributes: [TransactionAttritbute] = []
         customAttributes.append(TransactionAttritbute(script: self.address.hashFromAddress()))
         let remark = String(format: "O3X%@", Date().timeIntervalSince1970.description)
@@ -420,13 +415,6 @@ public class Account {
         #if DEBUG
         print(payload.1.fullHexString)
         #endif
-        NeoClient(seed: seedURL).sendRawTransaction(with: payload.1) { (result) in
-            switch result {
-            case .failure(let error):
-                completion(nil, error)
-            case .success(let response):
-                completion(response, nil)
-            }
-        }
+        NeoClient(seed: seedURL).sendRawTransaction(with: payload.1, completion: completion)
     }
 }

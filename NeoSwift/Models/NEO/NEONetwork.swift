@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class NEONode: Codable {
-    public var URL: String
-    public var blockCount: UInt
-    public var peerCount: UInt
+@objc public class NEONode: NSObject, Codable {
+    @objc public var URL: String
+    @objc public var blockCount: UInt
+    @objc public var peerCount: UInt
     
     enum CodingKeys: String, CodingKey {
         case URL = "url"
@@ -34,9 +34,9 @@ public class NEONode: Codable {
     }
 }
 
-public class NEONodes: Codable {
+@objc public class NEONodes: NSObject, Codable {
     
-    public var nodes: [NEONode]
+    @objc public var nodes: [NEONode]
     
     enum CodingKeys: String, CodingKey {
         case nodes = "nodes"
@@ -53,10 +53,10 @@ public class NEONodes: Codable {
     }
 }
 
-public struct NEONetwork: Codable {
+@objc public class NEONetwork: NSObject, Codable {
     
-    public var mainNet: NEONodes
-    public var testNet: NEONodes
+    @objc public var mainNet: NEONodes
+    @objc public var testNet: NEONodes
     
     enum CodingKeys: String, CodingKey {
         case mainNet = "main"
@@ -68,7 +68,7 @@ public struct NEONetwork: Codable {
         self.testNet = testNodes
     }
     
-    public init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let mainNodes: NEONodes = try container.decode(NEONodes.self, forKey: .mainNet)
         let testNodes: NEONodes = try container.decode(NEONodes.self, forKey: .testNet)

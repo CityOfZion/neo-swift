@@ -12,10 +12,10 @@ import NeoSwift
 class NeoWalletTests: XCTestCase {
     
     func testImportWifAndSamePrivateKey() {
-        guard let a = Account(),
-            let b = Account(wif: a.wif) else {
-                assert(false)
-                return
+        let a = Account()
+        guard let b = Account(wif: a.wif) else {
+            assert(false)
+            return
         }
         assert(a.privateKey == b.privateKey)
     }

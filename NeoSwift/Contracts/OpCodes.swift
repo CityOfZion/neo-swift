@@ -7,7 +7,8 @@
 //
 
 import Foundation
-enum OpCode: UInt8 {
+
+@objc enum OpCode: UInt8 {
     // Constants
     case PUSH0 = 0x00, // An empty array of bytes is pushed onto the stack.
     PUSHBYTES1 = 0x01, // 01-4B The next opcode bytes is data to be pushed onto the stack
