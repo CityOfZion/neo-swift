@@ -82,6 +82,14 @@ import Neoutils
         return bestNode.url()
     }
     
+    @objc public static func autoSelectTestBestNode() -> String? {
+        let networks = NEONetworkMonitor().load()
+        let nodes = networks?.testNet.nodes.map({$0.URL}).joined(separator: ",")
+        guard let bestNode =  NeoutilsSelectBestSeedNode(nodes) else {
+            return nil
+        }
+        return bestNode.url()
+    }
 }
 
 @objc public class NeoClient : NSObject {
