@@ -39,7 +39,6 @@
 
 - Implements read operations of neo blockchain
 - Allows for send asset transactions
-- This is pre-alpha software meant only to be used by experienced developers, use at your own risk
 
 ### Supported Methods
 ```
@@ -82,39 +81,6 @@ Run `carthage update` to build the framework and drag the built `neo-swift.frame
 ## Quick Start
 
 Clone the repo and open the project in xcode and run all tests in NeoSwiftTests.swift
-
-## Example Usage
-
-```
-func demo() {
-  // Create an account via a wif string
-  let wifPersonA = "L4Ns4Uh4WegsHxgDG49hohAYxuhj41hhxG6owjjTWg95GSrRRbLL" // REMINDER TO NEVER USE THIS FOR REAL FUNDS
-  let wifPersonB = "L4sSGSGh15dtocMMSYS115fhZEVN9UuETWDjgGKu2JDu59yncyVf" // REMINDER TO NEVER USE THIS FOR REAL FUNDS
-  let accountA = Account(wif: wifPersonA)
-  let accountB = Account(wif: wifPersonB)
-  print(accountA.wif)
-  print(accountA.publicKeyString)
-  print(accountA.privateKeyString)
-  print(accountA.address)
-  print(accountA.hashedSignature) //Data
-
-  accountA.sendAssetTransaction(asset: .gasAssetId, amount: 1, toAddress: accountB.address) { success, error in
-            assert(success ?? false)
-  }
-}
-```
-
-### Dynamic framework
-If you are linking NeoSwift as a Dynamic framework. Create a new “Run Script Phase” in your app’s target’s “Build Phases” and paste the following snippet in the script text field:
-
-
-```
-bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/NeoSwift.framework/strip-frameworks.sh"
-```
-
-This step is required to work around an App Store submission bug when archiving universal binaries.
-
-
 
 ## Help
 
