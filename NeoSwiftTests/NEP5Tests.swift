@@ -15,7 +15,7 @@ class NEP5Tests: XCTestCase {
         let accountA = Account(wif: REAL_WIF_DELETE)
         let toAddress = "AMi3NX8aU9XmcJhWfGs4wqL9LAQ8HZ7rPV"
         let exp1 = expectation(description: "Wait for transaction one to go through")
-        accountA?.sendNep5Token(seedURL: "http://18.191.236.185:30333", contractScripthash: "d460914223ae14cba0a890c6a4a9af540dcd2175", decimals: 8, amount: 1, toAddress: toAddress) { success, error, txID in
+        accountA?.sendNep5Token(seedURL: "http://chain.simpli.com.br:30333", contractScripthash: "d460914223ae14cba0a890c6a4a9af540dcd2175", decimals: 8, amount: 1, toAddress: toAddress) { success, error, txID in
             assert(success)
             exp1.fulfill()
         }
@@ -26,7 +26,7 @@ class NEP5Tests: XCTestCase {
         let wifToTest  = "KwxrTNGVC62dZ76PeCMnSPgxJdWVNktdvP9scjdvhwLPB9Nr6yDB"
         let accountA = Account(wif: wifToTest)
         let exp1 = expectation(description: "Wait for transaction one to go through")
-        accountA?.invokeContractFunction(seedURL: "http://18.191.236.185:30333", method: "feedReef", contractScripthash: "13c05d1ff69d3ad1cbdb89f729da9584893303a9") { (success, error) in
+        accountA?.invokeContractFunction(seedURL: "http://chain.simpli.com.br:30333", method: "feedReef", contractScripthash: "13c05d1ff69d3ad1cbdb89f729da9584893303a9") { (success, error) in
             assert(success)
             exp1.fulfill()
         }
