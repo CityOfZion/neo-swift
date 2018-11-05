@@ -1,0 +1,9 @@
+{
+  "docs": {
+    "Getting Started": ["overview", "installation"],
+    "Guides": ["account", "invokecontract"]
+  },
+  "changelog": {
+    "Latest": ["changelog/latest"]
+  }
+}

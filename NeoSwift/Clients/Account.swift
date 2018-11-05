@@ -373,22 +373,22 @@ public class Account : NSObject {
         return [UInt8(script.count)] + script
     }
     
-    @objc public func sendNep5Token(seedURL: String, tokenContractHash: String, decimals: Int, amount: Double, toAddress: String,
+    @objc public func sendNep5Token(seedURL: String, contractScripthash: String, decimals: Int, amount: Double, toAddress: String,
                               attributes: [TransactionAttritbute]? = nil, completion: @escaping(Bool, NeoClientError?, String?) -> Void) {
         
         var customAttributes: [TransactionAttritbute] = []
         customAttributes.append(TransactionAttritbute(script: self.address.hashFromAddress()))
         let remark = String(format: "O3X%@", Date().timeIntervalSince1970.description)
         customAttributes.append(TransactionAttritbute(remark: remark))
-        customAttributes.append(TransactionAttritbute(descriptionHex: tokenContractHash))
+        customAttributes.append(TransactionAttritbute(descriptionHex: contractScripthash))
         
         //send nep5 token without using utxo
-        let scriptBytes = self.buildNEP5TransferScript(scriptHash: tokenContractHash, decimals: decimals,
+        let scriptBytes = self.buildNEP5TransferScript(scriptHash: contractScripthash, decimals: decimals,
                                                        fromAddress: self.address, toAddress: toAddress, amount: amount)
         
         var payload = self.generateInvokeTransactionPayload(script: scriptBytes.fullHexString,
-                                                            contractAddress: tokenContractHash, attributes: customAttributes, fee: 0.0)
-        payload.1 += tokenContractHash.dataWithHexString().bytes
+                                                            contractAddress: contractScripthash, attributes: customAttributes, fee: 0.0)
+        payload.1 += contractScripthash.dataWithHexString().bytes
         #if DEBUG
         print(payload.1.fullHexString)
         #endif
@@ -398,20 +398,20 @@ public class Account : NSObject {
         }
     }
     
-    @objc public func invokeContractFunction(seedURL: String, method: String, tokenContractHash: String, completion: @escaping(Bool, NeoClientError?) -> Void) {
+    @objc public func invokeContractFunction(seedURL: String, method: String, contractScripthash: String, completion: @escaping(Bool, NeoClientError?) -> Void) {
         var customAttributes: [TransactionAttritbute] = []
         customAttributes.append(TransactionAttritbute(script: self.address.hashFromAddress()))
         let remark = String(format: "O3X%@", Date().timeIntervalSince1970.description)
         customAttributes.append(TransactionAttritbute(remark: remark))
-        customAttributes.append(TransactionAttritbute(descriptionHex: tokenContractHash))
+        customAttributes.append(TransactionAttritbute(descriptionHex: contractScripthash))
         
         let scriptBytes = self.buildInvocationScript(method: method,
-                                                     scriptHash: tokenContractHash,
+                                                     scriptHash: contractScripthash,
                                                      fromAddress: self.address)
         
         var payload = self.generateInvokeTransactionPayload(assets: nil, script: scriptBytes.fullHexString,
-                                                            contractAddress: tokenContractHash, attributes: customAttributes )
-        payload.1 += tokenContractHash.dataWithHexString().bytes
+                                                            contractAddress: contractScripthash, attributes: customAttributes )
+        payload.1 += contractScripthash.dataWithHexString().bytes
         #if DEBUG
         print(payload.1.fullHexString)
         #endif
