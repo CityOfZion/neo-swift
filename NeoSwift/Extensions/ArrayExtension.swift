@@ -18,14 +18,6 @@ extension Array where Element == UInt8 {
         return "0x\(hexString)"
     }
     
-    public var fullHexString: String {
-        return self.map { return String(format: "%02x", $0) }.joined()
-    }
-    
-    public var fullHexStringWithPrefix: String {
-        return "0x\(fullHexString)"
-    }
-    
     func toWordArray() -> [UInt32] {
         return arrayUtil_convertArray(self, to: UInt32.self)
     }

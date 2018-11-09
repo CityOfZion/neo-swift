@@ -11,7 +11,7 @@ import Foundation
 @objc public class ScriptBuilder: NSObject {
     private(set) public var rawBytes = [UInt8]()
     var rawHexString: String {
-        return rawBytes.fullHexString
+        return rawBytes.hexString
     }
     
     public override init() {
@@ -37,7 +37,7 @@ import Foundation
             rawBytes.append(rawValue)
         default:
             let intBytes = toByteArrayWithoutTrailingZeros(intValue)
-            pushHexString(intBytes.fullHexString)
+            pushHexString(intBytes.hexString)
         }
     }
     

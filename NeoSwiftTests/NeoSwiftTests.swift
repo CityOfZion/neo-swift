@@ -65,7 +65,7 @@ class NeoSwiftTests: XCTestCase {
         let d = NSDecimalNumber(decimal: intValue).intValue
         let b = toByteArray(d)
         #if DEBUG
-        print(b.fullHexString)
+        print(b.hexString)
         #endif
     }
 }

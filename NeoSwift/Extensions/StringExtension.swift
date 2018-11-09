@@ -38,7 +38,8 @@ extension String {
     }
     
     public var littleEndianHexToUInt: UInt {
-        return UInt(self.dataWithHexString().bytes.reversed().fullHexString, radix: 16)!
+        let str = self.dataWithHexString().bytes.reversed().hexString
+        return UInt(str, radix: 16)!
     }
     
     public var sha256: Data? {
@@ -61,7 +62,7 @@ extension String {
         //skip the first byte which is 0x17, revert it then convert to full hex
         let bytes = self.base58CheckDecodedBytes!
         let reverse = Data(bytes: bytes[1...bytes.count - 1].reversed())
-        return reverse.fullHexString
+        return reverse.hexString
     }
     
     func hashFromAddress() -> String {
@@ -72,7 +73,7 @@ extension String {
         let hashTwo = hashOne.sha256
         _ = [UInt8](hashTwo)
         let finalKeyData = Data(bytes: shortened[1...shortened.count - 1])
-        return finalKeyData.fullHexString
+        return finalKeyData.hexString
     }
     
     func scriptHash() -> Data {
