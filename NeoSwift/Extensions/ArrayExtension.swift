@@ -11,7 +11,7 @@ import CommonCrypto
 
 extension Array where Element == UInt8 {
     public var hexString: String {
-        return self.map { return String(format: "%x", $0) }.joined()
+        return self.map { return String(format: "%02x", $0) }.joined()
     }
     
     public var hexStringWithPrefix: String {
