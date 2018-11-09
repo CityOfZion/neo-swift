@@ -45,9 +45,6 @@ class NEP5Tests: XCTestCase {
                 exp.fulfill()
                 return
             }
-            else {
-                assert(false)
-            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -88,5 +85,22 @@ class NEP5Tests: XCTestCase {
         XCTAssertEqual(token.symbol, "TestSymbol")
         XCTAssertEqual(token.decimals, 8)
         XCTAssertEqual(token.totalSupply, 100)
+    }
+    
+    func testDecodingNEP5TokenNil() {
+        let json = """
+        {
+         "symbol": "TestSymbol",
+         "decimals": 8,
+         "totalSupply": 100
+        }
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        do {
+            try decoder.decode(NEP5Token.self, from: json)
+        } catch _ {
+            assert(true)
+        }
     }
 }

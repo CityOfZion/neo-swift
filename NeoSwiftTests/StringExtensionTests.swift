@@ -17,6 +17,11 @@ class StringExtensionTests: XCTestCase {
         assert(value == "ANC6ANC9tjEVEJg29JsNp3ixNMgbUzVYwu")
     }
     
+    func testHashFromAddress() {
+        let hashAddress = "ANC6ANC9tjEVEJg29JsNp3ixNMgbUzVYwu".hashFromAddress()
+        assert(hashAddress == "46652f4bd5b7df708b7839c1299875fcd539a6b5")
+    }
+    
 //
 //    public var base58CheckDecodedData: Data? {
 //        guard let bytes = self.base58CheckDecodedBytes else { return nil }

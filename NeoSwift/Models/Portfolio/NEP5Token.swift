@@ -28,7 +28,7 @@ import Foundation
         self.totalSupply = totalSupply
     }
     
-    @objc public init?(from vmStack: [StackEntry]) {
+    @objc public convenience init?(from vmStack: [StackEntry]) {
         let nameEntry = vmStack[0]
         let symbolEntry = vmStack[1]
         let decimalsEntry = vmStack[2]
@@ -39,9 +39,6 @@ import Foundation
                 return nil
         }
         let totalSupply = UInt64(littleEndian: totalSupplyData.dataWithHexString().withUnsafeBytes { $0.pointee })
-        self.name = name
-        self.symbol = symbol
-        self.decimals = decimalsEntry.intValue
-        self.totalSupply = Int(totalSupply / 100000000)
+        self.init(name: name, symbol: symbol, decimals: decimalsEntry.intValue, totalSupply: Int(totalSupply / 100000000))
     }
 }
