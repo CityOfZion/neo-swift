@@ -26,13 +26,5 @@ class NeoContractTests: XCTestCase {
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
-    
-    func testInvalidSeed() {
-        let client = NeoClient(seed: "abc")
-        client.sendJSONRPCRequest(.invokeContract, params: nil) { (json, error) in
-            assert(error != nil && error?.errorType == NeoClientErrorType.invalidSeed)
-        }
-        waitForExpectations(timeout: 20, handler: nil)
-    }
 }
 
