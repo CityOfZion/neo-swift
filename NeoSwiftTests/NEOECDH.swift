@@ -33,7 +33,7 @@ class NEOECDH: XCTestCase {
         let bobSharedSecret = bob?.createSharedSecret(publicKey: alice!.publicKey)
         //using public key encryption
         //Alice and Bob shared secret should be identical
-        XCTAssert(aliceSharedSecret?.fullHexString == bobSharedSecret?.fullHexString)
+        XCTAssert(aliceSharedSecret?.hexString == bobSharedSecret?.hexString)
     }
     
     func testEncryptionUsingShareSecret() {

@@ -21,9 +21,9 @@ class ScriptBuilderTest: XCTestCase {
             neoScript.resetScript()
             neoScript.pushData(key)
             #if DEBUG
-            print (neoScript.rawBytes.fullHexString)
+            print (neoScript.rawBytes.hexString)
             #endif
-            assert(neoScript.rawBytes.fullHexString == testCases[key])
+            assert(neoScript.rawBytes.hexString == testCases[key])
         }
     }
     
@@ -44,9 +44,9 @@ class ScriptBuilderTest: XCTestCase {
             neoScript.resetScript()
             neoScript.pushData(key)
             #if DEBUG
-            print (neoScript.rawBytes.fullHexString)
+            print (neoScript.rawBytes.hexString)
             #endif
-            assert(neoScript.rawBytes.fullHexString == testCases[key])
+            assert(neoScript.rawBytes.hexString == testCases[key])
         }
     }
     
@@ -59,9 +59,9 @@ class ScriptBuilderTest: XCTestCase {
             neoScript.resetScript()
             neoScript.pushData(key)
             #if DEBUG
-            print (neoScript.rawBytes.fullHexString)
+            print (neoScript.rawBytes.hexString)
             #endif
-            assert(neoScript.rawBytes.fullHexString == testCases[key])
+            assert(neoScript.rawBytes.hexString == testCases[key])
         }
     }
     
@@ -69,9 +69,9 @@ class ScriptBuilderTest: XCTestCase {
         let neoScript = ScriptBuilder()
         neoScript.pushData(OpCode.PUSH1)
         #if DEBUG
-        print (neoScript.rawBytes.fullHexString)
+        print (neoScript.rawBytes.hexString)
         #endif
-        assert(neoScript.rawBytes.fullHexString == "51")
+        assert(neoScript.rawBytes.hexString == "51")
     }
     
     func testContract() {
@@ -123,9 +123,9 @@ class ScriptBuilderTest: XCTestCase {
             let args = testCase["args"] ?? nil
             neoScript.pushContractInvoke(scriptHash: scriptHash, operation: operation, args: args)
             #if DEBUG
-            print (neoScript.rawBytes.fullHexString)
+            print (neoScript.rawBytes.hexString)
             #endif
-            assert(neoScript.rawBytes.fullHexString == script)
+            assert(neoScript.rawBytes.hexString == script)
             neoScript.resetScript()
         }
     }

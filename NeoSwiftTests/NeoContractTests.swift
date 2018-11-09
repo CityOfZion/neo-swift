@@ -23,9 +23,6 @@ class NeoContractTests: XCTestCase {
                 #endif
                 exp.fulfill()
             }
-            else {
-                assert(false)
-            }
         }
         waitForExpectations(timeout: 20, handler: nil)
     }

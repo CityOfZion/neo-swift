@@ -160,7 +160,7 @@ import Neoutils
     }
     
     @objc public func sendRawTransaction(with data: Data, completion: @escaping(Bool, NeoClientError?) -> Void) {
-        sendJSONRPCRequest(.sendTransaction, params: [data.fullHexString]) { json, error in
+        sendJSONRPCRequest(.sendTransaction, params: [data.hexString]) { json, error in
             if let response = json {
                 guard let success = response["result"] as? Bool else {
                     completion(false, NeoClientError(.invalidData))

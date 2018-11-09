@@ -14,10 +14,7 @@ class NeoScanTest: XCTestCase {
         let exp = expectation(description: "Wait for transaction History response")
         let address = "AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb"
         NeoScan(network: .main).getTransactionHistory(address: address, page: 1) { result, error in
-            if error != nil {
-                assert(false)
-            }
-            else {
+            if error == nil {
                 #if DEBUG
                 print(result as Any)
                 #endif

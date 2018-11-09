@@ -46,6 +46,8 @@
 		F3B816901F7432B60023A54E /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
 		F3B816911F7437CC0023A54E /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31C7F0B1F6E75530075688D /* Base58.swift */; };
 		F3B816941F7437CC0023A54E /* AES.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8168F1F7432B60023A54E /* AES.swift */; };
+		FA18168B2195A1AC00357697 /* DataExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18168A2195A1AC00357697 /* DataExtensionTests.swift */; };
+		FA18168D2195A73100357697 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18168C2195A73100357697 /* StringExtensionTests.swift */; };
 		FA3860E821499945001139CA /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3860E721499945001139CA /* NEONetwork.swift */; };
 		FA6083B8216E3C190016BDEA /* ContractParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6083B7216E3C190016BDEA /* ContractParamType.swift */; };
 		FA6083BA216E3D270016BDEA /* ContractParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6083B9216E3D270016BDEA /* ContractParam.swift */; };
@@ -123,6 +125,8 @@
 		F31C7F0B1F6E75530075688D /* Base58.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeoCryptoTests.swift; sourceTree = "<group>"; };
 		F3B8168F1F7432B60023A54E /* AES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES.swift; sourceTree = "<group>"; };
+		FA18168A2195A1AC00357697 /* DataExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensionTests.swift; sourceTree = "<group>"; };
+		FA18168C2195A73100357697 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		FA3860E721499945001139CA /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
 		FA6083B7216E3C190016BDEA /* ContractParamType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractParamType.swift; sourceTree = "<group>"; };
 		FA6083B9216E3D270016BDEA /* ContractParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractParam.swift; sourceTree = "<group>"; };
@@ -243,6 +247,7 @@
 		75CDAE261F48680500B05C51 /* NeoSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				FA18168A2195A1AC00357697 /* DataExtensionTests.swift */,
 				75CDAE291F48680500B05C51 /* Info.plist */,
 				75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */,
 				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
@@ -252,6 +257,7 @@
 				7575ADF51F602C590077007B /* NeoWalletTests.swift */,
 				FA8E18942153E3C300FC3859 /* NEP5Tests.swift */,
 				FA8DC1792153E6390016C513 /* ScriptBuilderTest.swift */,
+				FA18168C2195A73100357697 /* StringExtensionTests.swift */,
 			);
 			path = NeoSwiftTests;
 			sourceTree = "<group>";
@@ -487,6 +493,7 @@
 				FAF660F2215589EA00FF9480 /* NEP2.swift in Sources */,
 				FA876D11214AFF6F008AADCB /* NEONetwork.swift in Sources */,
 				FA876D10214AFF6C008AADCB /* IntExtension.swift in Sources */,
+				FA18168B2195A1AC00357697 /* DataExtensionTests.swift in Sources */,
 				FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */,
 				FAD5ED342149748D006B924F /* ContractResult.swift in Sources */,
 				350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */,
@@ -502,6 +509,7 @@
 				F389E2861F8771850023BDC5 /* Asset.swift in Sources */,
 				F389E2881F8771850023BDC5 /* TransactionHistory.swift in Sources */,
 				F389E27B1F8771170023BDC5 /* Account.swift in Sources */,
+				FA18168D2195A73100357697 /* StringExtensionTests.swift in Sources */,
 				FA6BCBA6216E7F810020170B /* DataExtension.swift in Sources */,
 				6EADA9992071EBDF0090C700 /* NeoScanTest.swift in Sources */,
 				FA8E18952153E3C300FC3859 /* NEP5Tests.swift in Sources */,
