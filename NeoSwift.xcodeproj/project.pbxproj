@@ -49,6 +49,7 @@
 		FA18168B2195A1AC00357697 /* DataExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18168A2195A1AC00357697 /* DataExtensionTests.swift */; };
 		FA18168D2195A73100357697 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18168C2195A73100357697 /* StringExtensionTests.swift */; };
 		FA3860E821499945001139CA /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3860E721499945001139CA /* NEONetwork.swift */; };
+		FA4FA24C219B5D41008EBBE1 /* ContractParamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FA24B219B5D41008EBBE1 /* ContractParamTests.swift */; };
 		FA6083B8216E3C190016BDEA /* ContractParamType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6083B7216E3C190016BDEA /* ContractParamType.swift */; };
 		FA6083BA216E3D270016BDEA /* ContractParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6083B9216E3D270016BDEA /* ContractParam.swift */; };
 		FA6083BB216E41FA0016BDEA /* ContractParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6083B9216E3D270016BDEA /* ContractParam.swift */; };
@@ -128,6 +129,7 @@
 		FA18168A2195A1AC00357697 /* DataExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensionTests.swift; sourceTree = "<group>"; };
 		FA18168C2195A73100357697 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		FA3860E721499945001139CA /* NEONetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEONetwork.swift; sourceTree = "<group>"; };
+		FA4FA24B219B5D41008EBBE1 /* ContractParamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractParamTests.swift; sourceTree = "<group>"; };
 		FA6083B7216E3C190016BDEA /* ContractParamType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractParamType.swift; sourceTree = "<group>"; };
 		FA6083B9216E3D270016BDEA /* ContractParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractParam.swift; sourceTree = "<group>"; };
 		FA6BCB9A216E7DE00020170B /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -247,8 +249,9 @@
 		75CDAE261F48680500B05C51 /* NeoSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				FA18168A2195A1AC00357697 /* DataExtensionTests.swift */,
 				75CDAE291F48680500B05C51 /* Info.plist */,
+				FA4FA24B219B5D41008EBBE1 /* ContractParamTests.swift */,
+				FA18168A2195A1AC00357697 /* DataExtensionTests.swift */,
 				75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */,
 				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
 				6E821F9F1FEF42730002A790 /* NEOECDH.swift */,
@@ -507,6 +510,7 @@
 				F389E2831F8771850023BDC5 /* Balance.swift in Sources */,
 				F389E2851F8771850023BDC5 /* TransactionAttritbute.swift in Sources */,
 				F389E2861F8771850023BDC5 /* Asset.swift in Sources */,
+				FA4FA24C219B5D41008EBBE1 /* ContractParamTests.swift in Sources */,
 				F389E2881F8771850023BDC5 /* TransactionHistory.swift in Sources */,
 				F389E27B1F8771170023BDC5 /* Account.swift in Sources */,
 				FA18168D2195A73100357697 /* StringExtensionTests.swift in Sources */,

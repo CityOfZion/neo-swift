@@ -76,7 +76,8 @@ class ScriptBuilderTest: XCTestCase {
     
     func testContract() {
         let testCases: [[String: Any?]] =
-            [["script": "00c1046e616d65675f0e5a86edd8e1f62b68d2b3f7c0a761fc5a67dc",
+            [
+             ["script": "00c1046e616d65675f0e5a86edd8e1f62b68d2b3f7c0a761fc5a67dc",
               "scriptHash": "dc675afc61a7c0f7b3d2682bf6e1d8ed865a0e5f",
               "operation": "name",
               "args": []
@@ -104,16 +105,32 @@ class ScriptBuilderTest: XCTestCase {
                 "scriptHash": "db81b3d1e546a958e60c8ce33c766165100c04b7",
                 "operation": nil,
                 "args": 7
+                ],
+             [
+                "script": "143775292229eccdf904f16fff8e83e7cffdc0f0ce51c10962616c616e63654f666711c4d1f4fba619f2628870d36e3a9773e874705b",
+                "scriptHash": "5b7074e873973a6ed3708862f219a6fbf4d1c411",
+                "operation": "balanceOf",
+                "args": [
+                    [
+                        "type": "Hash160",
+                        "value": "cef0c0fdcfe7838eff6ff104f9cdec2922297537"
+                    ]
                 ]
-//             [
-//                "script": "143775292229eccdf904f16fff8e83e7cffdc0f0ce51c10962616c616e63654f666711c4d1f4fba619f2628870d36e3a9773e874705b",
-//                "scriptHash": "5b7074e873973a6ed3708862f219a6fbf4d1c411",
-//                "operation": "balanceOf",
-//                "args": [
-//                    "type": "Hash160",
-//                    "value": "cef0c0fdcfe7838eff6ff104f9cdec2922297537"
-//                ]
-//            ]
+            ],
+            [
+                "script": "143775292229eccdf904f16fff8e83e7cffdc0f0ce51c10962616c616e63654f666711c4d1f4fba619f2628870d36e3a9773e874705b",
+                "scriptHash": "5b7074e873973a6ed3708862f219a6fbf4d1c411",
+                "operation": "balanceOf",
+                "args": [
+                    "type": "Array",
+                    "value": [
+                        [
+                            "type": "Hash160",
+                            "value": "cef0c0fdcfe7838eff6ff104f9cdec2922297537"
+                        ]
+                    ]
+                ]
+            ]
         ]
         let neoScript = ScriptBuilder()
         for testCase in testCases {

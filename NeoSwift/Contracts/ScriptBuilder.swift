@@ -131,8 +131,8 @@ import Foundation
             pushBool(false)
         } else if let opcodeValue = data as? OpCode {
             pushOPCode(opcodeValue)
-//        } else if let mapValue = data as? [String:Any], let contractParam = ContractParam.likeContractParam(mapValue) {
-//            pushParam(contractParam)
+        } else if let mapValue = data as? [String:Any], let contractParam = ContractParam.likeContractParam(mapValue) {
+            pushParam(contractParam)
         } else {
             fatalError("Unsupported Data Type Pushed on stack")
         }
@@ -142,7 +142,7 @@ import Foundation
         pushData(args)
         
         if let operation = operation {
-            let hex = operation.unicodeScalars.filter { $0.isASCII }.map { String(format: "%X", $0.value) }.joined()
+            let hex = operation.hexString()
             pushData(hex)
         }
         if scriptHash.count != 40 {
