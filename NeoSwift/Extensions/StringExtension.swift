@@ -46,17 +46,6 @@ extension String {
         return self.data(using: String.Encoding.utf8)?.sha256
     }
     
-    func reverseHex() -> String? {
-        var out = "";
-        //        var i = self.count - 2
-        //        var currentHex = self
-        //        while i >= 0 {
-        //            out = out.appending(self.suffix(2))
-        //            i = i - 2
-        //        }
-        return out;
-    }
-    
     func hash160() -> String? {
         //NEO Address hash160
         //skip the first byte which is 0x17, revert it then convert to full hex
@@ -99,5 +88,9 @@ extension String {
             data.append(&char, count: 1)
         }
         return data
+    }
+    
+    func hexString() -> String {
+        return self.data(using: .utf8)?.hexString ?? ""
     }
 }
