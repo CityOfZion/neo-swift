@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ContractParam: NSObject {
+@objc class ContractParam: NSObject {
     private(set) public var type: ContractParamType
     private(set) public var value: Any
     
-    static func likeContractParam(_ map: [String: Any]?) -> ContractParam? {
+    @objc static func likeContractParam(_ map: [String: Any]?) -> ContractParam? {
         guard let mapNotNull = map else {
             return nil
         }
@@ -61,7 +61,7 @@ class ContractParam: NSObject {
         return nil
     }
     
-    init(_ type: ContractParamType, value: Any) {
+    @objc init(_ type: ContractParamType, value: Any) {
         self.type = type
         self.value = value
     }
