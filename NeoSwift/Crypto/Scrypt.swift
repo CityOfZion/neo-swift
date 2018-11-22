@@ -13,12 +13,38 @@ var salsaCount = 0
 var blockMixCount = 0
 var roMixCount = 0
 
-@objc class scrypt: NSObject {
+@objc public class Scrypt: NSObject, Codable {
+    @objc public let n: Int = 16384
+    @objc public let r: Int = 8
+    @objc public let p: Int = 8
+    @objc public let dkLen: Int = 64
+    
+    private enum CodingKeys: String, CodingKey {
+        case n
+        case r
+        case p
+        case dkLen
+    }
     
     final private var salsaBuffer: [UInt32] = [UInt32](repeating: 0, count: 16)
     final private var salsaOutput: [UInt32] = [UInt32](repeating: 0, count: 16)
     
-    internal final func R(_ a: UInt32, _ b: UInt32) -> UInt32 {
+    @objc public func scrypt(passphrase: [UInt8], salt: [UInt8]) -> [UInt8] {
+        var B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: self.p * 128 * self.r)
+        
+        var result: [UInt8] = []
+        for i in 0...self.p-1 {
+            let blockStart = i * (128 * self.r)
+            let blockEnd = (i + 1) * (128 * self.r)
+            let block = Array(B[blockStart..<blockEnd])
+            let blockMix = scryptROMix(block, r: self.r, N: self.n)
+            result.append(contentsOf: blockMix)
+        }
+        
+        return PBKDF2.deriveKey(password: passphrase, salt: result, rounds: 1, keyLength: self.dkLen)
+    }
+    
+    final func R(_ a: UInt32, _ b: UInt32) -> UInt32 {
         return (a << b) | (a >> (32 - b))
     }
     
@@ -109,20 +135,5 @@ var roMixCount = 0
         i += UInt(x[6]) << 48 + UInt(x[7]) << 56
         
         return i
-    }
-    
-    @objc func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
-        var B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: p * 128 * r)
-        
-        var result: [UInt8] = []
-        for i in 0...p-1 {
-            let blockStart = i * (128 * r)
-            let blockEnd = (i + 1) * (128 * r)
-            let block = Array(B[blockStart..<blockEnd])
-            let blockMix = scryptROMix(block, r: r, N: n)
-            result.append(contentsOf: blockMix)
-        }
-        
-        return PBKDF2.deriveKey(password: passphrase, salt: result, rounds: 1, keyLength: dkLen)
     }
 }

@@ -17,6 +17,20 @@ class NeoWalletTests: XCTestCase {
         assert(a.privateKey == b?.privateKey)
     }
     
+    func testExportKeystoreJsonWithoutKey() {
+        let a = Account()
+        let json = a.exportKeystoreJson()
+        assert(json != nil)
+        assert(json != "")
+    }
+    
+    func testExportKeystoreJsonWithKey() {
+        let a = Account(encryptedPrivateKey: "6PYSEybC8LEzN98WjghY5SWZ1ZVQH992y9G69wCReb567NwgGj1tPF3jXB", passphrase: "neoswifttest")
+        let json = a?.exportKeystoreJson()
+        assert(json != nil)
+        assert(json != "")
+    }
+    
     func testCreateAccountWif() {
         let a = Account(wif: "L33xET8EkayBJzwSZ9vRi4TYxeiatq8quUF3x1cnhG9jVqTcEjsm")
         assert(a?.address == "ANC6ANC9tjEVEJg29JsNp3ixNMgbUzVYwu")

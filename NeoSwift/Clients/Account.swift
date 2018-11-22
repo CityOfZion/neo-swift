@@ -10,12 +10,27 @@ import Foundation
 import Neoutils
 import Security
 
-public class Account : NSObject {
+public class Account : NSObject, Codable {
     @objc public var wif: String
     @objc public var publicKey: Data
     @objc public var privateKey: Data
     @objc public var address: String
     @objc public var hashedSignature: Data
+    
+    @objc public var label: String?
+    @objc public var key: String?
+    @objc public var isDefault = false
+    @objc public var lock = false
+    @objc public var extra: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case address
+        case label
+        case isDefault
+        case lock
+        case extra
+        case key
+    }
     
     @objc lazy var publicKeyString: String = {
         return publicKey.hexString
@@ -24,6 +39,40 @@ public class Account : NSObject {
     @objc lazy var privateKeyString: String = {
         return privateKey.hexString
     }()
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(extra, forKey: .extra)
+        try container.encode(key, forKey: .key)
+        try container.encode(lock, forKey: .lock)
+        try container.encode(isDefault, forKey: .isDefault)
+        try container.encode(label, forKey: .label)
+        try container.encode(address, forKey: .address)
+    }
+    
+    public init(label: String?, address: String, isDefault: Bool, lock: Bool, extra: String?, key: String?) {
+        self.wif = ""
+        self.publicKey = Data()
+        self.privateKey = Data()
+        self.hashedSignature = Data()
+        
+        self.label = label
+        self.address = address
+        self.isDefault = isDefault
+        self.lock = lock
+        self.key = key
+    }
+    
+    public required convenience init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let label: String = try container.decode(String.self, forKey: .label)
+        let address: String = try container.decode(String.self, forKey: .address)
+        let isDefault: Bool = try container.decode(Bool.self, forKey: .isDefault)
+        let lock: Bool = try container.decode(Bool.self, forKey: .lock)
+        let extra: String = try container.decode(String.self, forKey: .extra)
+        let key: String = try container.decode(String.self, forKey: .key)
+        self.init(label: label, address: address, isDefault: isDefault, lock: lock, extra: extra, key: key)
+    }
     
     @objc public init?(wif: String) {
         var error: NSError?
@@ -50,6 +99,7 @@ public class Account : NSObject {
         guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
         guard let wallet = NeoutilsGenerateFromPrivateKey(decryptedKey.hexString, &error) else { return nil }
         
+        self.key = decryptedKey.base58CheckEncodedString
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = Data(decryptedKey)
@@ -76,6 +126,19 @@ public class Account : NSObject {
         self.privateKey = pkeyData
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
+    }
+    
+    @objc func exportKeystoreJson() -> String? {
+        let wallet = Wallet()
+        wallet.accounts.append(self)
+        do {
+            let data = try JSONEncoder().encode(wallet)
+            let json = String(data: data, encoding: .utf8)
+            return json
+        }
+        catch {
+            return nil
+        }
     }
     
     @objc func createSharedSecret(publicKey: Data) -> Data? {
