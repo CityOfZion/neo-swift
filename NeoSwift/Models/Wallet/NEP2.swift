@@ -20,7 +20,7 @@ import Neoutils
         let encryptedHalf1 = [UInt8](encryptedKeyBytes[7..<23])
         let encryptedHalf2 = [UInt8](encryptedKeyBytes[23..<39])
         
-        let derived = scrypt().scrypt(passphrase: [UInt8](passphrase.utf8), salt: addressHash, n: 16384, r: 8, p: 8, dkLen: 64)
+        let derived = Scrypt().scrypt(passphrase: [UInt8](passphrase.utf8), salt: addressHash)
         let derivedHalf1 = [UInt8](derived[0..<32])
         let derivedHalf2 = [UInt8](derived[32..<64])
         
