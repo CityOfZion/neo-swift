@@ -10,7 +10,7 @@ import Foundation
 import Neoutils
 
 @objc public class NEP2: NSObject {
-    public static func decryptKey(_ key: String, passphrase: String) -> (key: [UInt8], hash: [UInt8])? {
+    public static func decryptKey(_ key: String, passphrase: String, scryptParameter: Scrypt?) -> (key: [UInt8], hash: [UInt8])? {
         guard let encryptedKeyBytes = key.base58CheckDecodedBytes else { return nil }
         if encryptedKeyBytes.count != 39 {
             return nil
@@ -20,7 +20,12 @@ import Neoutils
         let encryptedHalf1 = [UInt8](encryptedKeyBytes[7..<23])
         let encryptedHalf2 = [UInt8](encryptedKeyBytes[23..<39])
         
-        let derived = Scrypt().scrypt(passphrase: [UInt8](passphrase.utf8), salt: addressHash)
+        var crypto = Scrypt()
+        if let paramNotNull = scryptParameter {
+            crypto = paramNotNull
+        }
+        
+        let derived = crypto.scrypt(passphrase: [UInt8](passphrase.utf8), salt: addressHash)
         let derivedHalf1 = [UInt8](derived[0..<32])
         let derivedHalf2 = [UInt8](derived[32..<64])
         

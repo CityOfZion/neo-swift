@@ -65,12 +65,12 @@ public class Account : NSObject, Codable {
     
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let label: String = try container.decode(String.self, forKey: .label)
+        let label: String? = try container.decode(String?.self, forKey: .label)
         let address: String = try container.decode(String.self, forKey: .address)
         let isDefault: Bool = try container.decode(Bool.self, forKey: .isDefault)
         let lock: Bool = try container.decode(Bool.self, forKey: .lock)
-        let extra: String = try container.decode(String.self, forKey: .extra)
-        let key: String = try container.decode(String.self, forKey: .key)
+        let extra: String? = try container.decode(String?.self, forKey: .extra)
+        let key: String? = try container.decode(String?.self, forKey: .key)
         self.init(label: label, address: address, isDefault: isDefault, lock: lock, extra: extra, key: key)
     }
     
@@ -96,15 +96,18 @@ public class Account : NSObject, Codable {
     
     @objc public init?(encryptedPrivateKey: String, passphrase: String) {
         var error: NSError?
-        guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase) else { return nil }
+        guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedPrivateKey, passphrase: passphrase, scryptParameter: nil) else { return nil }
         guard let wallet = NeoutilsGenerateFromPrivateKey(decryptedKey.hexString, &error) else { return nil }
         
-        self.key = decryptedKey.base58CheckEncodedString
         self.wif = wallet.wif()
         self.publicKey = wallet.publicKey()
         self.privateKey = Data(decryptedKey)
         self.address = wallet.address()
         self.hashedSignature = wallet.hashedSignature()
+        
+        let nep2 = NeoutilsNEP2Encrypt(self.wif, passphrase, &error)
+        self.key = nep2?.encryptedKey()
+        
         guard NEP2.verify(addressHash: hash, address: wallet.address()) else { return nil }
     }
     
@@ -128,16 +131,37 @@ public class Account : NSObject, Codable {
         self.hashedSignature = wallet.hashedSignature()
     }
     
-    @objc func exportKeystoreJson() -> String? {
+    @objc func decrypt(passphrase: String, scryptParam: Scrypt) {
+        guard let encryptedKey = self.key else { return }
+        
+        var error: NSError?
+        guard let (decryptedKey, hash) = NEP2.decryptKey(encryptedKey, passphrase: passphrase, scryptParameter: scryptParam) else { return }
+        guard let wallet = NeoutilsGenerateFromPrivateKey(decryptedKey.hexString, &error) else { return }
+        
+        if wallet.address() == self.address {
+            self.wif = wallet.wif()
+            self.publicKey = wallet.publicKey()
+            self.privateKey = Data(decryptedKey)
+            self.hashedSignature = wallet.hashedSignature()
+            
+            guard NEP2.verify(addressHash: hash, address: wallet.address()) else { return }
+        }
+    }
+    
+    @objc func exportKeystoreJson(completion: @escaping (String?, String?) -> Void) {
+        if self.key == nil {
+            completion(nil, "Encrypt private key first!")
+            return
+        }
         let wallet = Wallet()
         wallet.accounts.append(self)
         do {
             let data = try JSONEncoder().encode(wallet)
             let json = String(data: data, encoding: .utf8)
-            return json
+            completion(json, nil)
         }
         catch {
-            return nil
+            completion(nil, "Unexpected error")
         }
     }
     
