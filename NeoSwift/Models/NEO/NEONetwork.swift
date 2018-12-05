@@ -8,29 +8,24 @@
 
 import Foundation
 
-@objc public class NEONode: NSObject, Codable {
+@objc public class NEONode: BlockHeight {
     @objc public var URL: String
-    @objc public var blockCount: UInt
-    @objc public var peerCount: UInt
     
     enum CodingKeys: String, CodingKey {
         case URL = "url"
-        case blockCount = "blockcount"
-        case peerCount = "peercount"
     }
     
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let heightContainer = try decoder.container(keyedBy: BlockHeightCodingKeys.self)
         let url: String = try container.decode(String.self, forKey: .URL)
-        let blockcount: UInt = try container.decode(UInt.self, forKey: .blockCount)
-        let peercount: UInt = try container.decode(UInt.self, forKey: .peerCount)
-        self.init(url: url, blockCount: blockcount, peerCount: peercount)
+        let height: UInt = try heightContainer.decode(UInt.self, forKey: .height)
+        self.init(url: url, height: height)
     }
     
-    public init(url: String, blockCount: UInt, peerCount: UInt) {
+    public init(url: String, height: UInt) {
         self.URL = url
-        self.blockCount = blockCount
-        self.peerCount = peerCount
+        super.init(height: height)
     }
 }
 

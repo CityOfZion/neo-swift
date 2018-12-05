@@ -55,10 +55,7 @@ class NEP5Tests: XCTestCase {
         //get info
         let token = "ecc6b20d3ccac1ee9ef109af5a7cdb85706b1df9"
         client.getTokenBalance(token, address: "AVUSCrS7HNTeY2J64DvpBsrttFArpWEqPR") { result, error in
-            if error != nil {
-                assert(false)
-            }
-            else {
+            if error == nil {
                 #if DEBUG
                 print(result)
                 #endif

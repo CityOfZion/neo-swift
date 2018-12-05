@@ -2,131 +2,171 @@
     
     "main": {
         "nodes": [{
-                  "url": "http://seed2.aphelion-neo.com:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "https://seed1.neo.org:10331",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed3.neo.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed4.neo.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed5.neo.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed2.neo.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed2.aphelion-neo.com:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "https://seed3.switcheo.network:10331",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "https://seed2.switcheo.network:10331",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://node2.ams2.bridgeprotocol.io:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed1.o3node.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed2.o3node.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed3.o3node.org:10332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  }
-                  ]
+            "url": "https://seed1.switcheo.network:10331",
+            "height": 3049145
+        }, {
+            "url": "http://seed1.travala.com:10332",
+            "height": 3049081
+        }, {
+            "url": "https://seed1.neo.org:10331",
+            "height": 3044280
+        }, {
+            "url": "https://seed1.cityofzion.io:443",
+            "height": 3049130
+        }, {
+            "url": "https://seed2.cityofzion.io:443",
+            "height": 3049134
+        }, {
+            "url": "https://seed3.cityofzion.io:443",
+            "height": 3049144
+        }, {
+            "url": "https://seed4.cityofzion.io:443",
+            "height": 3049143
+        }, {
+            "url": "https://seed5.cityofzion.io:443",
+            "height": 3049138
+        }, {
+            "url": "https://seed0.cityofzion.io:443",
+            "height": 3049112
+        }, {
+            "url": "https://seed6.cityofzion.io:443",
+            "height": 3049109
+        }, {
+            "url": "https://seed7.cityofzion.io:443",
+            "height": 3049096
+        }, {
+            "url": "https://seed8.cityofzion.io:443",
+            "height": 3049135
+        }, {
+            "url": "https://seed9.cityofzion.io:443",
+            "height": 3049140
+        }, {
+            "url": "https://seed1.redpulse.com:443",
+            "height": 3049138
+        }, {
+            "url": "https://seed2.redpulse.com:443",
+            "height": 3049144
+        }, {
+            "url": "http://seed4.aphelion-neo.com:10332",
+            "height": 3049145
+        }, {
+            "url": "https://seed1.spotcoin.com:10332",
+            "height": 3049122
+        }, {
+            "url": "http://seed1.ngd.network:10332",
+            "height": 3049138
+        }, {
+            "url": "http://seed2.ngd.network:10332",
+            "height": 3049145
+        }, {
+            "url": "http://seed3.ngd.network:10332",
+            "height": 3049136
+        }, {
+            "url": "http://seed4.ngd.network:10332",
+            "height": 3049142
+        }, {
+            "url": "http://seed5.ngd.network:10332",
+            "height": 3030874
+        }, {
+            "url": "http://seed6.ngd.network:10332",
+            "height": 2805493
+        }, {
+            "url": "http://seed7.ngd.network:10332",
+            "height": 3049142
+        }, {
+            "url": "http://seed8.ngd.network:10332",
+            "height": 3049144
+        }, {
+            "url": "http://seed9.ngd.network:10332",
+            "height": 3048088
+        }, {
+            "url": "http://seed10.ngd.network:10332",
+            "height": 3049145
+        }]
     },
     "test": {
         "nodes": [{
-                  "url": "http://seed2.neo.org:20332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed1.neo.org:20332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed3.neo.org:20332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed4.neo.org:20332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://seed5.neo.org:20332",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://test1.cityofzion.io:8080",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://test2.cityofzion.io:8080",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://test3.cityofzion.io:8080",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://test4.cityofzion.io:8080",
-                  "blockcount": 0,
-                  "peercount": 0
-                  },
-                  {
-                  "url": "http://test5.cityofzion.io:8080",
-                  "blockcount": 0,
-                  "peercount": 0
-                  }
-                  ]
-    },
-    "private": {
-        "nodes": [{
-                  "url": "https://privatenet.o3.network:30333",
-                  "blockcount": 0,
-                  "peercount": 0
-                  }]
+            "url": "http://seed1.travala.com:10332",
+            "height": 3049082
+        }, {
+            "url": "https://seed1.neo.org:10331",
+            "height": 3044280
+        }, {
+            "url": "https://seed1.cityofzion.io:443",
+            "height": 3049216
+        }, {
+            "url": "https://seed2.cityofzion.io:443",
+            "height": 3049216
+        }, {
+            "url": "https://seed4.cityofzion.io:443",
+            "height": 3049207
+        }, {
+            "url": "https://seed5.cityofzion.io:443",
+            "height": 3049216
+        }, {
+            "url": "https://seed0.cityofzion.io:443",
+            "height": 3049210
+        }, {
+            "url": "https://seed6.cityofzion.io:443",
+            "height": 3049209
+        }, {
+            "url": "https://seed7.cityofzion.io:443",
+            "height": 3049219
+        }, {
+            "url": "https://seed8.cityofzion.io:443",
+            "height": 3049212
+        }, {
+            "url": "https://seed9.cityofzion.io:443",
+            "height": 3049218
+        }, {
+            "url": "https://seed1.redpulse.com:443",
+            "height": 3049215
+        }, {
+            "url": "https://seed2.redpulse.com:443",
+            "height": 3049203
+        }, {
+            "url": "http://seed1.aphelion-neo.com:10332",
+            "height": 3049220
+        }, {
+            "url": "http://seed2.aphelion-neo.com:10332",
+            "height": 3049220
+        }, {
+            "url": "http://seed4.aphelion-neo.com:10332",
+            "height": 3049220
+        }, {
+            "url": "https://seed1.spotcoin.com:10332",
+            "height": 3049148
+        }, {
+            "url": "http://seed1.ngd.network:10332",
+            "height": 3049216
+        }, {
+            "url": "http://seed2.ngd.network:10332",
+            "height": 3049211
+        }, {
+            "url": "http://seed3.ngd.network:10332",
+            "height": 3049214
+        }, {
+            "url": "http://seed4.ngd.network:10332",
+            "height": 3049218
+        }, {
+            "url": "http://seed5.ngd.network:10332",
+            "height": 3030874
+        }, {
+            "url": "http://seed6.ngd.network:10332",
+            "height": 2824033
+        }, {
+            "url": "http://seed7.ngd.network:10332",
+            "height": 3049217
+        }, {
+            "url": "http://seed8.ngd.network:10332",
+            "height": 3049216
+        }, {
+            "url": "http://seed9.ngd.network:10332",
+            "height": 3048088
+        }, {
+            "url": "http://seed10.ngd.network:10332",
+            "height": 3049220
+        }]
     }
     
 }
