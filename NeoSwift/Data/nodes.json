@@ -2,6 +2,9 @@
     
     "main": {
         "nodes": [{
+            "url": "http://seed4.aphelion-neo.com:10332",
+            "height": 3049145
+        }, {
             "url": "https://seed1.switcheo.network:10331",
             "height": 3049145
         }, {
@@ -46,9 +49,6 @@
         }, {
             "url": "https://seed2.redpulse.com:443",
             "height": 3049144
-        }, {
-            "url": "http://seed4.aphelion-neo.com:10332",
-            "height": 3049145
         }, {
             "url": "https://seed1.spotcoin.com:10332",
             "height": 3049122
