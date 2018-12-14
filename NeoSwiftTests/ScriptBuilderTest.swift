@@ -74,6 +74,21 @@ class ScriptBuilderTest: XCTestCase {
         assert(neoScript.rawBytes.hexString == "51")
     }
     
+    func testPushContractError() {
+        let neoScript = ScriptBuilder()
+        expectFatalError(expectedMessage: "Attempting to invoke invalid contract") {
+            neoScript.pushContractInvoke(scriptHash: "4546", operation: "test", args: nil, useTailCall: false)
+        }
+    }
+    
+    func testPushContractWithTailCall() {
+        let neoScript = ScriptBuilder()
+        neoScript.pushContractInvoke(scriptHash: "5b7074e873973a6ed3708862f219a6fbf4d1c411", operation: nil, args: nil, useTailCall: true)
+        print (neoScript.rawBytes.hexString)
+        assert(neoScript.rawBytes.hexString == "0069")
+        assert(neoScript.rawBytes[1] == 105)
+    }
+    
     func testContract() {
         let testCases: [[String: Any?]] =
             [
@@ -144,6 +159,27 @@ class ScriptBuilderTest: XCTestCase {
             #endif
             assert(neoScript.rawBytes.hexString == script)
             neoScript.resetScript()
+        }
+    }
+    
+    func testContractParamError() {
+        let testCase: [String: Any?] =
+                [
+                    "scriptHash": "5b7074e873973a6ed3708862f219a6fbf4d1c411",
+                    "operation": "balanceOf",
+                    "args": [
+                        [
+                            "type": "typeNotExist",
+                            "value": "cef0c0fdcfe7838eff6ff104f9cdec2922297537"
+                        ]
+                    ]
+                ]
+        let neoScript = ScriptBuilder()
+        let scriptHash = testCase["scriptHash"] as! String
+        let operation = testCase["operation"] as? String
+        let args = testCase["args"] ?? nil
+        expectFatalError(expectedMessage: "Unsupported Data Type Pushed on stack") {
+            neoScript.pushContractInvoke(scriptHash: scriptHash, operation: operation, args: args)
         }
     }
 }

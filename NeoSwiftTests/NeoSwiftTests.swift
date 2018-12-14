@@ -14,7 +14,6 @@ class NeoSwiftTests: XCTestCase {
     let testSeed = "http://test4.cityofzion.io:8880"
     let mainSeed = "http://seed1.neo.org:10332"
     
-    
     func testNetworkMonitor() {
         let network = NEONetworkMonitor.sharedInstance.network
         assert(network != nil)
@@ -67,5 +66,15 @@ class NeoSwiftTests: XCTestCase {
         #if DEBUG
         print(b.hexString)
         #endif
+    }
+    
+    func testAutoSelectBestNode() {
+        let url = NEONetworkMonitor.autoSelectBestNode()
+        assert(url != nil)
+    }
+    
+    func testAutoSelectTestBestNode() {
+        let url = NEONetworkMonitor.autoSelectTestBestNode()
+        assert(url != nil)
     }
 }

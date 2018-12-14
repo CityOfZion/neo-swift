@@ -33,6 +33,16 @@ class NEP5Tests: XCTestCase {
         waitForExpectations(timeout: 60, handler: nil)
     }
     
+    func testSendRawTransactionErro() {
+        let exp = expectation(description: "Wait for NEP 5 response")
+        let client = NeoClient(seed: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)
+        client.sendRawTransaction(with: Data()) { (result, error) in
+            assert(error != nil)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
     func testNEP5Info() {
         let exp = expectation(description: "Wait for NEP 5 response")
         let client = NeoClient(seed: (NEONetworkMonitor.sharedInstance.network?.mainNet.nodes[0].URL)!)

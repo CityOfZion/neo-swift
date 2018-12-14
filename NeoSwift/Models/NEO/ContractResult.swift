@@ -22,8 +22,8 @@ private enum StackEntryCodingKeys: String, CodingKey {
 
     @objc public var type: VMOutputType
     @objc public var intValue: Int = 0
-    @objc public var hexDataValue: String?
-    @objc public var arrayValue: [StackEntry]?
+    @objc public var hexDataValue: String = ""
+    @objc public var arrayValue = [StackEntry]()
     
     @objc public init(type: VMOutputType, value: Any) {
         self.type = type

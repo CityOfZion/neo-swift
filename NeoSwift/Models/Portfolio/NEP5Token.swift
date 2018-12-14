@@ -33,11 +33,10 @@ import Foundation
         let symbolEntry = vmStack[1]
         let decimalsEntry = vmStack[2]
         let totalSupplyEntry = vmStack[3]
-        guard let name = String(data: (nameEntry.hexDataValue?.dataWithHexString())!, encoding: .utf8),
-            let symbol = String(data: (symbolEntry.hexDataValue?.dataWithHexString())!, encoding: .utf8),
-            let totalSupplyData = totalSupplyEntry.hexDataValue else {
-                return nil
-        }
+        let name = String(data: (nameEntry.hexDataValue.dataWithHexString()), encoding: .utf8) ?? ""
+        let symbol = String(data: (symbolEntry.hexDataValue.dataWithHexString()), encoding: .utf8) ?? ""
+        let totalSupplyData = totalSupplyEntry.hexDataValue
+        
         let totalSupply = UInt64(littleEndian: totalSupplyData.dataWithHexString().withUnsafeBytes { $0.pointee })
         self.init(name: name, symbol: symbol, decimals: decimalsEntry.intValue, totalSupply: Int(totalSupply / 100000000))
     }

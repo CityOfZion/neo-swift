@@ -61,6 +61,7 @@ class NeoWalletTests: XCTestCase {
     func testCreateAccountWif() {
         let a = Account(wif: "L33xET8EkayBJzwSZ9vRi4TYxeiatq8quUF3x1cnhG9jVqTcEjsm")
         assert(a?.address == "ANC6ANC9tjEVEJg29JsNp3ixNMgbUzVYwu")
+        assert(a?.publicKeyString == "030eff1340988ee79420e42864cb91dcc6e3ed8314a46bae94f6d92185091ca55a")
         assert(a?.privateKeyString == "ae012da38dfba592d28859cbad4cf6276e75cf0c3795a0f1611531a754f772c7")
     }
     
