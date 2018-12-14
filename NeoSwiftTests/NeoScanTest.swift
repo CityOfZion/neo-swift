@@ -46,6 +46,17 @@ class NeoScanTest: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
+    func testGetHistoryError() {
+        let exp = expectation(description: "Wait for transaction History response")
+        let address = ""
+        NeoScan(network: .main).getTransactionHistory(address: address, page: 1) { result, error in
+            if error != nil {
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
     func testGetHistoryAccessPageWithoutEntries() {
         let exp = expectation(description: "Wait for transaction History response")
         let address = "AeNkbJdiMx49kBStQdDih7BzfDwyTNVRfb"
@@ -128,6 +139,16 @@ class NeoScanTest: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
+    func testGetBlockError() {
+        let exp = expectation(description: "Wait for get block response")
+        NeoScan(network: .main).getBlock(blockHash: "asdf") { (result, error) in
+            if error != nil {
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
     func testGetLatestBlockHeight() {
         let exp = expectation(description: "Wait for get latest block height response")
         let expectedMinimumHeight: UInt = 3049368
@@ -151,6 +172,16 @@ class NeoScanTest: XCTestCase {
                 print(result as Any)
                 #endif
                 assert(result?.unclaimed != 0)
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetUnclaimedError() {
+        let exp = expectation(description: "Wait for get unclaimed gas response")
+        NeoScan(network: .main).getUnclaimed(address: "") { (result, error) in
+            if error != nil {
                 exp.fulfill()
             }
         }

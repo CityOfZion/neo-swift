@@ -73,6 +73,8 @@
 		FA876D11214AFF6F008AADCB /* NEONetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3860E721499945001139CA /* NEONetwork.swift */; };
 		FA8DC17A2153E6390016C513 /* ScriptBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8DC1792153E6390016C513 /* ScriptBuilderTest.swift */; };
 		FA8E18952153E3C300FC3859 /* NEP5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8E18942153E3C300FC3859 /* NEP5Tests.swift */; };
+		FAA32B1B21C3C9C000216869 /* ContractResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA32B1A21C3C9C000216869 /* ContractResultTests.swift */; };
+		FAA32B1D21C3CC0E00216869 /* UtExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA32B1C21C3CC0E00216869 /* UtExtension.swift */; };
 		FAA33FAE21A7074B0075F8A0 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA33FAD21A7074B0075F8A0 /* Wallet.swift */; };
 		FAA33FAF21A70EC40075F8A0 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA33FAD21A7074B0075F8A0 /* Wallet.swift */; };
 		FAD5ED1921497046006B924F /* ContractResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5ED1821497046006B924F /* ContractResult.swift */; };
@@ -152,6 +154,8 @@
 		FA70E9E921497CD600D3016D /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		FA8DC1792153E6390016C513 /* ScriptBuilderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptBuilderTest.swift; sourceTree = "<group>"; };
 		FA8E18942153E3C300FC3859 /* NEP5Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP5Tests.swift; sourceTree = "<group>"; };
+		FAA32B1A21C3C9C000216869 /* ContractResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResultTests.swift; sourceTree = "<group>"; };
+		FAA32B1C21C3CC0E00216869 /* UtExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtExtension.swift; sourceTree = "<group>"; };
 		FAA33FAD21A7074B0075F8A0 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		FAD5ED1821497046006B924F /* ContractResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractResult.swift; sourceTree = "<group>"; };
 		FAD83B2F21482C1300AF11DF /* NEP5Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEP5Token.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 			children = (
 				75CDAE291F48680500B05C51 /* Info.plist */,
 				FA4FA24B219B5D41008EBBE1 /* ContractParamTests.swift */,
+				FAA32B1A21C3C9C000216869 /* ContractResultTests.swift */,
 				FA18168A2195A1AC00357697 /* DataExtensionTests.swift */,
 				75F0A3991FA59CC1009E45CB /* NeoContractTests.swift */,
 				F31C7FA11F6E83D70075688D /* NeoCryptoTests.swift */,
@@ -276,6 +281,7 @@
 				FA8E18942153E3C300FC3859 /* NEP5Tests.swift */,
 				FA8DC1792153E6390016C513 /* ScriptBuilderTest.swift */,
 				FA18168C2195A73100357697 /* StringExtensionTests.swift */,
+				FAA32B1C21C3CC0E00216869 /* UtExtension.swift */,
 			);
 			path = NeoSwiftTests;
 			sourceTree = "<group>";
@@ -524,6 +530,7 @@
 				FA876D10214AFF6C008AADCB /* IntExtension.swift in Sources */,
 				FA29144921B816A50074CED1 /* BlockScript.swift in Sources */,
 				FA18168B2195A1AC00357697 /* DataExtensionTests.swift in Sources */,
+				FAA32B1B21C3C9C000216869 /* ContractResultTests.swift in Sources */,
 				FAD5ED35214974B9006B924F /* NEP5Token.swift in Sources */,
 				FAD5ED342149748D006B924F /* ContractResult.swift in Sources */,
 				350E271A207B610C006AB519 /* NeoScanTransactionHistory.swift in Sources */,
@@ -553,6 +560,7 @@
 				FA29144F21B8405C0074CED1 /* Unclaimed.swift in Sources */,
 				F3B816941F7437CC0023A54E /* AES.swift in Sources */,
 				F31C7FA21F6E83D70075688D /* NeoCryptoTests.swift in Sources */,
+				FAA32B1D21C3CC0E00216869 /* UtExtension.swift in Sources */,
 				75CDAE281F48680500B05C51 /* NeoSwiftTests.swift in Sources */,
 				7575ADF61F602C590077007B /* NeoWalletTests.swift in Sources */,
 			);
