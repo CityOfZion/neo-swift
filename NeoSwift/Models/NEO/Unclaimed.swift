@@ -9,22 +9,29 @@
 import Foundation
 
 @objc public class Unclaimed: NSObject, Codable {
+    @objc public var claimable: [Claimable]
     @objc public var unclaimed: Double
     @objc public var address: String
     
     enum CodingKeys: String, CodingKey {
-        case unclaimed = "unclaimed"
-        case address = "address"
+        case claimable
+        case unclaimed
+        case address
     }
     
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        var claimable = [Claimable] ()
+        if container.contains(.claimable) {
+            claimable = try container.decode([Claimable].self, forKey: .claimable)
+        }
         let unclaimed: Double = try container.decode(Double.self, forKey: .unclaimed)
         let address: String = try container.decode(String.self, forKey: .address)
-        self.init(unclaimed: unclaimed, address: address)
+        self.init(claimable: claimable, unclaimed: unclaimed, address: address)
     }
     
-    public init(unclaimed: Double, address: String) {
+    public init(claimable: [Claimable], unclaimed: Double, address: String) {
+        self.claimable = claimable
         self.unclaimed = unclaimed
         self.address = address
     }
