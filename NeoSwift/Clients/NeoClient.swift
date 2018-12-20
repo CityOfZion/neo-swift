@@ -245,7 +245,7 @@ import Neoutils
                 #if DEBUG
                 print(response)
                 #endif
-                let balanceData = response.stack[0].hexDataValue ?? ""
+                let balanceData = response.stack[0].hexDataValue
                 if balanceData == "" {
                     completion(0, nil)
                     return

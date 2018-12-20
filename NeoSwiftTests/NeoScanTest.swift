@@ -50,9 +50,8 @@ class NeoScanTest: XCTestCase {
         let exp = expectation(description: "Wait for transaction History response")
         let address = ""
         NeoScan(network: .main).getTransactionHistory(address: address, page: 1) { result, error in
-            if error != nil {
-                exp.fulfill()
-            }
+            assert(error != nil)
+            exp.fulfill()
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -87,6 +86,85 @@ class NeoScanTest: XCTestCase {
                 assert(result?.entries.count ?? 0 >= 13)
                 exp.fulfill()
             }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetBalance() {
+        let exp = expectation(description: "Wait for balance response")
+        let address = "AHXuwS7kPLcc8tWsiKQt7SQvmqnxeriNXJ"
+        NeoScan(network: .main).getBalance(address: address) { result, error in
+            if error == nil {
+                #if DEBUG
+                print(result as Any)
+                #endif
+                assert(result?.address == address)
+                assert(result?.balance.count ?? 0 > 0)
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetBalanceWithError() {
+        let exp = expectation(description: "Wait for balance response")
+        let address = "0000"
+        NeoScan(network: .main).getBalance(address: address) { result, error in
+            assert(error != nil)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetClaimableTransactions() {
+        let exp = expectation(description: "Wait for claimable transactions")
+        let address = "AGLvTTTYXGnMTGFqTYW7DibAc1vd7JX1pa"
+        NeoScan(network: .main).getClaimable(address: address) { result, error in
+            if error == nil {
+                #if DEBUG
+                print(result as Any)
+                #endif
+                assert(result?.address == address)
+                assert(result?.claimable.count ?? 0 > 0)
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetClaimableTransactionsWithError() {
+        let exp = expectation(description: "Wait for claimable transactions")
+        let address = "000"
+        NeoScan(network: .main).getClaimable(address: address) { result, error in
+            assert(error != nil)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetClaimedTransactions() {
+        let exp = expectation(description: "Wait for claimed transactions")
+        let address = "AGLvTTTYXGnMTGFqTYW7DibAc1vd7JX1pa"
+        NeoScan(network: .main).getClaimed(address: address) { result, error in
+            if error == nil {
+                #if DEBUG
+                print(result as Any)
+                #endif
+                assert(result?.address == address)
+                assert(result?.claimed.count ?? 0 > 0)
+                assert(result?.claimed.first?.txids.count ?? 0 > 0)
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetClaimedTransactionsWithError() {
+        let exp = expectation(description: "Wait for claimed transactions")
+        let address = "000"
+        NeoScan(network: .main).getClaimed(address: address) { result, error in
+            assert(error != nil)
+            exp.fulfill()
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -142,9 +220,8 @@ class NeoScanTest: XCTestCase {
     func testGetBlockError() {
         let exp = expectation(description: "Wait for get block response")
         NeoScan(network: .main).getBlock(blockHash: "asdf") { (result, error) in
-            if error != nil {
-                exp.fulfill()
-            }
+            assert(error != nil)
+            exp.fulfill()
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
@@ -178,12 +255,86 @@ class NeoScanTest: XCTestCase {
         waitForExpectations(timeout: 20, handler: nil)
     }
     
+    func testGetLastTransactions() {
+        let exp = expectation(description: "Wait for get last transactions model response")
+        NeoScan(network: .main).getLastTransactions(address: "AHv47wpNHPiy2NReCvfeYDxAzvunJrsu4F", page: 1) { (response, error) in
+            if error == nil {
+                #if DEBUG
+                print(response as Any)
+                #endif
+                assert(response?.count == 15)
+                
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetLastTransactionsWithError() {
+        let exp = expectation(description: "Wait for get last transactions model response")
+        NeoScan(network: .main).getLastTransactions(address: "000", page: 1) { (response, error) in
+            assert(error != nil)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetTransaction() {
+        let exp = expectation(description: "Wait for get transaction model response")
+        NeoScan(network: .main).getTransaction(txHash: "acbd64b30b70a2aef81135a30183ed5beb5f1f49f12738aeee1a23c7d79e35d6") { (result, error) in
+            if error == nil {
+                #if DEBUG
+                print(result as Any)
+                #endif
+                assert(result?.vouts.count == 1)
+                assert(result?.vouts.first?.value == 2.29473719)
+                assert(result?.vouts.first?.txid == "acbd64b30b70a2aef81135a30183ed5beb5f1f49f12738aeee1a23c7d79e35d6")
+                assert(result?.vouts.first?.n == 0)
+                assert(result?.vouts.first?.asset == "GAS")
+                assert(result?.vouts.first?.address_hash == "AGLvTTTYXGnMTGFqTYW7DibAc1vd7JX1pa")
+                
+                assert(result?.vin.count == 1)
+                assert(result?.vin.first?.value == 2.29473719)
+                assert(result?.vin.first?.txid == "2e518bb82f9854260686fcd2579c08067eddfddf0cdc6b0a187f4b304df601c7")
+                assert(result?.vin.first?.n == 0)
+                assert(result?.vin.first?.asset == "GAS")
+                assert(result?.vin.first?.address_hash == "AKJQMHma9MA8KK5M8iQg8ASeg3KZLsjwvB")
+                
+                assert(result?.version == 1)
+                assert(result?.type == "InvocationTransaction")
+                assert(result?.txid == "acbd64b30b70a2aef81135a30183ed5beb5f1f49f12738aeee1a23c7d79e35d6")
+                assert(result?.time == 1545313190)
+                assert(result?.size == 257)
+                assert(result?.scripts.count == 1)
+                assert(result?.scripts.first?.verification == "")
+                assert(result?.scripts.first?.invocation == "0000")
+                assert(result?.net_fee == 0)
+                assert(result?.block_height == 3116277)
+                assert(result?.block_hash == "75be94bb46bb66a1715fa4f7c012384b661439b6fbdbea664185d0823ff4ab88")
+                
+                assert(result?.attributes.first?.usage == "Hash1")
+                assert(result?.attributes.first?.data == "5100000000000000000000000000000000000000000000000000000000000000")
+                
+                exp.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
+    func testGetTransactionWithError() {
+        let exp = expectation(description: "Wait for get transaction model response")
+        NeoScan(network: .main).getTransaction(txHash: "0000") { (result, error) in
+            assert(error != nil)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 20, handler: nil)
+    }
+    
     func testGetUnclaimedError() {
         let exp = expectation(description: "Wait for get unclaimed gas response")
         NeoScan(network: .main).getUnclaimed(address: "") { (result, error) in
-            if error != nil {
-                exp.fulfill()
-            }
+            assert(error != nil)
+            exp.fulfill()
         }
         waitForExpectations(timeout: 20, handler: nil)
     }
